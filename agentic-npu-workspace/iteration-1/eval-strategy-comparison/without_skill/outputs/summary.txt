@@ -1,0 +1,66 @@
+GEMM Tiling Strategy Summary
+Problem: M=1537, N=257, K=769, dtype=bf16
+======================================================
+
+WINNER: Strategy A
+  Padded shape : (Mp=2048, Np=512, Kp=1024)
+  Tile         : (tile_m=2048, tile_n=512, tile_k=1024)
+  Num tiles    : 1
+  Waste ops %  : 254.4%
+  Arith. Int.  : 292.6 ops/byte
+  Tile dispatches: 1 x 1 x 1
+
+======================================================
+KEY REASONING
+======================================================
+
+1. FORCED DIMENSION — M=1537:
+   M=1537 exceeds every ALLOWED_M value below 2048 (max is 1024 < 1537).
+   Therefore Mp=2048 is the only valid choice. No freedom here.
+   M-dimension padding: 2048 - 1537 = 511 rows (33.2% overhead in M).
+
+2. MINIMUM VALID N PADDING — N=257:
+   N=257 just exceeds 256 (not in ALLOWED_N), so the smallest valid Np is 512.
+   Np=512 pads 255 values (49.8% N overhead) — acceptable.
+   Alternative Np=768 pads 511 values (198.8% N overhead) — nearly 3x worse in N.
+   The higher arithmetic intensity of Np=768 tile (351 vs 293 ops/byte) does NOT
+   compensate for executing 77% more total compute. REJECT Np=768.
+
+3. MINIMUM VALID K PADDING — K=769:
+   K=769 just exceeds 768 (not in ALLOWED_K), so the smallest valid Kp is 1024.
+   Kp=1024 pads 255 values (33.2% K overhead).
+   Kp=1536 = 2*768 pads 767 values (99.6% K overhead) — nearly 3x worse in K.
+   Kp=2048 pads 1279 values (166.3% K overhead). Both alternatives rejected.
+
+4. LARGEST VALID TILE within (2048, 512, 1024):
+   Since padded shape = (2048, 512, 1024) and each dimension equals exactly
+   one allowed tile size, the maximum tile is (2048, 512, 1024) itself.
+   This produces exactly 1 tile, minimizing:
+     - Kernel dispatch overhead (1 launch vs 2+ for smaller tiles)
+     - Data reload costs (no repeated buffer fills)
+   And maximizes arithmetic intensity: 292.6 ops/byte, keeping NPU compute units
+   saturated throughout execution.
+
+5. WHY NOT STRATEGY B (Np=768)?
+   Total ops: 3.22B vs 2.15B for Strategy A.
+   Extra compute: +50% more total operations just to pad N to 768 instead of 512.
+   Even with a single tile dispatch, this runs 50% longer in the compute phase.
+   CONCLUSION: Minimum padding beats higher arithmetic intensity here.
+
+6. WHY NOT SMALLER TILES WITHIN STRATEGY A?
+   Using (1024, 512, 1024) or (2048, 512, 512) tiles creates 2 dispatches
+   with lower arithmetic intensity (204-256 vs 293 ops/byte).
+   Same total compute, more overhead, lower throughput. Strictly worse.
+
+======================================================
+FINAL ANSWER
+======================================================
+Best strategy: pad to (2048, 512, 1024), tile with (2048, 512, 1024)
+This minimizes total latency by:
+  (a) Choosing the smallest valid padded dimensions in each axis
+  (b) Using the maximum possible tile to minimize dispatch overhead
+  (c) Achieving 292.6 ops/byte arithmetic intensity for high NPU utilization
+  (d) Executing the entire GEMM as a single kernel launch (1 tile)
+
+Total estimated wasted compute: 254.4% above useful work — unavoidable due to
+dimension misalignment (each of M, N, K falls just above an allowed boundary).

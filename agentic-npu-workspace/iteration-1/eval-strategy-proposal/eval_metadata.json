@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "eval-strategy-proposal",
+  "prompt": "/agentic-npu M=300 N=500 K=700 dtype=bf16",
+  "assertions": [
+    "The strategy JSON block is present and contains keys: input, padded, tile, pad_impl, strategy_source, estimated_execution_us, estimated_total_us, confidence",
+    "The proposed padded M, N, K are each members of the respective ALLOWED lists",
+    "The padded dims are all >= the input dims (Mp >= 300, Np >= 500, Kp >= 700)",
+    "The tile (m, n, k) evenly divides the padded shape",
+    "Phase 4 writes or attempts to write to memory/gemm-data/runs.json",
+    "A session log file is created or attempted in memory/sessions/"
+  ]
+}

@@ -1,0 +1,109 @@
+GEMM NPU Strategy Summary
+=========================
+Date: 2026-03-09
+Task: Run int8 GEMM on AMD Ryzen NPU for A[512x1024] x B[1024x768]
+
+1. PROBLEM IDENTIFICATION
+--------------------------
+From A[512 x 1024] and B[1024 x 768], the standard GEMM dimensions are:
+  M = 512   (rows of A, rows of C)
+  N = 768   (cols of B, cols of C)
+  K = 1024  (cols of A = rows of B, the reduction dimension)
+Output C has shape [512 x 768].
+Data type: int8 (dtype key "i8" in profiling JSON).
+
+2. PADDING ANALYSIS
+--------------------
+Checking each dimension against NPU allowed values:
+  ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048]
+  ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048]
+  ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048]
+
+  M=512  -> 512 is in ALLOWED_M  -> Mp=512  (no padding)
+  N=768  -> 768 is in ALLOWED_N  -> Np=768  (no padding)
+  K=1024 -> 1024 is in ALLOWED_K -> Kp=1024 (no padding)
+
+Result: NO PADDING REQUIRED. All three dimensions land exactly on allowed NPU
+values. This is the best-case scenario — zero wasted compute, zero copy overhead.
+
+Padded shape: Mp=512, Np=768, Kp=1024 (identical to input shape).
+Pad method: none (no padding needed).
+
+3. TILE SELECTION
+------------------
+The tile (m, n, k) must satisfy:
+  - Mp % m == 0
+  - Np % n == 0
+  - Kp % k == 0
+
+Chosen tile: m=64, n=64, k=64
+
+Reasoning:
+  - 64x64x64 tiles are a well-known sweet spot for int8 GEMM on AMD AIE-based
+    NPUs. They fill the on-chip SRAM efficiently without overflow.
+  - Divisibility: 512/64=8, 768/64=12, 1024/64=16 — all exact integers.
+  - This yields 8 x 12 x 16 = 1536 tile dispatches total.
+  - Larger tiles (e.g., 128x128x128) would also divide evenly but risk exceeding
+    per-core SRAM capacity for int8 accumulators (128x128 int8 = 16KB per tile
+    face, which is borderline on the AIE core local memory).
+  - Smaller tiles (e.g., 32x32x32) increase dispatch overhead with 8x more tiles.
+  - 64x64x64 balances utilization and dispatch overhead well.
+
+Allo library call:
+  GEMM(Mp=512, Np=768, Kp=1024,
+       tiles_M=8, tiles_N=12, tiles_K=16,
+       TyI=int8, TyO=int8)
+
+4. PERFORMANCE ESTIMATE
+------------------------
+Total multiply-accumulate operations:
+  2 x M x N x K = 2 x 512 x 768 x 1024 = 805,306,368 (~805M ops)
+
+AMD Ryzen AI NPU int8 peak throughput: ~2 TOPS (2 x 10^12 ops/sec)
+
+Theoretical compute time:
+  805M ops / 2T ops/sec = ~0.40 ms
+
+Estimated real latency (including kernel dispatch, DMA, and scheduling overhead):
+  ~1.2 ms  (range: 0.8 ms to 2.0 ms)
+
+Since there is no padding, there is zero memory overhead for zero-padding copies,
+which would otherwise add 50-200 µs for large matrices.
+
+5. STRATEGY SELECTION
+----------------------
+Recommended lookup strategy: hashmap_27
+
+Rationale: M=512, N=768, K=1024 are all "medium-sized" and each falls exactly on
+a profiled NPU allowed value. hashmap_27 selects the 3 nearest-larger candidates
+per dimension, forms a 27-way cross-product, and picks the fastest profiled shape.
+With all dims exactly on allowed values, the 27-way cross-product immediately
+collapses to the exact (512,768,1024) entry, making this lookup both fast and
+correct.
+
+sorted_first_fit would also work but may skip the exact shape in favor of a
+globally faster but larger shape — adding unnecessary padding in some cases.
+preprocessed_map would also be valid given the dense profile grid here.
+
+6. SUMMARY TABLE
+-----------------
+Parameter       Value
+-----------     -----
+M               512
+N               768
+K               1024
+Mp (padded)     512
+Np (padded)     768
+Kp (padded)     1024
+Tile m          64
+Tile n          64
+Tile k          64
+Tiles (M dim)   8
+Tiles (N dim)   12
+Tiles (K dim)   16
+Total tiles     1536
+Padding needed  No
+Pad overhead    None
+dtype           int8
+Estimated ms    ~1.2 ms (range 0.8–2.0 ms)
+Strategy        hashmap_27

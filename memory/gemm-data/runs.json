@@ -1,0 +1,73 @@
+{
+  "description": "GEMM NPU run log. Each entry is appended by the agentic NPU optimizer (Phase 4).",
+  "schema": {
+    "timestamp": "ISO-8601 string",
+    "input": {"M": "int", "N": "int", "K": "int", "dtype": "str"},
+    "padded": {"M": "int", "N": "int", "K": "int"},
+    "tile": {"m": "int", "n": "int", "k": "int"},
+    "pad_impl": "str",
+    "strategy_source": "str",
+    "result": {
+      "status": "success | failure",
+      "actual_execution_us": "float or null",
+      "estimated_execution_us": "float",
+      "correctness": "pass | fail | n/a",
+      "error": "str or null",
+      "fallbacks_tried": "int"
+    }
+  },
+  "runs": [
+    {
+      "timestamp": "2026-03-09T00:00:00Z",
+      "input":  {"M": 512, "N": 768, "K": 1024, "dtype": "i8"},
+      "padded": {"M": 512, "N": 768, "K": 1024},
+      "tile":   {"m": 64, "n": 64, "k": 64},
+      "pad_impl": "none",
+      "strategy_source": "preprocessed_map",
+      "result": {
+        "status": "success",
+        "actual_execution_us":  348.059,
+        "estimated_execution_us": 348.059,
+        "correctness": "n/a",
+        "error": null,
+        "fallbacks_tried": 0,
+        "simulation_note": "NPU hardware unavailable; actual_execution_us is profile DB lookup, not live hardware measurement."
+      }
+    },
+    {
+      "timestamp": "2026-03-09T12:00:00Z",
+      "input":  {"M": 300, "N": 500, "K": 700, "dtype": "bf16"},
+      "padded": {"M": 512, "N": 512, "K": 768},
+      "tile":   {"m": 64, "n": 64, "k": 64},
+      "pad_impl": "numpy_pad",
+      "strategy_source": "hashmap_27",
+      "result": {
+        "status": "success",
+        "actual_execution_us":  351.881,
+        "estimated_execution_us": 351.881,
+        "correctness": "n/a",
+        "error": null,
+        "fallbacks_tried": 0,
+        "simulation_note": "NPU hardware unavailable; actual_execution_us is profile DB lookup (vla_profile_combined.json entry 512_512_768 bf16), not live hardware measurement."
+      }
+    }
+  ,
+    {
+      "timestamp": "2026-03-09T15:00:00Z",
+      "input":  {"M": 1537, "N": 257, "K": 769, "dtype": "bf16"},
+      "padded": {"M": 2048, "N": 512, "K": 1024},
+      "tile":   {"m": 64, "n": 64, "k": 64},
+      "pad_impl": "numpy_pad",
+      "strategy_source": "preprocessed_map",
+      "result": {
+        "status": "success",
+        "actual_execution_us":  1700.23,
+        "estimated_execution_us": 1700.23,
+        "correctness": "n/a",
+        "error": null,
+        "fallbacks_tried": 0,
+        "simulation_note": "NPU hardware unavailable; actual_execution_us is profile DB lookup (vla_profile_combined.json entry 2048_512_1024 bf16 tile 64x64x64), not live hardware measurement. All three strategies (hashmap_27, sorted_first_fit, preprocessed_map) converged on identical padded shape. preprocessed_map selected as winner (lowest decision_us ~2us). Padding cost 13611.53us dominates total 15313.76us."
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+╔══════════════════════════════════════════════════╗
+║  Agentic NPU — Run Complete                      ║
+╠══════════════════════════════════════════════════╣
+║  Input:    M=300  N=500  K=700  dtype=bf16       ║
+║  Padded:   M=512  N=512  K=768                   ║
+║  Tile:     m=64   n=64   k=64                    ║
+║  Strategy: hashmap_27                            ║
+╠══════════════════════════════════════════════════╣
+║  Estimated exec:  351.881µs                      ║
+║  Actual exec:     351.881µs  (0.00% error)       ║
+║    [SIMULATION — NPU not available; result       ║
+║     taken from vla_profile_combined.json]        ║
+║  Correctness:     n/a (simulation)               ║
+╠══════════════════════════════════════════════════╣
+║  Memory updated:  ✓ runs.json  ✓ session log     ║
+║  KB updated:      no          Error log: no      ║
+╚══════════════════════════════════════════════════╝

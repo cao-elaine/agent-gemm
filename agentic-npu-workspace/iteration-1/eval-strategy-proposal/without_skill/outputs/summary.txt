@@ -1,0 +1,111 @@
+GEMM NPU Strategy Proposal — Without Skill
+==========================================
+Input:  A=(300,700) @ B=(700,500) -> C=(300,500), dtype=bf16
+Date:   2026-03-09
+
+--- Step 1: Padding Analysis ---
+
+None of the input dimensions (M=300, N=500, K=700) are in the allowed NPU shape lists:
+
+  ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048]
+  ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048]
+  ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048]
+
+Padding is required. We select the smallest allowed value >= each dimension:
+  M=300 -> Mp=512  (256 < 300, so next is 512)
+  N=500 -> Np=512  (512 >= 500; 512 is the tightest fit)
+  K=700 -> Kp=768  (768 >= 700; 512 < 700 so 768 is next)
+
+Padded shape: (Mp=512, Np=512, Kp=768)
+
+Padding efficiency:
+  M: 300/512 = 58.6% utilized (41.4% waste — acceptable, no smaller allowed value)
+  N: 500/512 = 97.7% utilized (excellent)
+  K: 700/768 = 91.1% utilized (excellent)
+
+--- Step 2: Tile Selection ---
+
+Profile key "512_512_768" bf16 results from vla_profile_combined.json:
+
+  Working tiles and their avg NPU times:
+    (32, 32, 32)  ->  565.014 us
+    (32, 64, 32)  ->  442.555 us
+    (64, 64, 64)  ->  351.881 us   <-- BEST
+
+  Failing tiles:
+    (128, 128, 128)  -- resource exhaustion
+    (64, 128, 64)    -- fails for bf16 at this shape
+
+  Selected tile: (m=64, n=64, k=64)
+
+Divisibility verification:
+  Mp % m = 512 % 64 = 0  ✓
+  Np % n = 512 % 64 = 0  ✓
+  Kp % k = 768 % 64 = 0  ✓
+
+Number of tiles: (512/64) x (512/64) x (768/64) = 8 x 8 x 12 = 768 tiles
+
+--- Step 3: Padding Implementation ---
+
+Total elements to pad:
+  A_padded: 512 x 768 = 393,216 elements (original: 300 x 700 = 210,000)
+  B_padded: 768 x 512 = 393,216 elements (original: 700 x 500 = 350,000)
+  C_padded: 512 x 512 = 262,144 elements (original: 300 x 500 = 150,000)
+  Total:    1,048,576 elements
+
+The knowledge base threshold for switching from manual_copy to numpy_pad is
+~500,000 total elements. At 1,048,576 elements, numpy_pad is the appropriate
+choice. torch_pad would also be competitive but numpy_pad is the default for
+bf16 at this scale.
+
+Selected pad_impl: numpy_pad
+
+Estimated padding overhead: ~70 us (bf16 = 2 bytes/element; 1,048,576 * 2 = ~2MB
+memory transfer; typical numpy_pad throughput on host memory yields ~70 us).
+
+--- Step 4: Latency Estimate ---
+
+  NPU execution time (from profile):  351.881 us
+  Estimated padding overhead:         ~70.000 us
+  Estimated total:                    ~421.881 us
+
+Confidence: HIGH
+  - Exact profile entry exists for (512, 512, 768) bf16.
+  - Tile (64,64,64) is confirmed working in the profile.
+  - The padded shape is the minimum feasible shape; no smaller valid option exists.
+  - Padding overhead estimate is approximate; actual may vary ±30 us depending
+    on host memory bandwidth and cache state.
+
+--- Step 5: CLI Command ---
+
+python v2_test_mapping_large_gemm.py \
+  --M 512 --N 512 --K 768 \
+  --m 64  --n 64  --k 64 \
+  --dtype bf16 \
+  --use-padding \
+  --pad-M 512 --pad-N 512 --pad-K 768 \
+  --pad-impl numpy_pad
+
+--- Step 6: Alternative Strategies Considered ---
+
+1. Smaller padded shape: Not possible. Mp must be >= 300; next ALLOWED_M below
+   512 is 256, which is < 300. So Mp=512 is the minimum.
+
+2. Larger padded shape for a "faster" tile: The profile entry for (512, 512, 1024)
+   in bf16 would not be better — it pads K more (from 768 to 1024), increasing
+   both padding cost and NPU compute time.
+
+3. Different M padding: Could try Mp=1024 which allows tile (64,128,64) — but
+   that tile fails even at 512x512x768 for bf16, and the larger padded shape
+   would increase execution time substantially.
+
+4. Tile (32, 64, 32): Working but slower at 442.555 us vs 351.881 us for (64,64,64).
+
+--- Conclusion ---
+
+Recommended strategy:
+  Padded shape: (512, 512, 768)
+  Tile:         (64, 64, 64)
+  Pad impl:     numpy_pad
+  Est. NPU time: 351.881 us
+  Est. total:   ~422 us

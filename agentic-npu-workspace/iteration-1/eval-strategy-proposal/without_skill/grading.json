@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "The strategy JSON block is present and contains keys: input, padded, tile, pad_impl, strategy_source, estimated_execution_us, estimated_total_us, confidence",
+      "passed": true,
+      "evidence": "strategy.json has all required top-level keys. Notes field is an array rather than a string but all required keys are present."
+    },
+    {
+      "text": "The proposed padded M, N, K are each members of the respective ALLOWED lists",
+      "passed": true,
+      "evidence": "Mp=512 in ALLOWED_M, Np=512 in ALLOWED_N, Kp=768 in ALLOWED_K"
+    },
+    {
+      "text": "The padded dims are all >= the input dims (Mp >= 300, Np >= 500, Kp >= 700)",
+      "passed": true,
+      "evidence": "Mp=512>=300, Np=512>=500, Kp=768>=700 — all satisfied"
+    },
+    {
+      "text": "The tile (m, n, k) evenly divides the padded shape",
+      "passed": true,
+      "evidence": "512%64=0, 512%64=0, 768%64=0 — all exact"
+    },
+    {
+      "text": "Phase 4 writes or attempts to write to memory/gemm-data/runs.json",
+      "passed": false,
+      "evidence": "No Phase 4 executed — baseline has no skill workflow. No runs.json update."
+    },
+    {
+      "text": "A session log file is created or attempted in memory/sessions/",
+      "passed": false,
+      "evidence": "No session log created — baseline has no memory update phase."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.667
+  }
+}

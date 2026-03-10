@@ -1,0 +1,12 @@
+{
+  "input":  {"M": 1537, "N": 257, "K": 769, "dtype": "bf16"},
+  "padded": {"M": 2048, "N": 512, "K": 1024},
+  "tile":   {"m": 64,   "n": 64,  "k": 64},
+  "pad_impl": "numpy_pad",
+  "strategy_source": "preprocessed_map",
+  "estimated_execution_us": 1700.23,
+  "estimated_padding_us":   13611.53,
+  "estimated_total_us":     15313.76,
+  "confidence": "high",
+  "notes": "M=1537>1024 forces Mp=2048 (only feasible ALLOWED_M). N=257 pads to 512, K=769 pads to 1024. All three strategies (hashmap_27, sorted_first_fit, preprocessed_map) converge on the same padded shape (2048,512,1024) with bf16 best tile (64,64,64) at 1700.23us. preprocessed_map selected as winner due to lowest decision overhead (~2us vs ~15-25us). Padding cost dominates total latency (13611us >> 1700us execution). Elements padded = 3,670,016 > 500,000 threshold, so numpy_pad chosen over manual_copy."
+}

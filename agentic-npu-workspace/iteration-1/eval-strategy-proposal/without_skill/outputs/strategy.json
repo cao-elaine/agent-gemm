@@ -1,0 +1,37 @@
+{
+  "input": {
+    "M": 300,
+    "N": 500,
+    "K": 700,
+    "dtype": "bf16"
+  },
+  "padded": {
+    "M": 512,
+    "N": 512,
+    "K": 768
+  },
+  "tile": {
+    "m": 64,
+    "n": 64,
+    "k": 64
+  },
+  "pad_impl": "numpy_pad",
+  "strategy_source": "profile_lookup_512_512_768_bf16",
+  "estimated_execution_us": 351.881,
+  "estimated_total_us": 421.881,
+  "confidence": "high",
+  "notes": [
+    "M=300 padded to Mp=512 (next allowed value >= 300 in ALLOWED_M).",
+    "N=500 padded to Np=512 (next allowed value >= 500 in ALLOWED_N).",
+    "K=700 padded to Kp=768 (next allowed value >= 700 in ALLOWED_K).",
+    "Tile (64,64,64) is the best working tile for (512,512,768) bf16 from profile (351.881 us). Tile (64,128,64) fails for bf16 at this shape per profile Failing list.",
+    "Divisibility check: 512%64==0, 512%64==0, 768%64==0. All pass.",
+    "Total padded elements across A+B+C: 393216 + 393216 + 262144 = 1048576 > 500000 threshold -> numpy_pad selected over manual_copy.",
+    "Padding overhead estimated at ~70 us for numpy_pad on bf16 at this scale.",
+    "estimated_total_us = 351.881 (NPU execution) + ~70 (padding overhead) = ~421.881 us.",
+    "No exact profile entry for (300,500,700); using (512,512,768) as the minimum feasible padded shape.",
+    "Padding fractions: M 300->512 (70.7% utilization), N 500->512 (97.7%), K 700->768 (91.1%). N and K are efficient; M has notable waste (41.2% extra rows).",
+    "Alternative considered: Mp=256 is too small (256 < 300), so 512 is truly the minimum. No smaller option exists for M.",
+    "Strategy source: direct profile lookup (hashmap_27 equivalent) on key '512_512_768' with dtype 'bf16'."
+  ]
+}

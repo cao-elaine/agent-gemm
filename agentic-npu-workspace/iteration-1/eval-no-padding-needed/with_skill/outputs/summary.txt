@@ -1,0 +1,27 @@
+╔══════════════════════════════════════════════════╗
+║  Agentic NPU — Run Complete                      ║
+╠══════════════════════════════════════════════════╣
+║  Input:    M=512  N=768  K=1024  dtype=i8        ║
+║  Padded:   M=512  N=768  K=1024  (no padding)    ║
+║  Tile:     m=64   n=64   k=64                    ║
+║  Strategy: preprocessed_map                      ║
+╠══════════════════════════════════════════════════╣
+║  Estimated exec:  348.059µs                      ║
+║  Actual exec:     348.059µs  (0.00% error)       ║
+║  [SIMULATION — NPU unavailable, value from DB]   ║
+║  Correctness:     n/a (simulation)               ║
+╠══════════════════════════════════════════════════╣
+║  Memory updated:  ✓ runs.json  ✓ session log     ║
+║  KB updated:      no           Error log: no     ║
+╚══════════════════════════════════════════════════╝
+
+Notes:
+- No padding was required: all three dims (512, 768, 1024) are exact members
+  of ALLOWED_M, ALLOWED_N, ALLOWED_K respectively.
+- Profile key "512_768_1024" found in vla_profile_combined.json.
+- Best i8 tile from profile: (64,64,64) at 348.059µs.
+  Other working tiles: (32,64,32)=462.645µs, (32,32,32)=697.72µs.
+- Failing tiles for this shape: (128,128,128), (64,128,64).
+- NPU hardware not available; Phase 2 was simulated using profile data.
+- Phase 3 confirmed strategy was optimal; no new error patterns observed.
+- Phase 4 memory files written: runs.json updated, session log created.

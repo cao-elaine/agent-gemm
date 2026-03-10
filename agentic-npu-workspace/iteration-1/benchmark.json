@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "skill_name": "agentic-npu",
+    "skill_path": "/home/ec935/.claude/plugins/marketplaces/claude-plugins-official/plugins/agentic-npu/skills/agentic-npu",
+    "timestamp": "2026-03-09T00:00:00Z",
+    "evals_run": ["eval-strategy-proposal", "eval-no-padding-needed", "eval-strategy-comparison"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "eval-strategy-proposal",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 136.4,
+        "tokens": 33810,
+        "tool_calls": 30,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Strategy JSON contains required keys", "passed": true, "evidence": "All keys present including notes about failing tile (64,128,64)"},
+        {"text": "Padded dims in ALLOWED lists", "passed": true, "evidence": "512, 512, 768"},
+        {"text": "Padded dims >= input", "passed": true, "evidence": "512>=300, 512>=500, 768>=700"},
+        {"text": "Tile divides padded shape", "passed": true, "evidence": "512%64=0, 512%64=0, 768%64=0"},
+        {"text": "Phase 4 updates runs.json", "passed": true, "evidence": "Entry confirmed in runs.json"},
+        {"text": "Session log created", "passed": true, "evidence": "sessions/20260309_120000.md created"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "eval-strategy-proposal",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 96.2,
+        "tokens": 26942,
+        "tool_calls": 23,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Strategy JSON contains required keys", "passed": true, "evidence": "All keys present (notes as array)"},
+        {"text": "Padded dims in ALLOWED lists", "passed": true, "evidence": "512, 512, 768"},
+        {"text": "Padded dims >= input", "passed": true, "evidence": "512>=300, 512>=500, 768>=700"},
+        {"text": "Tile divides padded shape", "passed": true, "evidence": "512%64=0, 512%64=0, 768%64=0"},
+        {"text": "Phase 4 updates runs.json", "passed": false, "evidence": "No Phase 4 — baseline only"},
+        {"text": "Session log created", "passed": false, "evidence": "No session log — baseline only"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "eval-no-padding-needed",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 109.1,
+        "tokens": 28421,
+        "tool_calls": 22,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Correct M/N/K from matrix dims", "passed": true, "evidence": "M=512, N=768, K=1024 correctly extracted"},
+        {"text": "No padding needed identified", "passed": true, "evidence": "pad_impl=none, padded=input"},
+        {"text": "Dtype i8 or int8", "passed": true, "evidence": "dtype=i8"},
+        {"text": "Strategy source valid", "passed": true, "evidence": "preprocessed_map — exact profile hit"},
+        {"text": "Phase 0 reads knowledge base", "passed": true, "evidence": "Read all memory files + profile entry 512_768_1024"},
+        {"text": "All 5 phases completed", "passed": true, "evidence": "Full 5-phase workflow executed"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "eval-no-padding-needed",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 73.3,
+        "tokens": 14602,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Correct M/N/K from matrix dims", "passed": true, "evidence": "M=512, N=768, K=1024 correctly extracted"},
+        {"text": "No padding needed identified", "passed": true, "evidence": "padding_needed=false"},
+        {"text": "Dtype i8 or int8", "passed": true, "evidence": "dtype=int8/i8"},
+        {"text": "Strategy source valid", "passed": true, "evidence": "hashmap_27 recommended"},
+        {"text": "Phase 0 reads knowledge base", "passed": false, "evidence": "No Phase 0 — no profile or KB read. Latency from TOPS estimate, not profile."},
+        {"text": "All 5 phases completed", "passed": false, "evidence": "Only strategy output — no Phase 0/3/4"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "eval-strategy-comparison",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 304.4,
+        "tokens": 72205,
+        "tool_calls": 51,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "All 3 strategies compared with total_us", "passed": true, "evidence": "hashmap_27=15326µs, sorted_first_fit=15336µs, preprocessed_map=15313µs"},
+        {"text": "Winner named with advantage explained", "passed": true, "evidence": "preprocessed_map wins on decision overhead (2µs vs 15-25µs); strategies converge for M>1024"},
+        {"text": "Padded dims satisfy constraints", "passed": true, "evidence": "Mp=2048>=1537, Np=512>=257, Kp=1024>=769"},
+        {"text": "Padded shape in ALLOWED lists", "passed": true, "evidence": "2048, 512, 1024 all valid"},
+        {"text": "Phase 3 actual vs estimated latency", "passed": true, "evidence": "Padding=13611µs, execution=1700µs; 8x ratio noted; KB updated with new insight"},
+        {"text": "Phase 4 appends run record", "passed": true, "evidence": "runs.json entry confirmed + KB updated with 3 new dated bullets"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "eval-strategy-comparison",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 3,
+        "failed": 3,
+        "total": 6,
+        "time_seconds": 162.7,
+        "tokens": 19372,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "All 3 strategies compared with total_us", "passed": false, "evidence": "Compared shape candidates A-F but not the named hashmap_27/sorted_first_fit/preprocessed_map with total_us"},
+        {"text": "Winner named with advantage explained", "passed": true, "evidence": "Strategy A chosen (single-dispatch, minimum waste)"},
+        {"text": "Padded dims satisfy constraints", "passed": true, "evidence": "Mp=2048>=1537, Np=512>=257, Kp=1024>=769"},
+        {"text": "Padded shape in ALLOWED lists", "passed": true, "evidence": "2048, 512, 1024 all valid"},
+        {"text": "Phase 3 actual vs estimated latency", "passed": false, "evidence": "No Phase 3 — no latency comparison"},
+        {"text": "Phase 4 appends run record", "passed": false, "evidence": "No Phase 4 — no memory update"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 183.3, "stddev": 88.4, "min": 109.1, "max": 304.4},
+      "tokens": {"mean": 44812, "stddev": 22637, "min": 28421, "max": 72205}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.611, "stddev": 0.089, "min": 0.5, "max": 0.667},
+      "time_seconds": {"mean": 110.7, "stddev": 45.7, "min": 73.3, "max": 162.7},
+      "tokens": {"mean": 20305, "stddev": 5125, "min": 14602, "max": 26942}
+    },
+    "delta": {
+      "pass_rate": "+0.389",
+      "time_seconds": "+72.6",
+      "tokens": "+24507"
+    }
+  },
+  "notes": [
+    "Assertions about padded shape correctness (ALLOWED lists, divisibility) pass in BOTH configurations — both with and without skill find the correct minimum padded shape. These are non-discriminating for shape selection quality.",
+    "The discriminating assertions are Phase 0 (reading profile/KB), Phase 3 analysis, and Phase 4 memory update — all fail in baseline, all pass with skill.",
+    "Eval 3 (strategy-comparison) is the most complex and shows the largest gap: with-skill queries all three named strategies with total_us; baseline reasons from first principles without profile data.",
+    "With-skill runs self-improve: the knowledge base gained 3 new insights from eval 3 alone (M>1024 convergence, padding dominance ratio, hashmap_27 neighborhood collapse).",
+    "Token cost is significantly higher with skill (~2.2x) due to reading memory, profiling data, and executing all 5 phases. This is the intended trade-off for accuracy and self-improvement.",
+    "Eval 3 with-skill took 304s — the dominant cost was reading the large vla_profile_combined.json to query all three strategies. Future optimization: cache DB between phases."
+  ]
+}

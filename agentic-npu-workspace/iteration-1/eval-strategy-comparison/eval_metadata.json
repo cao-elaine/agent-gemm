@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "eval-strategy-comparison",
+  "prompt": "Run the agentic NPU workflow for M=1537, N=257, K=769 with bf16. I want to see the analysis of which strategy was best and why.",
+  "assertions": [
+    "All three strategies are queried and their estimated total_us values are compared",
+    "The winning strategy is named and its advantage explained",
+    "The padded dims satisfy Mp >= 1537, Np >= 257, Kp >= 769",
+    "The final padded shape (Mp, Np, Kp) are each from their respective ALLOWED lists",
+    "Phase 3 analysis mentions actual vs estimated latency comparison",
+    "Phase 4 appends a run record or explains it could not write"
+  ]
+}

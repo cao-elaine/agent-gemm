@@ -1,0 +1,68 @@
+{
+  "problem": {
+    "A_shape": [512, 1024],
+    "B_shape": [1024, 768],
+    "C_shape": [512, 768],
+    "M": 512,
+    "N": 768,
+    "K": 1024,
+    "dtype": "int8",
+    "dtype_key": "i8"
+  },
+  "padding": {
+    "Mp": 512,
+    "Np": 768,
+    "Kp": 1024,
+    "padding_needed": false,
+    "pad_M": 0,
+    "pad_N": 0,
+    "pad_K": 0,
+    "total_padded_elements": 0,
+    "pad_method": "none"
+  },
+  "tiling": {
+    "m": 64,
+    "n": 64,
+    "k": 64,
+    "tiles_M": 8,
+    "tiles_N": 12,
+    "tiles_K": 16,
+    "total_tiles": 1536,
+    "divisibility_check": {
+      "Mp_mod_m": 0,
+      "Np_mod_n": 0,
+      "Kp_mod_k": 0,
+      "valid": true
+    }
+  },
+  "allo_call": {
+    "Mp": 512,
+    "Np": 768,
+    "Kp": 1024,
+    "tiles_M": 8,
+    "tiles_N": 12,
+    "tiles_K": 16,
+    "TyI": "int8",
+    "TyO": "int8",
+    "example": "GEMM(512, 768, 1024, 8, 12, 16, int8, int8)"
+  },
+  "performance_estimate": {
+    "total_multiply_add_ops": 805306368,
+    "total_flops_equivalent": 805306368,
+    "npu_peak_int8_tops": 2.0,
+    "theoretical_compute_ms": 0.40,
+    "estimated_latency_ms_with_overhead": 1.2,
+    "latency_range_ms": [0.8, 2.0],
+    "notes": "Estimate assumes ~2 TOPS int8 on AMD Ryzen AI NPU. No padding overhead since all dims are exact NPU-allowed values."
+  },
+  "strategy_selection": {
+    "recommended_strategy": "hashmap_27",
+    "rationale": "M=512, N=768, K=1024 are all medium-sized dims and all land exactly on profiled allowed values. hashmap_27 uses the 3-nearest-larger candidates per dimension and picks the fastest — ideal for this case where all three dims are exactly in the allowed set.",
+    "alternative": "preprocessed_map"
+  },
+  "allowed_values": {
+    "ALLOWED_M": [32, 64, 128, 256, 512, 1024, 2048],
+    "ALLOWED_N": [32, 64, 128, 256, 512, 768, 1024, 2048],
+    "ALLOWED_K": [32, 64, 128, 256, 512, 768, 1024, 2048]
+  }
+}

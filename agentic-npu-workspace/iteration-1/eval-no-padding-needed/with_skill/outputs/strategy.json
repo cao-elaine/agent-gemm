@@ -1,0 +1,12 @@
+{
+  "input":  {"M": 512, "N": 768, "K": 1024, "dtype": "i8"},
+  "padded": {"M": 512, "N": 768, "K": 1024},
+  "tile":   {"m": 64,  "n": 64,  "k": 64},
+  "pad_impl": "none",
+  "strategy_source": "preprocessed_map",
+  "estimated_execution_us": 348.059,
+  "estimated_padding_us":   0.0,
+  "estimated_total_us":     348.059,
+  "confidence": "high",
+  "notes": "M=512, N=768, K=1024 are all exact members of ALLOWED_M/N/K — no padding required. Exact profile hit at key '512_768_1024' in vla_profile_combined.json. Best i8 tile is (64,64,64) at 348.059us; (32,32,32) is 2x slower at 697.72us and (32,64,32) is 462.645us. Tile (64,64,64) divides (512,768,1024) evenly (512/64=8, 768/64=12, 1024/64=16). Strategy source is preprocessed_map because the shape exists exactly in the profile DB, giving sub-microsecond decision time."
+}

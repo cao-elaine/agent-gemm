@@ -1,0 +1,48 @@
+╔══════════════════════════════════════════════════╗
+║  Agentic NPU — Run Complete                      ║
+╠══════════════════════════════════════════════════╣
+║  Input:    M=1537  N=257  K=769  dtype=bf16      ║
+║  Padded:   M=2048  N=512  K=1024                 ║
+║  Tile:     m=64    n=64   k=64                   ║
+║  Strategy: preprocessed_map                      ║
+╠══════════════════════════════════════════════════╣
+║  Estimated exec:  1700.23µs                      ║
+║  Actual exec:     1700.23µs (SIMULATION — 0.0%)  ║
+║  Correctness:     n/a (NPU not available)        ║
+╠══════════════════════════════════════════════════╣
+║  Memory updated:  ✓ runs.json  ✓ session log     ║
+║  KB updated:      yes          Error log: no     ║
+╚══════════════════════════════════════════════════╝
+
+STRATEGY COMPARISON SUMMARY
+============================
+All three strategies chose identical padded shape (2048,512,1024) and tile (64,64,64).
+Winner is preprocessed_map due to lowest decision overhead.
+
+  hashmap_27        total_us = 15,326.76 µs  (decision ~15µs, 6 candidates)
+  sorted_first_fit  total_us = 15,336.76 µs  (decision ~25µs, ~420+ candidates)
+  preprocessed_map  total_us = 15,313.76 µs  (decision ~2µs,  1 candidate)  ← WINNER
+
+HARDWARE NOTE: NPU was unavailable. Phase 2 was simulated using profile data.
+Actual execution time reported is the profiled bf16 average for shape (2048,512,1024)
+with tile (64,64,64) from vla_profile_combined.json.
+
+WHY preprocessed_map WON:
+  preprocessed_map uses O(1) precomputed lookup — decision overhead is ~2µs.
+  hashmap_27 evaluates 6 cross-product candidates — ~15µs.
+  sorted_first_fit scans ~420+ entries before finding a feasible shape — ~25µs.
+  For this input, all strategies reach the same answer; the margin is purely
+  algorithmic overhead. In single-shot use, the difference is imperceptible
+  (~23µs across a ~15,313µs total). In tight loops or real-time routing,
+  preprocessed_map's O(1) property becomes meaningful.
+
+WHY THE PADDED SHAPE WAS OPTIMAL:
+  M=1537 > 1024 → only Mp=2048 is valid (no smaller ALLOWED_M satisfies Mp>=1537).
+  N=257  > 256  → minimum Np=512.
+  K=769  > 768  → minimum Kp=1024.
+  The system found the tightest legal padded shape automatically. No smaller
+  feasible shape exists, so no optimization was left on the table.
+
+DOMINANT COST: padding (13,611µs) >> execution (1,700µs).
+  Padding ratio: 8.0x the NPU execution time.
+  Future work: explore torch_pad for potential speedup vs numpy_pad for bf16.

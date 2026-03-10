@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "The agent correctly identifies M=512, N=768, K=1024 from the matrix dimensions described",
+      "passed": true,
+      "evidence": "strategy.json correctly sets M=512, N=768, K=1024 derived from A[512x1024] x B[1024x768]"
+    },
+    {
+      "text": "The strategy correctly identifies that no padding is needed (all dims already in ALLOWED lists)",
+      "passed": true,
+      "evidence": "strategy.json sets padding_needed=false, pad_impl=none, all padded dims equal input dims"
+    },
+    {
+      "text": "The strategy block includes dtype: i8 or int8",
+      "passed": true,
+      "evidence": "dtype set to 'int8' and dtype_key 'i8' in strategy.json"
+    },
+    {
+      "text": "The strategy source is one of: hashmap_27, sorted_first_fit, preprocessed_map, fallback",
+      "passed": true,
+      "evidence": "strategy_selection.recommended_strategy = 'hashmap_27'"
+    },
+    {
+      "text": "Phase 0 reads from the knowledge base and profiling data",
+      "passed": false,
+      "evidence": "No Phase 0 in baseline — did not read knowledge base or profiling data. Latency estimate is analytic (2 TOPS assumption) rather than from actual profile."
+    },
+    {
+      "text": "The agent completes all 5 phases or explains clearly why a phase was skipped",
+      "passed": false,
+      "evidence": "Baseline has no phase structure — only produced strategy.json and summary.txt, no analysis or memory update phases."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.667
+  }
+}

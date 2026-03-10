@@ -1,0 +1,83 @@
+{
+  "problem": {
+    "M": 1537,
+    "N": 257,
+    "K": 769,
+    "dtype": "bf16",
+    "bytes_per_element": 2
+  },
+  "constraints": {
+    "ALLOWED_M": [32, 64, 128, 256, 512, 1024, 2048],
+    "ALLOWED_N": [32, 64, 128, 256, 512, 768, 1024, 2048],
+    "ALLOWED_K": [32, 64, 128, 256, 512, 768, 1024, 2048]
+  },
+  "best_strategy": {
+    "name": "Strategy A: Minimum-M, Minimum-K Padding with Maximum Tile",
+    "padded_shape": {
+      "Mp": 2048,
+      "Np": 512,
+      "Kp": 1024
+    },
+    "tile": {
+      "tile_m": 2048,
+      "tile_n": 512,
+      "tile_k": 1024
+    },
+    "metrics": {
+      "num_tiles": 1,
+      "tiles_breakdown": {"tiles_m": 1, "tiles_n": 1, "tiles_k": 1},
+      "useful_ops": 605985842,
+      "total_ops": 2147483648,
+      "waste_ops_pct": 254.4,
+      "pad_elements_A": {"original": 1181153, "padded": 2097152, "overhead_pct": 77.5},
+      "pad_elements_B": {"original": 197633, "padded": 524288, "overhead_pct": 165.3},
+      "pad_elements_C": {"original": 394769, "padded": 1048576, "overhead_pct": 165.6},
+      "tile_ops": 2147483648,
+      "tile_memory_bytes": 7340032,
+      "arithmetic_intensity_ops_per_byte": 292.6,
+      "dispatch_overhead": "minimal (1 tile dispatch)",
+      "npu_utilization": "high (single large kernel fills NPU compute array)"
+    },
+    "rationale": "With M=1537, the smallest valid Mp is 2048 (the only ALLOWED_M value >= 1537). With N=257, the smallest valid Np is 512 (since 256 < 257 and 512 is the next ALLOWED_N value >= 257). With K=769, the smallest valid Kp is 1024 (since 768 < 769 and 1024 is the next ALLOWED_K value >= 769). Using the maximum possible tile (2048, 512, 1024) achieves: (1) exactly 1 tile dispatch minimizing kernel launch overhead, (2) maximum arithmetic intensity of 292.6 ops/byte keeping NPU compute units saturated, (3) minimum padding by choosing the smallest valid padded shapes in each dimension."
+  },
+  "alternative_strategies_considered": [
+    {
+      "name": "Strategy B: Larger Np=768",
+      "padded_shape": {"Mp": 2048, "Np": 768, "Kp": 1024},
+      "best_tile": {"tile_m": 2048, "tile_n": 768, "tile_k": 1024},
+      "num_tiles": 1,
+      "waste_ops_pct": 431.6,
+      "arithmetic_intensity": 316.0,
+      "verdict": "REJECTED: Higher padding waste (431.6% vs 254.4%) outweighs marginal arithmetic intensity gain. N=257 pads to 768 wastes nearly 3x more N-dimension compute."
+    },
+    {
+      "name": "Strategy C: Smaller tiles within A (tile_m=1024)",
+      "padded_shape": {"Mp": 2048, "Np": 512, "Kp": 1024},
+      "best_tile": {"tile_m": 1024, "tile_n": 512, "tile_k": 1024},
+      "num_tiles": 2,
+      "waste_ops_pct": 254.4,
+      "arithmetic_intensity": 204.8,
+      "verdict": "REJECTED: Same padded shape as Strategy A but 2x tile dispatches and lower arithmetic intensity (204.8 vs 292.6). No benefit."
+    },
+    {
+      "name": "Strategy D: Smaller K tile within A (tile_k=512)",
+      "padded_shape": {"Mp": 2048, "Np": 512, "Kp": 1024},
+      "best_tile": {"tile_m": 2048, "tile_n": 512, "tile_k": 512},
+      "num_tiles": 2,
+      "waste_ops_pct": 254.4,
+      "arithmetic_intensity": 204.8,
+      "verdict": "REJECTED: Same padded shape but 2x K-direction tiles, lower arithmetic intensity."
+    },
+    {
+      "name": "Strategy E: Larger Kp=1536",
+      "padded_shape": {"Mp": 2048, "Np": 512, "Kp": 1536},
+      "best_tile": {"tile_m": 2048, "tile_n": 512, "tile_k": 768},
+      "num_tiles": 2,
+      "waste_ops_pct": 381.3,
+      "arithmetic_intensity": 219.4,
+      "verdict": "REJECTED: More padding waste than Strategy A (381.3% vs 254.4%) and 2 tiles required."
+    }
+  ],
+  "winner": "Strategy A",
+  "winner_key_insight": "Mp=2048 is forced (only option >= 1537). The real tradeoffs are in N and K. For N=257, Np=512 is strictly better than Np=768 because it wastes less than half the N-padding compute. For K=769, Kp=1024 is the minimum valid choice. Using the maximum tile (2048,512,1024) achieves a single-dispatch, high-intensity kernel execution."
+}

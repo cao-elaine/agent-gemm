@@ -1,0 +1,12 @@
+{
+  "input":  {"M": 300, "N": 500, "K": 700, "dtype": "bf16"},
+  "padded": {"M": 512, "N": 512, "K": 768},
+  "tile":   {"m": 64,  "n": 64,  "k": 64},
+  "pad_impl": "numpy_pad",
+  "strategy_source": "hashmap_27",
+  "estimated_execution_us": 351.881,
+  "estimated_padding_us":   800.0,
+  "estimated_total_us":     1156.881,
+  "confidence": "high",
+  "notes": "M=300->512 (next ALLOWED_M >= 300), N=500->512 (next ALLOWED_N >= 500), K=700->768 (next ALLOWED_K >= 700). Profile entry '512_512_768' bf16 found; best tile (64,64,64) @ 351.881us confirmed working. Total padding elements = 512*768 + 768*512 + 512*512 = 1,048,576 >= 500,000 threshold, so numpy_pad selected over manual_copy. hashmap_27 chosen as it reliably handles interior-of-grid shapes. Note: tile (64,128,64) is listed as Failing for bf16 at this shape, confirming (64,64,64) is the correct optimal tile."
+}

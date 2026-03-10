@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "All three strategies are queried and their estimated total_us values are compared",
+      "passed": false,
+      "evidence": "Baseline compared multiple padded shape candidates (strategies A-F) but did not use the named hashmap_27/sorted_first_fit/preprocessed_map strategies. No total_us values were computed using the analytic padding model."
+    },
+    {
+      "text": "The winning strategy is named and its advantage explained",
+      "passed": true,
+      "evidence": "Strategy A (2048,512,1024) with single-dispatch tile selected; advantage explained as minimum padding waste and maximum utilization with one kernel dispatch"
+    },
+    {
+      "text": "The padded dims satisfy Mp >= 1537, Np >= 257, Kp >= 769",
+      "passed": true,
+      "evidence": "Mp=2048>=1537, Np=512>=257, Kp=1024>=769 — all satisfied"
+    },
+    {
+      "text": "The final padded shape (Mp, Np, Kp) are each from their respective ALLOWED lists",
+      "passed": true,
+      "evidence": "Mp=2048 in ALLOWED_M, Np=512 in ALLOWED_N, Kp=1024 in ALLOWED_K"
+    },
+    {
+      "text": "Phase 3 analysis mentions actual vs estimated latency comparison",
+      "passed": false,
+      "evidence": "No Phase 3 in baseline — no actual vs estimated comparison. Performance estimate based on theoretical TOPS calculation, not profile data."
+    },
+    {
+      "text": "Phase 4 appends a run record or explains it could not write",
+      "passed": false,
+      "evidence": "No Phase 4 — no memory update attempted."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 3,
+    "total": 6,
+    "pass_rate": 0.5
+  }
+}
