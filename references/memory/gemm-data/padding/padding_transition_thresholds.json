@@ -1,0 +1,29 @@
+{
+  "feature": "ab_elements",
+  "dtype_thresholds": {
+    "i8": {
+      "num_samples": 1018,
+      "small_strategy": "manual_copy",
+      "large_strategy": "numpy_pad",
+      "threshold": 1653750,
+      "avg_chosen_us": 19.87707121807464,
+      "avg_regret_us": 0.5024852652259333
+    },
+    "i16": {
+      "num_samples": 1018,
+      "small_strategy": "manual_copy",
+      "large_strategy": "numpy_pad",
+      "threshold": 1213000,
+      "avg_chosen_us": 41.420062377210144,
+      "avg_regret_us": 0.7708683693516697
+    },
+    "bf16": {
+      "num_samples": 1018,
+      "small_strategy": "manual_copy",
+      "large_strategy": "numpy_pad",
+      "threshold": 571779,
+      "avg_chosen_us": 99.87063703339882,
+      "avg_regret_us": 8.403154223968565
+    }
+  }
+}
