@@ -101,4 +101,87 @@ Maintained by the agentic NPU optimizer. New entries appended by Phase 4.
 
 ## Entries added by agent runs
 
-(none yet — will be appended as sessions run)
+### [2026-03-19] Small-tile compilation failures: program memory overflow from high stage counts
+
+- **Trigger**: tiles with very small values (m=16, n=16) on medium-to-large shapes, causing total pipeline stage count (M//m × N//n × K//k) to exceed ~256
+- **Error**: Manifests as a clang++ invocation visible at the start of stderr — full MLIR-AIE compilation failure
+- **Root cause**: the AIE program memory is fixed; when the total tile count is very large, the generated pipeline program overflows it. `[AIE ERROR] _XAie_LoadProgMemSection():231: Overflow of program memory` is the typical sub-cause.
+- **Fix**: avoid tiles where m=16 or n=16 on shapes ≥ 256 in any dimension. Prefer m,n ≥ 32 on medium shapes and m,n ≥ 64 on large shapes.
+- **Confirmed examples** (2026-03-19 exploration session):
+  - (256,256,256) i8 tile=(16,16,64): M//m×N//n×K//k = 16×16×4 = 1024 stages → failed
+  - (256,256,256) i8 tile=(16,32,32): 16×8×8 = 1024 stages → failed
+  - (512,256,512) i8 tile=(16,16,64): 32×16×8 = 4096 stages → failed
+  - (512,512,256) bf16 tile=(16,16,64): 32×32×4 = 4096 stages → failed
+  - (128,128,128) bf16 tile=(32,16,16): 4×8×8 = 256 stages → failed (smallest confirmed failing count)
+  - Contrast: (512,512,512) i16 tile=(32,128,64): 16×4×8 = 512 stages → PASSED; (64,64,64): 8×8×8 = 512 stages → PASSED
+
+### [2026-03-19] AssertionError — new confirmed examples: N=768 n=128 on 1024-sized shapes
+
+- **Shape**: (1024, 768, 768) and (1024, 768, 1024), dtype=i8 (also expected for i16/bf16)
+- **Failing tiles**: (32,128,128), (128,128,32), (16,128,128), (32,128,64), (64,128,32), (128,128,16) — all have n=128 on Np=768 → N//n = 6 (not power of 2)
+- **Pattern**: n=128 on Np=768 gives N//n=6; confirmed to fail with `AssertionError: Unresolvable mapping from X logical nodes to 16 physical nodes`
+- **Safe alternatives**: n=32 (N//n=24) and n=64 (N//n=12) both work on N=768 — non-power-of-2 quotients are acceptable for N//n as long as n ≠ 128
+
+### [2026-03-13] CDOError: k=16 on K=768 for bf16
+
+- **Shape**: (1024, 768, 768), dtype=bf16
+- **Tiles**: (64,64,16), (32,64,16), (32,32,16) — all failed with `ValueError: Failed to generate cdo`
+- **Pattern**: K=768 with k=16 → 48 k-tiles. CDO generation fails — not solely a k=2048 issue.
+- **Confirmed CDO-safe tiles**: k=32 or k=64 on K=768 with bf16 work if the tile passes memory constraints.
+
+### [2026-03-13] bf16 accuracy failures on (1024,768,768): tile-dependent
+
+- **Shape**: (1024, 768, 768), dtype=bf16
+- **Failing tiles (accuracy)**: (128,64,32), (128,32,32), (64,32,32) — execution completes but correctness check fails (atol=1e-1).
+- **Passing tiles**: (64,32,64), (128,32,64), (32,32,32), (64,64,64), (32,64,32), (32,32,64), (64,64,32) all pass.
+- **Pattern**: Tiles with very small k (k=32) combined with larger m seem more prone to bf16 accuracy failures on this shape. Tiles with k≥64 were more reliable.
+
+### [2026-03-20] bf16 CDO failure confirmed for K=3072 across all tile sizes
+
+- **Shape**: M=1024, K=3072, N=768 (padded K=3072), dtype=bf16
+- **All tiles tried**: (64,64,64), (64,64,32), (32,32,32) — all fail with `ValueError: Failed to generate cdo`
+- **Pattern**: K=3072 is beyond the bf16 CDO limit (previously documented for K=2048; now confirmed extends to K=3072)
+- **Fix**: bf16 with K>2048 is unsupported on this hardware configuration; avoid or use i8/i16 instead
+
+### [2026-03-20] bf16 accuracy failure on K-dominated shapes with very small M×N
+
+- **Shapes**: M=1, K=960, N=32 padded to (32,1024,32); M=50, K=960, N=96 padded to (64,1024,128)
+- **Pattern**: When M and N are very small (M≤50, N≤128) but K is large (K≥960), bf16 accumulation accuracy degrades beyond atol=1e-1 tolerance across ALL tile sizes
+- **Hypothesis**: floating point accumulation error grows with K; at K=960–1024 with small output matrices, the rounding errors exceed the bfloat16 tolerance
+- **Fix**: no known tile workaround; consider i8 or i16 for shapes with K>>M, K>>N
+
+### [2026-03-20] bf16 accuracy failure on K=2560 (K > 2048)
+
+- **Shape**: M=128, K=2560, N=960 (no padding possible, K=2560 exceeds ALLOWED_K max), dtype=bf16
+- **Pattern**: K=2560 causes bf16 accuracy failure for all tested tiles (64,64,64) and (32,32,32)
+- **Fix**: consistent with K>2048 accuracy boundary for bf16; use i8/i16 or restructure computation
+
+### [2026-03-21] bf16 accuracy failure on (1024,768,3072): all tiles fail accuracy, no CDO error
+
+- **Shape**: M=1024, K=3072, N=768 (padded (1024,768,3072)), dtype=bf16
+- **Pattern**: Most tiles that fit in memory complete execution but produce incorrect results (AccuracyFail). Very large-stage tiles (stages>20K) timeout (MemoryExceeded). CDOError does NOT appear for all tiles — some compile and execute but fail numerically.
+- **Prior entry** (2026-03-20) said "all fail with CDO" — this was based on 3 tiles. With 30 tiles tested: 13 AccuracyFail, 17 MemoryExceeded, 0 CDOError, 0 passes.
+- **Correction**: K=3072 bf16 fails accuracy (not CDO) for tiles that compile successfully. CDO failures only occur for very small-k tiles on K=768; at K=3072 the CDO can compile but results are numerically wrong.
+- **Confirmed examples** (session 2026-03-21): (32,64,128) AccuracyFail 3965µs, (64,32,128) AccuracyFail 3972µs, (16,64,128) AccuracyFail 6356µs, (32,32,128) AccuracyFail 5185µs
+
+### [2026-03-21] bf16 accuracy failure on (128,1024,1024) and (128,512,1024): K=1024 with K>>M
+
+- **Shapes**: (128,1024,1024) padded from (M=128,K=960,N=960); (128,512,1024) padded from (M=128,K=960,N=320)
+- **Pattern**: Tiles with k≤64 consistently fail accuracy. Tiles with k≥128 tend to pass. Tiles with n=128 frequently fail accuracy even with k=64.
+- **Confirmed passing tiles on (128,1024,1024)**: (32,64,128), (16,64,128), (32,16,256), (32,32,128), (16,16,256), (16,32,128), (32,16,128), (16,16,128) — all have k≥128
+- **Confirmed passing tiles on (128,512,1024)**: (32,64,128), (16,64,128), (32,16,256), (32,32,128), (16,32,256), (32,16,128), (16,16,128), (32,64,64), (16,64,64) — mix of k=64 and k≥128
+- **Pattern**: bf16 accuracy on K=1024 shapes requires k≥64; smaller k values accumulate rounding error beyond atol=1e-1
+
+### [2026-03-21] bf16 accuracy failure on (128,1024,3072): K=3072 all tiles fail
+
+- **Shape**: (128,1024,3072) padded from (M=128,K=2560,N=960), dtype=bf16
+- **All 36 tiles tested**: all fail with AccuracyFail. Best avg measured was ~313µs but all numerically incorrect.
+- **Pattern**: Consistent with K>2048 accuracy boundary for bf16 across all shapes and tile sizes
+
+### [2026-03-21] bf16 accuracy failure on (128,3072,1024): large Np + Kp=1024 all tiles fail
+
+- **Shape**: (128,3072,1024) padded from (M=128,K=960,N=2560), dtype=bf16
+- **Tiles tried**: (32,64,128), (32,64,256), (32,64,512), (32,64,1024), (64,64,64), (32,32,32) — all fail with AccuracyError
+- **Pattern**: Even with k≥128 (which works on other Kp=1024 shapes), the combination of Np=3072 (N=2560 padded) with K=960 and M=128 causes bf16 accuracy failure
+- **Hypothesis**: The very large N dimension (3072) changes the accumulation behavior such that even per-row errors accumulate beyond atol=1e-1
+- **Fix**: No tile workaround found; use i8/i16 for (M=128, K=960, N=2560) bf16 workloads

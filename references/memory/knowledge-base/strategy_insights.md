@@ -64,6 +64,20 @@ Maintained by the agentic NPU optimizer.
   on very large shapes but the gap is small (~2%). Default to (64,64,64)
   when there is no profile hit.
 
+- **[2026-03-21] bf16 memory constraint prevents tiles that win on i8.** The
+  tile memory budget is 32,256 bytes. bf16 uses 2 bytes/element vs i8's 1 byte,
+  so the effective tile element budget is halved. Tiles like (128,64,64) that
+  beat (64,64,64) by -11.9% on i8 for shape (1024,768,768) require
+  (128×64 + 64×64 + 64×128)×2 = 40,960 bytes — exceeding the bf16 limit.
+  For bf16, (64,64,64) is often the largest tile that fits, making it the
+  practical optimum even when larger tiles would be faster if they fit.
+
+- **[2026-03-21] Small shapes (M≤64) always tie regardless of tile or strategy.**
+  The NPU has a fixed launch overhead of ~157µs. For shapes where M≤64, all
+  execution times cluster in the 120–170µs range regardless of tile choice.
+  Tile selection has no measurable effect here. Do not waste trial runs
+  comparing strategies for M≤64 shapes — the result will always be a tie.
+
 - **Shapes with Np < 128 (padded N = 32 or 64) frequently only support (32,32,32).**
   Larger tiles fail divisibility checks on small N values. If the padded shape has
   N ≤ 64, immediately fall back to (32,32,32) and skip larger tile attempts.
@@ -204,3 +218,59 @@ Maintained by the agentic NPU optimizer.
   candidate (2048), reducing the 27-candidate cross-product to at most 1×3×2=6
   candidates. The strategy still works correctly but loses its main advantage
   (broad neighborhood search).
+
+- [2026-03-21] **Tile divisibility filter is too strict for Np=768 and Np=3072.**
+  The power-of-2 quotient rule (Dp//t must be a power of 2) is generally correct
+  but empirically fails for Np=768 and Np=3072 — both dimensions are multiples of
+  3×2^k, so no standard tile gives a power-of-2 quotient, yet tiles like (64,64,64)
+  pass on both. For these two N values, only divisibility (Np % n == 0) is required.
+  Applying the strict filter leaves these shapes almost entirely unexplored.
+
+- [2026-03-13] **CDO errors extend beyond K=2048 for bf16**: k=16 on K=768 (48 k-tiles)
+  triggers `ValueError: Failed to generate cdo` for bf16. The CDO failure boundary
+  is not solely K=2048 — avoid small k values (k≤16) on large K dimensions with bf16.
+  k=32 and k=64 on K=768 are CDO-safe.
+
+- [2026-03-13] **bf16 accuracy is tile-dependent on large shapes**: On (1024,768,768),
+  tiles (128,64,32), (128,32,32), (64,32,32) produced incorrect results (atol=1e-1
+  violation) while (64,32,64) and (128,32,64) passed. Tiles with k≥64 appear more
+  reliable for bf16 accuracy on K=768. Avoid tiles with k=32 combined with large m on
+  large K bf16 shapes unless specifically validated.
+
+- [2026-03-19] **Tiles with m=16 or n=16 frequently fail on medium/large shapes.** When total pipeline stage count (M//m × N//n × K//k) exceeds ~256, AIE program memory overflows. On shapes ≥256 in any dim, avoid m=16 or n=16. Prefer m,n ≥ 32 on 256-512 shapes and m,n ≥ 64 on 1024+ shapes. Confirmed across 19 failures this session — all involved m=16 or n=16 on shapes ≥128.
+
+- [2026-03-19] **Major speedup on (1024,768,768) i8: tile (128,64,64) beats (64,64,64) by -11.9%.** Prior best was (64,64,64) @ 445.9µs; new best is (128,64,64) @ 393µs. For shapes where Np=768, n=64 is safe (N//n=12 works despite not being power of 2), and larger m (m=128) gives significant improvement. This refutes the assumption that (64,64,64) is optimal for all 1024-class shapes with non-standard N.
+
+- [2026-03-19] **For (512,512,256) bf16, tile (64,128,32) beats (64,64,64) by -2.2%.** Prior best (64,64,64) @ 225.6µs; new best (64,128,32) @ 220.6µs. Asymmetric n=128 tile wins over symmetric tile for this shape — consistent with the general heuristic that n=128 tiles tend to outperform symmetric tiles on large N shapes.
+
+- [2026-03-19] **For (64,64,128) i8, tile (64,32,32) beats (64,64,64) by -1.6%.** Prior best (64,64,64) @ 122.8µs; new best (64,32,32) @ 120.8µs. Asymmetric tile with smaller n and k shows marginal gain on this K-dominated shape (Kp=128 vs Mp=Np=64).
+
+- [2026-03-19] **For (128,128,64) i16, tile (32,64,16) beats (32,32,32) by -0.7%.** Prior best (32,32,32) @ 126.7µs; new best (32,64,16) @ 125.9µs. Larger n with small k produces marginal gain.
+
+- [2026-03-13] **Asymmetric tiles with reduced k (k=32, k=64) on K-dominated shapes**:
+  On (128,128,768)/i8, tiles with reduced k (e.g. (64,32,64), (128,32,64)) perform
+  competitively with the standard (64,64,64) tile. (64,32,64)=139.9µs vs
+  (64,64,64)=139.3µs — essentially identical. The (128,32,128) tile also performs
+  well at 162µs. For K-dominated shapes, exploring varied k-tile sizes is worthwhile.
+
+- [2026-03-20] **bf16 accuracy degrades on K-dominated shapes with very small M×N (M≤50, N≤128, K≥960).** Confirmed across shapes (1,960,32) padded to (32,1024,32) and (50,960,96) padded to (64,1024,128) — all tile sizes fail accuracy check (atol=1e-1). No tile workaround found. These shapes should use i8/i16 dtype instead of bf16.
+
+- [2026-03-20] **K>2048 is a hard bf16 limit for both CDO generation and numerical accuracy.** K=3072 fails CDO for all tile sizes. K=2560 passes CDO but fails accuracy. Combined with prior observations (K=2048 CDO failure), the practical bf16 K-limit appears to be K≤2048 for CDO safety and K≤768 for accuracy safety on very small output matrices.
+
+- [2026-03-20] **Shapes (M=1024, N=3072, K=768) and (M=128, N=2560, K=960) run successfully without padding when passed directly to the NPU.** N=3072 and N=2560 are not in the script ALLOWED_N list (max 2048), but the underlying GEMM module accepts them as long as N%n==0. The ALLOWED lists in the script only gate the `--use-padding` path. When no padding is needed (dimensions already cleanly divide by tile), raw out-of-range values can be passed directly.
+
+- [2026-03-20] **For SmolVLA bf16 workloads, the most reliable tile across all 13 successful shapes was (64,64,64) for large shapes (M≥128, any K, any N) and (32,32,32) or (32,64,32) for small shapes (M≤64).** The profiling-recommended tiles sometimes failed accuracy on live runs for shapes with K≥960 and small M/N; (64,64,64) was more robust in practice for the large shapes.
+
+- [2026-03-21] **bf16 accuracy on K=1024 shapes requires k≥128 for reliable correctness.** Across 8 passing tiles on (128,1024,1024) (from M=128,K=960,N=960) and 9 passing tiles on (128,512,1024) (from M=128,K=960,N=320), tiles with k=16 or k=32 consistently fail accuracy; tiles with k≥64 mostly pass on the (512,1024) shape and tiles with k≥128 pass reliably on both. Best tile on (128,1024,1024): (32,64,128) at 343µs. Best tile on (128,512,1024): (32,64,128) at 239µs. The pattern: larger k reduces accumulation error over many K-tiles.
+
+- [2026-03-21] **K=3072 for bf16 causes accuracy failure (not CDO failure) for tiles that compile.** Revised from prior entry: initial testing of 3 tiles on (1024,768,3072) reported CDOError; full testing of 30 tiles shows 13 AccuracyFail + 17 MemoryExceeded + 0 passes. CDO generation succeeds for k≥32 tiles; the failure mode is numerical — bf16 accumulation over 3072/k K-tiles produces unacceptably large error. K>2048 is a hard accuracy limit for bf16 regardless of whether CDO compilation succeeds.
+
+- [2026-03-21] **For small SmolVLA shapes (M≤64, K≤256, N≤1024), bf16 accuracy is reliable across nearly all tile sizes.** Shapes (64,128,32), (64,128,256), (64,256,128), (64,1024,128) showed 100% pass rate (43/43 tiles). Shape (64,128,1024) showed 4/10 passing — failures occur for k≤64. This confirms the k-threshold rule: for K≤256, all k values work; for K=1024, k≥128 is required.
+
+- [2026-03-21] **On (1024,768,768) bf16, (64,64,64) is the best tile at 762µs avg / 723µs min, beating (32,64,64) at 1056µs by 28%.** CDO failures appear for tiles with k=16 on Kp=768 (CDOError confirmed for 5 tiles: (128,64,16), (256,32,16), (128,32,16), (64,32,16), (16,64,16)). Accuracy failures for tiles with very small k combined with small n (e.g. (64,64,32), (32,32,32), (32,64,32), (16,64,32)) — consistent with prior observations on this shape.
+
+- [2026-03-21] **For (128,128,512) bf16, best tile is (32,32,128) at 145µs, followed closely by (32,32,32) at 147µs.** All 17 tested tiles pass except 2 AccuracyFail ((16,16,64) and (32,16,16)). Pattern: tiles with very small m×n product (m=16,n=16 or m=32,n=16 on small K) fail accuracy — likely due to reduced accumulation precision per tile.
+
+- [2026-03-21] **SmolVLA bf16 experiment: bf16 accuracy on Kp=1024 shapes consistently requires k≥128.** Live 5-trial run across 13 SmolVLA shapes confirmed that tiles with k<128 fail accuracy on shapes padded to Kp=1024 (M=128,K=960,N=960 → (128,1024,1024) and M=128,K=960,N=320 → (128,512,1024)). The agentic strategy using (32,64,128) passed all 5 trials on both shapes; baseline (profiling-recommended) tiles (64,64,64) and (32,64,32) failed all accuracy checks. Profiling data updated: (128,1024,1024) and (128,512,1024) bf16 best tile changed to (32,64,128).
+
+- [2026-03-21] **Shape (128,3072,1024) bf16 fails accuracy for all tile sizes including k≥128.** Live testing of (128,3072,1024) padded from (M=128,K=960,N=2560): tiles (32,64,128), (32,64,256), (32,64,512), (32,64,1024) all fail accuracy. Pattern: when N is very large (Np=3072) combined with K=1024 and small M=128, bf16 accumulation error exceeds tolerance across all k values. This may be specific to extremely unbalanced N-dominated shapes with K=1024.

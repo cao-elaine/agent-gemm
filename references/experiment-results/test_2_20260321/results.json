@@ -1,0 +1,1394 @@
+{
+  "experiment": "smolvla_bf16_n20260321",
+  "date": "2026-03-21",
+  "dtype": "bf16",
+  "trials_per_group": 5,
+  "shapes_total": 17,
+  "prescreened_skips": 4,
+  "shapes_run": 13,
+  "shapes": [
+    {
+      "id": 1,
+      "M": 1024,
+      "K": 768,
+      "N": 768,
+      "layers": "VE:q/k/v/out/patch",
+      "status": "ran",
+      "padded": [
+        1024,
+        768,
+        768
+      ],
+      "pad_impl": "none",
+      "baseline": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 806.315,
+            "npu_min_us": 726,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 758.929,
+            "npu_min_us": 727,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 760.598,
+            "npu_min_us": 719,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 757.417,
+            "npu_min_us": 714,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 754.68,
+            "npu_min_us": 722,
+            "padding_us": 0
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 767.6
+      },
+      "agentic": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 749.549,
+            "npu_min_us": 726,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 754.308,
+            "npu_min_us": 723,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 766.005,
+            "npu_min_us": 724,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 753.178,
+            "npu_min_us": 718,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 773.964,
+            "npu_min_us": 720,
+            "padding_us": 0
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 759.4
+      },
+      "winner": "tie",
+      "delta_us": -8.2,
+      "delta_pct": -1.07
+    },
+    {
+      "id": 2,
+      "M": 1024,
+      "K": 768,
+      "N": 3072,
+      "layers": "VE:mlp.fc1",
+      "status": "ran",
+      "padded": [
+        1024,
+        3072,
+        768
+      ],
+      "pad_impl": "none",
+      "baseline": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 2908.78,
+            "npu_min_us": 2555,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2879.84,
+            "npu_min_us": 2547,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2950.08,
+            "npu_min_us": 2604,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2950.91,
+            "npu_min_us": 2616,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2926.62,
+            "npu_min_us": 2575,
+            "padding_us": 0
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 2923.2
+      },
+      "agentic": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 2918.36,
+            "npu_min_us": 2573,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2941.71,
+            "npu_min_us": 2575,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2930.25,
+            "npu_min_us": 2579,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2929.72,
+            "npu_min_us": 2566,
+            "padding_us": 0
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 2938.31,
+            "npu_min_us": 2595,
+            "padding_us": 0
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 2931.7
+      },
+      "winner": "tie",
+      "delta_us": 8.5,
+      "delta_pct": 0.29
+    },
+    {
+      "id": 3,
+      "M": 128,
+      "K": 960,
+      "N": 960,
+      "layers": "TL:q/o_proj",
+      "status": "ran",
+      "padded": [
+        128,
+        1024,
+        1024
+      ],
+      "pad_impl": "numpy_pad",
+      "baseline": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "notes": "All fallback tiles (64,64,64),(32,32,32),(16,32,32) fail bf16 accuracy on Kp=1024",
+        "trials": [
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          }
+        ],
+        "passes": 0,
+        "mean_npu_avg_us": null
+      },
+      "agentic": {
+        "tile": [
+          32,
+          64,
+          128
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 349.803,
+            "npu_min_us": 324,
+            "padding_us": 948.874
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 347.866,
+            "npu_min_us": 321,
+            "padding_us": 860.014
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 348.055,
+            "npu_min_us": 321,
+            "padding_us": 1316.196
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 352.846,
+            "npu_min_us": 322,
+            "padding_us": 892.907
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 349.687,
+            "npu_min_us": 322,
+            "padding_us": 939.026
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 349.7
+      },
+      "winner": "agentic",
+      "delta_us": null,
+      "delta_pct": null,
+      "winner_reason": "baseline 0 passes, agentic 5 passes"
+    },
+    {
+      "id": 4,
+      "M": 128,
+      "K": 960,
+      "N": 320,
+      "layers": "TL:k/v_proj",
+      "status": "ran",
+      "padded": [
+        128,
+        512,
+        1024
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          64,
+          32
+        ],
+        "notes": "All fallback tiles fail bf16 accuracy on Kp=1024",
+        "trials": [
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              32
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              32
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              32
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              32
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              32
+            ]
+          }
+        ],
+        "passes": 0,
+        "mean_npu_avg_us": null
+      },
+      "agentic": {
+        "tile": [
+          32,
+          64,
+          128
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 238.658,
+            "npu_min_us": 209,
+            "padding_us": 671.152
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 236.663,
+            "npu_min_us": 217,
+            "padding_us": 688.336
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 239.95,
+            "npu_min_us": 216,
+            "padding_us": 672.736
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 237.77,
+            "npu_min_us": 215,
+            "padding_us": 683.666
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 240.829,
+            "npu_min_us": 214,
+            "padding_us": 667.035
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 238.8
+      },
+      "winner": "agentic",
+      "delta_us": null,
+      "delta_pct": null,
+      "winner_reason": "baseline 0 passes, agentic 5 passes"
+    },
+    {
+      "id": 5,
+      "M": 128,
+      "K": 960,
+      "N": 2560,
+      "layers": "TL:gate/up_proj",
+      "status": "ran",
+      "padded": [
+        128,
+        3072,
+        1024
+      ],
+      "pad_impl": "numpy_pad",
+      "baseline": {
+        "tile": [
+          64,
+          64,
+          64
+        ],
+        "notes": "All tiles fail accuracy on (128,3072,1024)",
+        "trials": [
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              64,
+              64,
+              64
+            ]
+          }
+        ],
+        "passes": 0,
+        "mean_npu_avg_us": null
+      },
+      "agentic": {
+        "tile": [
+          32,
+          64,
+          128
+        ],
+        "notes": "Also tried k=256,512,1024 \u2014 all fail accuracy on (128,3072,1024)",
+        "trials": [
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              128
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              128
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              128
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              128
+            ]
+          },
+          {
+            "status": "failed",
+            "error": "AccuracyError",
+            "tile_tried": [
+              32,
+              64,
+              128
+            ]
+          }
+        ],
+        "passes": 0,
+        "mean_npu_avg_us": null
+      },
+      "winner": "inconclusive",
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "id": 6,
+      "M": 128,
+      "K": 320,
+      "N": 96,
+      "layers": "AE:k/v_proj",
+      "status": "ran",
+      "padded": [
+        128,
+        128,
+        512
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 145.252,
+            "npu_min_us": 128,
+            "padding_us": 24.547
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 149.813,
+            "npu_min_us": 131,
+            "padding_us": 24.147
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 150.009,
+            "npu_min_us": 126,
+            "padding_us": 23.475
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 148.053,
+            "npu_min_us": 126,
+            "padding_us": 24.567
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 149.469,
+            "npu_min_us": 128,
+            "padding_us": 24.036
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 148.5
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 148.8,
+            "npu_min_us": 126,
+            "padding_us": 24.507
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 146.399,
+            "npu_min_us": 128,
+            "padding_us": 24.808
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 146.044,
+            "npu_min_us": 126,
+            "padding_us": 25.108
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 151.178,
+            "npu_min_us": 129,
+            "padding_us": 26.11
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 150.371,
+            "npu_min_us": 125,
+            "padding_us": 24.577
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 148.6
+      },
+      "winner": "tie",
+      "delta_us": 0.1,
+      "delta_pct": 0.07
+    },
+    {
+      "id": 7,
+      "M": 50,
+      "K": 96,
+      "N": 960,
+      "layers": "AE:o_proj",
+      "status": "ran",
+      "padded": [
+        64,
+        1024,
+        128
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          64,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 166.04,
+            "npu_min_us": 146,
+            "padding_us": 24.026
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 167.076,
+            "npu_min_us": 145,
+            "padding_us": 25.699
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 167.169,
+            "npu_min_us": 143,
+            "padding_us": 26.11
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 165.579,
+            "npu_min_us": 142,
+            "padding_us": 25.639
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 167.541,
+            "npu_min_us": 144,
+            "padding_us": 25.078
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 166.7
+      },
+      "agentic": {
+        "tile": [
+          32,
+          64,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 167.105,
+            "npu_min_us": 148,
+            "padding_us": 24.537
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 167.66,
+            "npu_min_us": 144,
+            "padding_us": 25.959
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 166.66,
+            "npu_min_us": 147,
+            "padding_us": 25.179
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 166.133,
+            "npu_min_us": 149,
+            "padding_us": 32.352
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 164.16,
+            "npu_min_us": 145,
+            "padding_us": 25.669
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 166.3
+      },
+      "winner": "tie",
+      "delta_us": -0.4,
+      "delta_pct": -0.24
+    },
+    {
+      "id": 8,
+      "M": 50,
+      "K": 96,
+      "N": 256,
+      "layers": "AE:gate/up_proj",
+      "status": "ran",
+      "padded": [
+        64,
+        256,
+        128
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          64,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 131.79,
+            "npu_min_us": 111,
+            "padding_us": 18.656
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 135.66,
+            "npu_min_us": 110,
+            "padding_us": 19.767
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 132.587,
+            "npu_min_us": 117,
+            "padding_us": 34.155
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 135.566,
+            "npu_min_us": 115,
+            "padding_us": 20.359
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 135.709,
+            "npu_min_us": 117,
+            "padding_us": 34.717
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 134.3
+      },
+      "agentic": {
+        "tile": [
+          32,
+          64,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 132.117,
+            "npu_min_us": 116,
+            "padding_us": 23.234
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.417,
+            "npu_min_us": 112,
+            "padding_us": 20.068
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 133.499,
+            "npu_min_us": 114,
+            "padding_us": 34.967
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 132.531,
+            "npu_min_us": 112,
+            "padding_us": 23.345
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 137.561,
+            "npu_min_us": 114,
+            "padding_us": 18.796
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 133.2
+      },
+      "winner": "tie",
+      "delta_us": -1.1,
+      "delta_pct": -0.82
+    },
+    {
+      "id": 9,
+      "M": 50,
+      "K": 256,
+      "N": 96,
+      "layers": "AE:down_proj",
+      "status": "ran",
+      "padded": [
+        64,
+        128,
+        256
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 130.1,
+            "npu_min_us": 114,
+            "padding_us": 19.828
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.795,
+            "npu_min_us": 106,
+            "padding_us": 23.715
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 127.683,
+            "npu_min_us": 110,
+            "padding_us": 24.277
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 132.019,
+            "npu_min_us": 112,
+            "padding_us": 25.208
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.884,
+            "npu_min_us": 106,
+            "padding_us": 34.426
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 130.3
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 130.712,
+            "npu_min_us": 112,
+            "padding_us": 19.577
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 128.86,
+            "npu_min_us": 107,
+            "padding_us": 35.067
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.565,
+            "npu_min_us": 114,
+            "padding_us": 20.058
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.398,
+            "npu_min_us": 110,
+            "padding_us": 19.667
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 128.923,
+            "npu_min_us": 111,
+            "padding_us": 34.536
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 129.9
+      },
+      "winner": "tie",
+      "delta_us": -0.4,
+      "delta_pct": -0.31
+    },
+    {
+      "id": 10,
+      "M": 50,
+      "K": 32,
+      "N": 96,
+      "layers": "Proj:action_in_proj",
+      "status": "ran",
+      "padded": [
+        64,
+        128,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 128.793,
+            "npu_min_us": 110,
+            "padding_us": 28.624
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.293,
+            "npu_min_us": 110,
+            "padding_us": 29.727
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 132.017,
+            "npu_min_us": 107,
+            "padding_us": 29.386
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 128.567,
+            "npu_min_us": 113,
+            "padding_us": 37.221
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.277,
+            "npu_min_us": 110,
+            "padding_us": 28.845
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 130.0
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 128.921,
+            "npu_min_us": 112,
+            "padding_us": 28.714
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.987,
+            "npu_min_us": 114,
+            "padding_us": 16.401
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 131.23,
+            "npu_min_us": 111,
+            "padding_us": 29.226
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 126.711,
+            "npu_min_us": 114,
+            "padding_us": 17.383
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.652,
+            "npu_min_us": 111,
+            "padding_us": 28.354
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 129.7
+      },
+      "winner": "tie",
+      "delta_us": -0.3,
+      "delta_pct": -0.23
+    },
+    {
+      "id": 11,
+      "M": 50,
+      "K": 96,
+      "N": 32,
+      "layers": "Proj:action_out_proj",
+      "status": "ran",
+      "padded": [
+        64,
+        32,
+        128
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 127.051,
+            "npu_min_us": 108,
+            "padding_us": 29.336
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 125.605,
+            "npu_min_us": 106,
+            "padding_us": 28.775
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 122.083,
+            "npu_min_us": 106,
+            "padding_us": 17.233
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 123.393,
+            "npu_min_us": 103,
+            "padding_us": 29.837
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 125.907,
+            "npu_min_us": 105,
+            "padding_us": 30.338
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 124.8
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 125.962,
+            "npu_min_us": 105,
+            "padding_us": 29.707
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 122.913,
+            "npu_min_us": 106,
+            "padding_us": 20.299
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 122.03,
+            "npu_min_us": 105,
+            "padding_us": 37.111
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 123.433,
+            "npu_min_us": 101,
+            "padding_us": 29.036
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 124.915,
+            "npu_min_us": 108,
+            "padding_us": 29.106
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 123.9
+      },
+      "winner": "tie",
+      "delta_us": -0.9,
+      "delta_pct": -0.72
+    },
+    {
+      "id": 12,
+      "M": 1,
+      "K": 192,
+      "N": 96,
+      "layers": "Proj:time_mlp_in",
+      "status": "ran",
+      "padded": [
+        32,
+        128,
+        256
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 127.095,
+            "npu_min_us": 108,
+            "padding_us": 19.116
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 131.848,
+            "npu_min_us": 112,
+            "padding_us": 22.623
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 128.013,
+            "npu_min_us": 111,
+            "padding_us": 34.185
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 126.957,
+            "npu_min_us": 110,
+            "padding_us": 21.05
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.896,
+            "npu_min_us": 110,
+            "padding_us": 20.659
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 128.9
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 128.007,
+            "npu_min_us": 108,
+            "padding_us": 20.82
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 131.574,
+            "npu_min_us": 109,
+            "padding_us": 20.158
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 126.897,
+            "npu_min_us": 110,
+            "padding_us": 33.744
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 125.224,
+            "npu_min_us": 110,
+            "padding_us": 23.575
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.232,
+            "npu_min_us": 112,
+            "padding_us": 20.499
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 128.4
+      },
+      "winner": "tie",
+      "delta_us": -0.5,
+      "delta_pct": -0.39
+    },
+    {
+      "id": 13,
+      "M": 1,
+      "K": 96,
+      "N": 96,
+      "layers": "Proj:time_mlp_out",
+      "status": "ran",
+      "padded": [
+        32,
+        128,
+        128
+      ],
+      "pad_impl": "manual_copy",
+      "baseline": {
+        "tile": [
+          32,
+          32,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 128.309,
+            "npu_min_us": 110,
+            "padding_us": 30.298
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.08,
+            "npu_min_us": 110,
+            "padding_us": 34.025
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 127.385,
+            "npu_min_us": 109,
+            "padding_us": 33.514
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 131.284,
+            "npu_min_us": 112,
+            "padding_us": 20.78
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 129.724,
+            "npu_min_us": 111,
+            "padding_us": 31.089
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 129.4
+      },
+      "agentic": {
+        "tile": [
+          32,
+          32,
+          64
+        ],
+        "trials": [
+          {
+            "status": "passed",
+            "npu_avg_us": 130.492,
+            "npu_min_us": 109,
+            "padding_us": 31.561
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 129.595,
+            "npu_min_us": 109,
+            "padding_us": 30.578
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 128.667,
+            "npu_min_us": 106,
+            "padding_us": 23.745
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 130.794,
+            "npu_min_us": 110,
+            "padding_us": 19.387
+          },
+          {
+            "status": "passed",
+            "npu_avg_us": 131.251,
+            "npu_min_us": 111,
+            "padding_us": 17.083
+          }
+        ],
+        "passes": 5,
+        "mean_npu_avg_us": 130.2
+      },
+      "winner": "tie",
+      "delta_us": 0.8,
+      "delta_pct": 0.62
+    }
+  ],
+  "prescreened": [
+    {
+      "M": 1024,
+      "K": 3072,
+      "N": 768,
+      "reason": "bf16_K_limit",
+      "layers": "VE:mlp.fc2"
+    },
+    {
+      "M": 128,
+      "K": 2560,
+      "N": 960,
+      "reason": "bf16_K_limit",
+      "layers": "TL:down_proj"
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 96,
+      "reason": "bf16_accuracy_small_MN_large_K",
+      "layers": "AE:q_proj"
+    },
+    {
+      "M": 1,
+      "K": 960,
+      "N": 32,
+      "reason": "bf16_accuracy_small_MN_large_K",
+      "layers": "Proj:state_proj"
+    }
+  ]
+}

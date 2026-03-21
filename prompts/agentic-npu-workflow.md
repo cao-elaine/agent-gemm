@@ -1,17 +1,26 @@
+/gemm-npu-optimizer
+
 # Agentic NPU Workflow — Master Prompt
 
 Step-by-step instructions for the agentic NPU GEMM optimization agent.
 Copy this file into a Claude Code session, fill in the input block, and run.
+
+**Execution mode: fully autonomous.** Execute all four phases end-to-end without
+pausing, asking for confirmation, or requesting permissions at any point. Every
+file read, Bash command, and file write in this workflow is pre-authorised. Do not
+stop between phases. Do not ask the user to approve the strategy, the tile, the
+CLI command, or any memory update. If a decision is ambiguous, apply the rules in
+this document and proceed.
 
 ---
 
 ## Input (fill in before running)
 
 ```
-M     = <M>
-N     = <N>
-K     = <K>
-dtype = <dtype>   # one of: i8, i16, bf16
+M     = 1999
+N     = 2043
+K     = 1777
+dtype = i8
 ```
 
 ---
@@ -185,7 +194,7 @@ Fallback plan:
 ========================
 ```
 
-Proceed automatically to Phase 2 without asking for confirmation.
+Proceed automatically to Phase 2. Do not pause, summarise, or ask for confirmation.
 
 ---
 
@@ -211,7 +220,7 @@ os.environ["ENABLE_AGGRESSIVE_PORT_UTILIZATION_PATCH"] = "1"
 
 ### 2.2 Run
 
-Execute via CLI:
+Execute via CLI immediately — do not ask for permission to run the command:
 
 ```bash
 python v2_test_mapping_large_gemm.py \
@@ -350,7 +359,7 @@ New error patterns:
 
 ## Phase 4 — Update memory
 
-Perform ALL of the following updates. Do not skip any step.
+Perform ALL of the following updates without asking for confirmation. Do not skip any step.
 
 ### 4.1 Append to runs log
 

@@ -146,6 +146,27 @@
         "fallbacks_tried": 0,
         "note": "Repeat run. Avg (3602µs) is 6.5% BELOW profile estimate — contrast with prior run avg (5149µs, +33.6%). Min (3323µs) stable vs prior run (3339µs, 0.5% diff). Confirms: avg is load-dependent and unreliable; min is stable at ~13-14% below profile."
       }
+
+    }
+  ,
+    {
+      "timestamp": "2026-03-13T00:00:00Z",
+      "input":  {"M": 1999, "N": 2043, "K": 1777, "dtype": "i8"},
+      "padded": {"M": 2048, "N": 2048, "K": 2048},
+      "tile":   [64, 128, 64],
+      "pad_impl": "numpy_pad",
+      "strategy_source": "preprocessed_map",
+      "result": {
+        "status": "passed",
+        "npu_execution_us": 3740.19,
+        "npu_min_us": 3338.0,
+        "estimated_npu_us": 3854.46,
+        "padding_us": 3204.118,
+        "correctness": true,
+        "error_message": null,
+        "fallbacks_tried": 0,
+        "note": "M>1024 forced Mp=2048; all strategies converged. Profile tile (64,128,64) used — ~33% faster than (64,64,64). Avg NPU 2.97% below profile estimate; min NPU 13.4% below profile (consistent with known pattern). Padding (numpy_pad) 3204µs = 86% of NPU time — unavoidable structural cost for this input size."
+      }
     }
   ]
 }

@@ -1,0 +1,127 @@
+{
+  "description": "Unique GEMM shapes from SmolVLA requiring NPU execution. Derived from smolvla_gemm_sizes.md using B=1, L=128, C=50, S_conn=64. Shapes where any dimension exceeds 4000 (modality_projection K=12288, lm_head N=49280) are excluded. embed_tokens is excluded as it is a row-gather (not a GEMM). Each entry lists all model layers that map to the same (M, K, N) triple.",
+  "parameters": {
+    "B": 1,
+    "L": 128,
+    "C": 50,
+    "S_conn": 64
+  },
+  "excluded": [
+    { "reason": "K > 4000", "layer": "modality_projection", "M": 64,  "K": 12288, "N": 960  },
+    { "reason": "N > 4000", "layer": "lm_head",             "M": 128, "K": 960,   "N": 49280 },
+    { "reason": "not a GEMM (row-gather)", "layer": "embed_tokens", "M": 128, "K": 960, "N": 49280 }
+  ],
+  "shapes": [
+    {
+      "M": 1024, "K": 768, "N": 768,
+      "layers": [
+        { "section": "Vision Encoder", "name": "q_proj" },
+        { "section": "Vision Encoder", "name": "k_proj" },
+        { "section": "Vision Encoder", "name": "v_proj" },
+        { "section": "Vision Encoder", "name": "out_proj" },
+        { "section": "Vision Encoder", "name": "patch_embedding" }
+      ]
+    },
+    {
+      "M": 1024, "K": 768, "N": 3072,
+      "layers": [
+        { "section": "Vision Encoder", "name": "mlp.fc1" }
+      ]
+    },
+    {
+      "M": 1024, "K": 3072, "N": 768,
+      "layers": [
+        { "section": "Vision Encoder", "name": "mlp.fc2" }
+      ]
+    },
+    {
+      "M": 128, "K": 960, "N": 960,
+      "layers": [
+        { "section": "Text Layers (x16)", "name": "q_proj" },
+        { "section": "Text Layers (x16)", "name": "o_proj" }
+      ]
+    },
+    {
+      "M": 128, "K": 960, "N": 320,
+      "layers": [
+        { "section": "Text Layers (x16)", "name": "k_proj" },
+        { "section": "Text Layers (x16)", "name": "v_proj" }
+      ]
+    },
+    {
+      "M": 128, "K": 960, "N": 2560,
+      "layers": [
+        { "section": "Text Layers (x16)", "name": "gate_proj" },
+        { "section": "Text Layers (x16)", "name": "up_proj" }
+      ]
+    },
+    {
+      "M": 128, "K": 2560, "N": 960,
+      "layers": [
+        { "section": "Text Layers (x16)", "name": "down_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 960, "N": 96,
+      "layers": [
+        { "section": "Action Expert (x16)", "name": "q_proj" }
+      ]
+    },
+    {
+      "M": 128, "K": 320, "N": 96,
+      "layers": [
+        { "section": "Action Expert (x16)", "name": "k_proj" },
+        { "section": "Action Expert (x16)", "name": "v_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 96, "N": 960,
+      "layers": [
+        { "section": "Action Expert (x16)", "name": "o_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 96, "N": 256,
+      "layers": [
+        { "section": "Action Expert (x16)", "name": "gate_proj" },
+        { "section": "Action Expert (x16)", "name": "up_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 256, "N": 96,
+      "layers": [
+        { "section": "Action Expert (x16)", "name": "down_proj" }
+      ]
+    },
+    {
+      "M": 1, "K": 960, "N": 32,
+      "layers": [
+        { "section": "Projections", "name": "state_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 32, "N": 96,
+      "layers": [
+        { "section": "Projections", "name": "action_in_proj" }
+      ]
+    },
+    {
+      "M": 50, "K": 96, "N": 32,
+      "layers": [
+        { "section": "Projections", "name": "action_out_proj" }
+      ]
+    },
+    {
+      "M": 1, "K": 192, "N": 96,
+      "layers": [
+        { "section": "Projections", "name": "action_time_mlp_in" }
+      ]
+    },
+    {
+      "M": 1, "K": 96, "N": 96,
+      "layers": [
+        { "section": "Projections", "name": "action_time_mlp_out" }
+      ]
+    }
+  ]
+}

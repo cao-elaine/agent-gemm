@@ -1,0 +1,1602 @@
+{
+  "experiment": "test_n_20260320",
+  "date": "2026-03-20",
+  "dtype": "bf16",
+  "npu_available": true,
+  "shapes": [
+    {
+      "shape_idx": 1,
+      "M": 1024,
+      "K": 768,
+      "N": 768,
+      "Mp": 1024,
+      "Kp": 768,
+      "Np": 768,
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "pad_impl": "none",
+      "needs_padding": false,
+      "baseline_trials": [
+        {
+          "avg": 760.242,
+          "min": 720,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 756.126,
+          "min": 721,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 770.498,
+          "min": 724,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 764.449,
+          "min": 724,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 759.478,
+          "min": 722,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 758.734,
+          "min": 720,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 755.442,
+          "min": 719,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 760.619,
+          "min": 725,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 747.242,
+          "min": 722,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 755.396,
+          "min": 727,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 762.16,
+      "baseline_mean_npu_min": 722.2,
+      "baseline_mean_pad": 0.0,
+      "agentic_mean_npu_avg": 755.49,
+      "agentic_mean_npu_min": 722.6,
+      "agentic_mean_pad": 0.0,
+      "delta_us": -6.67,
+      "delta_pct": -0.88,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 2,
+      "M": 1024,
+      "K": 768,
+      "N": 3072,
+      "Mp": 1024,
+      "Kp": 768,
+      "Np": 3072,
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "pad_impl": "none",
+      "needs_padding": false,
+      "note": "N=3072 exceeds script ALLOWED_N but works without padding",
+      "baseline_trials": [
+        {
+          "avg": 2922.53,
+          "min": 2566,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2895.38,
+          "min": 2587,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2767.85,
+          "min": 2583,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2856.98,
+          "min": 2566,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2912.76,
+          "min": 2585,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 2919.51,
+          "min": 2567,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2833.64,
+          "min": 2558,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2922.23,
+          "min": 2565,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2868.56,
+          "min": 2560,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 2841.61,
+          "min": 2567,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 2871.1,
+      "baseline_mean_npu_min": 2577.4,
+      "baseline_mean_pad": 0.0,
+      "agentic_mean_npu_avg": 2877.11,
+      "agentic_mean_npu_min": 2563.4,
+      "agentic_mean_pad": 0.0,
+      "delta_us": 6.01,
+      "delta_pct": 0.21,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 3,
+      "M": 1024,
+      "K": 3072,
+      "N": 768,
+      "Mp": null,
+      "Kp": null,
+      "Np": null,
+      "tile": null,
+      "pad_impl": "none",
+      "needs_padding": false,
+      "note": "K=3072 exceeds bf16 CDO limit; all trials failed CDOError",
+      "baseline_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "CDOError: K=3072 exceeds bf16 CDO limit"
+        }
+      ],
+      "baseline_pass_count": 0,
+      "agentic_pass_count": 0,
+      "baseline_mean_npu_avg": null,
+      "baseline_mean_npu_min": null,
+      "baseline_mean_pad": null,
+      "agentic_mean_npu_avg": null,
+      "agentic_mean_npu_min": null,
+      "agentic_mean_pad": null,
+      "winner": "N/A",
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "shape_idx": 4,
+      "M": 128,
+      "K": 960,
+      "N": 960,
+      "Mp": 128,
+      "Kp": 1024,
+      "Np": 1024,
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "pad_impl": "numpy_pad",
+      "needs_padding": true,
+      "note": "Profiling recommended (32,64,32) but (64,64,64) was used (accuracy verified)",
+      "baseline_trials": [
+        {
+          "avg": 353.754,
+          "min": 327,
+          "pad": 839.694,
+          "status": "passed"
+        },
+        {
+          "avg": 359.172,
+          "min": 326,
+          "pad": 855.084,
+          "status": "passed"
+        },
+        {
+          "avg": 349.046,
+          "min": 327,
+          "pad": 857.458,
+          "status": "passed"
+        },
+        {
+          "avg": 350.108,
+          "min": 322,
+          "pad": 859.992,
+          "status": "passed"
+        },
+        {
+          "avg": 351.382,
+          "min": 323,
+          "pad": 822.19,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 348.878,
+          "min": 319,
+          "pad": 854.753,
+          "status": "passed"
+        },
+        {
+          "avg": 350.594,
+          "min": 329,
+          "pad": 812.672,
+          "status": "passed"
+        },
+        {
+          "avg": 349.89,
+          "min": 326,
+          "pad": 859.151,
+          "status": "passed"
+        },
+        {
+          "avg": 350.014,
+          "min": 326,
+          "pad": 862.077,
+          "status": "passed"
+        },
+        {
+          "avg": 354.649,
+          "min": 323,
+          "pad": 843.882,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 352.69,
+      "baseline_mean_npu_min": 325.0,
+      "baseline_mean_pad": 846.88,
+      "agentic_mean_npu_avg": 350.81,
+      "agentic_mean_npu_min": 324.6,
+      "agentic_mean_pad": 846.51,
+      "delta_us": -1.88,
+      "delta_pct": -0.53,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 5,
+      "M": 128,
+      "K": 960,
+      "N": 320,
+      "Mp": 128,
+      "Kp": 1024,
+      "Np": 512,
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "note": "Profiling (32,64,32) failed accuracy; fallback to (64,64,64)",
+      "baseline_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: (32,64,32) failed bf16 correctness"
+        },
+        {
+          "avg": 241.303,
+          "min": 216,
+          "pad": 296.025,
+          "status": "passed"
+        },
+        {
+          "avg": 243.122,
+          "min": 216,
+          "pad": 286.557,
+          "status": "passed"
+        },
+        {
+          "avg": 240.479,
+          "min": 218,
+          "pad": 282.54,
+          "status": "passed"
+        },
+        {
+          "avg": 241.932,
+          "min": 220,
+          "pad": 286.026,
+          "status": "passed"
+        },
+        {
+          "avg": 242.381,
+          "min": 220,
+          "pad": 293.971,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 241.341,
+          "min": 220,
+          "pad": 282.78,
+          "status": "passed"
+        },
+        {
+          "avg": 243.999,
+          "min": 221,
+          "pad": 605.496,
+          "status": "passed"
+        },
+        {
+          "avg": 241.985,
+          "min": 214,
+          "pad": 289.753,
+          "status": "passed"
+        },
+        {
+          "avg": 241.39,
+          "min": 220,
+          "pad": 312.767,
+          "status": "passed"
+        },
+        {
+          "avg": 241.705,
+          "min": 215,
+          "pad": 285.365,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 241.84,
+      "baseline_mean_npu_min": 218.0,
+      "baseline_mean_pad": 289.02,
+      "agentic_mean_npu_avg": 242.08,
+      "agentic_mean_npu_min": 218.0,
+      "agentic_mean_pad": 355.23,
+      "delta_us": 0.24,
+      "delta_pct": 0.1,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 6,
+      "M": 128,
+      "K": 960,
+      "N": 2560,
+      "Mp": 128,
+      "Kp": 960,
+      "Np": 2560,
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "pad_impl": "none",
+      "needs_padding": false,
+      "note": "N=2560 exceeds script ALLOWED_N but works without padding directly",
+      "baseline_trials": [
+        {
+          "avg": 655.41,
+          "min": 621,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 658.534,
+          "min": 621,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 661.787,
+          "min": 624,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 660.829,
+          "min": 624,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 660.157,
+          "min": 621,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 659.397,
+          "min": 623,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 653.653,
+          "min": 621,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 664.177,
+          "min": 618,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 655.0,
+          "min": 622,
+          "pad": 0,
+          "status": "passed"
+        },
+        {
+          "avg": 654.981,
+          "min": 620,
+          "pad": 0,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 659.34,
+      "baseline_mean_npu_min": 622.2,
+      "baseline_mean_pad": 0.0,
+      "agentic_mean_npu_avg": 657.44,
+      "agentic_mean_npu_min": 620.8,
+      "agentic_mean_pad": 0.0,
+      "delta_us": -1.9,
+      "delta_pct": -0.29,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 7,
+      "M": 128,
+      "K": 2560,
+      "N": 960,
+      "Mp": null,
+      "Kp": null,
+      "Np": null,
+      "tile": null,
+      "pad_impl": "none",
+      "needs_padding": false,
+      "note": "K=2560 exceeds bf16 accuracy limit; all trials failed AccuracyError",
+      "baseline_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": 0,
+          "status": "failed",
+          "error": "AccuracyError: K=2560 bf16 accuracy failure"
+        }
+      ],
+      "baseline_pass_count": 0,
+      "agentic_pass_count": 0,
+      "baseline_mean_npu_avg": null,
+      "baseline_mean_npu_min": null,
+      "baseline_mean_pad": null,
+      "agentic_mean_npu_avg": null,
+      "agentic_mean_npu_min": null,
+      "agentic_mean_pad": null,
+      "winner": "N/A",
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "shape_idx": 8,
+      "M": 50,
+      "K": 960,
+      "N": 96,
+      "Mp": 64,
+      "Kp": 1024,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "note": "All tiles failed bf16 accuracy on K=960 with small M=50, N=96",
+      "baseline_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 accuracy failure K=960 small M/N"
+        }
+      ],
+      "baseline_pass_count": 0,
+      "agentic_pass_count": 0,
+      "baseline_mean_npu_avg": null,
+      "baseline_mean_npu_min": null,
+      "baseline_mean_pad": null,
+      "agentic_mean_npu_avg": null,
+      "agentic_mean_npu_min": null,
+      "agentic_mean_pad": null,
+      "winner": "N/A",
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "shape_idx": 9,
+      "M": 128,
+      "K": 320,
+      "N": 96,
+      "Mp": 128,
+      "Kp": 512,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 149.686,
+          "min": 123,
+          "pad": 44.605,
+          "status": "passed"
+        },
+        {
+          "avg": 148.794,
+          "min": 127,
+          "pad": 24.156,
+          "status": "passed"
+        },
+        {
+          "avg": 147.622,
+          "min": 123,
+          "pad": 44.705,
+          "status": "passed"
+        },
+        {
+          "avg": 151.686,
+          "min": 124,
+          "pad": 44.885,
+          "status": "passed"
+        },
+        {
+          "avg": 147.128,
+          "min": 124,
+          "pad": 45.978,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 149.041,
+          "min": 123,
+          "pad": 22.743,
+          "status": "passed"
+        },
+        {
+          "avg": 148.769,
+          "min": 130,
+          "pad": 23.685,
+          "status": "passed"
+        },
+        {
+          "avg": 148.818,
+          "min": 125,
+          "pad": 29.456,
+          "status": "passed"
+        },
+        {
+          "avg": 150.598,
+          "min": 127,
+          "pad": 23.836,
+          "status": "passed"
+        },
+        {
+          "avg": 148.833,
+          "min": 122,
+          "pad": 42.721,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 148.98,
+      "baseline_mean_npu_min": 124.2,
+      "baseline_mean_pad": 40.87,
+      "agentic_mean_npu_avg": 149.21,
+      "agentic_mean_npu_min": 125.4,
+      "agentic_mean_pad": 28.49,
+      "delta_us": 0.23,
+      "delta_pct": 0.15,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 10,
+      "M": 50,
+      "K": 96,
+      "N": 960,
+      "Mp": 64,
+      "Kp": 128,
+      "Np": 1024,
+      "tile": [
+        32,
+        64,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 166.352,
+          "min": 144,
+          "pad": 28.875,
+          "status": "passed"
+        },
+        {
+          "avg": 163.266,
+          "min": 145,
+          "pad": 24.477,
+          "status": "passed"
+        },
+        {
+          "avg": 167.373,
+          "min": 143,
+          "pad": 24.537,
+          "status": "passed"
+        },
+        {
+          "avg": 166.293,
+          "min": 144,
+          "pad": 24.848,
+          "status": "passed"
+        },
+        {
+          "avg": 166.493,
+          "min": 144,
+          "pad": 30.478,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 170.675,
+          "min": 148,
+          "pad": 26.0,
+          "status": "passed"
+        },
+        {
+          "avg": 166.768,
+          "min": 145,
+          "pad": 24.818,
+          "status": "passed"
+        },
+        {
+          "avg": 169.633,
+          "min": 144,
+          "pad": 25.359,
+          "status": "passed"
+        },
+        {
+          "avg": 168.448,
+          "min": 149,
+          "pad": 24.016,
+          "status": "passed"
+        },
+        {
+          "avg": 167.414,
+          "min": 145,
+          "pad": 47.531,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 165.96,
+      "baseline_mean_npu_min": 144.0,
+      "baseline_mean_pad": 26.64,
+      "agentic_mean_npu_avg": 168.59,
+      "agentic_mean_npu_min": 146.2,
+      "agentic_mean_pad": 29.54,
+      "delta_us": 2.63,
+      "delta_pct": 1.58,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 11,
+      "M": 50,
+      "K": 96,
+      "N": 256,
+      "Mp": 64,
+      "Kp": 128,
+      "Np": 256,
+      "tile": [
+        32,
+        64,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 134.754,
+          "min": 114,
+          "pad": 20.45,
+          "status": "passed"
+        },
+        {
+          "avg": 134.06,
+          "min": 117,
+          "pad": 33.414,
+          "status": "passed"
+        },
+        {
+          "avg": 132.966,
+          "min": 108,
+          "pad": 23.926,
+          "status": "passed"
+        },
+        {
+          "avg": 135.995,
+          "min": 113,
+          "pad": 19.888,
+          "status": "passed"
+        },
+        {
+          "avg": 133.421,
+          "min": 112,
+          "pad": 20.168,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 130.462,
+          "min": 114,
+          "pad": 19.667,
+          "status": "passed"
+        },
+        {
+          "avg": 132.404,
+          "min": 113,
+          "pad": 33.424,
+          "status": "passed"
+        },
+        {
+          "avg": 136.427,
+          "min": 113,
+          "pad": 34.015,
+          "status": "passed"
+        },
+        {
+          "avg": 135.381,
+          "min": 113,
+          "pad": 19.147,
+          "status": "passed"
+        },
+        {
+          "avg": 134.862,
+          "min": 115,
+          "pad": 34.837,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 134.24,
+      "baseline_mean_npu_min": 112.8,
+      "baseline_mean_pad": 23.57,
+      "agentic_mean_npu_avg": 133.91,
+      "agentic_mean_npu_min": 113.6,
+      "agentic_mean_pad": 28.22,
+      "delta_us": -0.33,
+      "delta_pct": -0.25,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 12,
+      "M": 50,
+      "K": 256,
+      "N": 96,
+      "Mp": 64,
+      "Kp": 256,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 131.47,
+          "min": 113,
+          "pad": 20.87,
+          "status": "passed"
+        },
+        {
+          "avg": 131.824,
+          "min": 111,
+          "pad": 22.052,
+          "status": "passed"
+        },
+        {
+          "avg": 130.581,
+          "min": 107,
+          "pad": 35.468,
+          "status": "passed"
+        },
+        {
+          "avg": 131.854,
+          "min": 113,
+          "pad": 20.048,
+          "status": "passed"
+        },
+        {
+          "avg": 128.498,
+          "min": 114,
+          "pad": 36.33,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 132.918,
+          "min": 110,
+          "pad": 21.932,
+          "status": "passed"
+        },
+        {
+          "avg": 129.005,
+          "min": 111,
+          "pad": 35.959,
+          "status": "passed"
+        },
+        {
+          "avg": 130.407,
+          "min": 110,
+          "pad": 44.345,
+          "status": "passed"
+        },
+        {
+          "avg": 129.342,
+          "min": 114,
+          "pad": 25.158,
+          "status": "passed"
+        },
+        {
+          "avg": 130.722,
+          "min": 111,
+          "pad": 36.519,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 130.85,
+      "baseline_mean_npu_min": 111.6,
+      "baseline_mean_pad": 26.95,
+      "agentic_mean_npu_avg": 130.48,
+      "agentic_mean_npu_min": 111.2,
+      "agentic_mean_pad": 32.78,
+      "delta_us": -0.37,
+      "delta_pct": -0.28,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 13,
+      "M": 1,
+      "K": 960,
+      "N": 32,
+      "Mp": 32,
+      "Kp": 1024,
+      "Np": 32,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "note": "All tiles failed bf16 accuracy on K=1024 padding with very small M=1, N=32",
+      "baseline_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        },
+        {
+          "avg": null,
+          "min": null,
+          "pad": null,
+          "status": "failed",
+          "error": "AccuracyError: bf16 on (32,1024,32) with M=1,K=960,N=32"
+        }
+      ],
+      "baseline_pass_count": 0,
+      "agentic_pass_count": 0,
+      "baseline_mean_npu_avg": null,
+      "baseline_mean_npu_min": null,
+      "baseline_mean_pad": null,
+      "agentic_mean_npu_avg": null,
+      "agentic_mean_npu_min": null,
+      "agentic_mean_pad": null,
+      "winner": "N/A",
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "shape_idx": 14,
+      "M": 50,
+      "K": 32,
+      "N": 96,
+      "Mp": 64,
+      "Kp": 32,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 128.812,
+          "min": 110,
+          "pad": 29.487,
+          "status": "passed"
+        },
+        {
+          "avg": 130.09,
+          "min": 108,
+          "pad": 16.702,
+          "status": "passed"
+        },
+        {
+          "avg": 131.442,
+          "min": 110,
+          "pad": 29.927,
+          "status": "passed"
+        },
+        {
+          "avg": 133.448,
+          "min": 111,
+          "pad": 28.996,
+          "status": "passed"
+        },
+        {
+          "avg": 131.16,
+          "min": 113,
+          "pad": 19.297,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 131.018,
+          "min": 113,
+          "pad": 29.306,
+          "status": "passed"
+        },
+        {
+          "avg": 130.703,
+          "min": 114,
+          "pad": 18.566,
+          "status": "passed"
+        },
+        {
+          "avg": 132.427,
+          "min": 112,
+          "pad": 29.066,
+          "status": "passed"
+        },
+        {
+          "avg": 132.527,
+          "min": 109,
+          "pad": 29.316,
+          "status": "passed"
+        },
+        {
+          "avg": 130.308,
+          "min": 110,
+          "pad": 18.134,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 130.99,
+      "baseline_mean_npu_min": 110.4,
+      "baseline_mean_pad": 24.88,
+      "agentic_mean_npu_avg": 131.4,
+      "agentic_mean_npu_min": 111.6,
+      "agentic_mean_pad": 24.88,
+      "delta_us": 0.41,
+      "delta_pct": 0.31,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 15,
+      "M": 50,
+      "K": 96,
+      "N": 32,
+      "Mp": 64,
+      "Kp": 128,
+      "Np": 32,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 123.367,
+          "min": 104,
+          "pad": 29.396,
+          "status": "passed"
+        },
+        {
+          "avg": 122.223,
+          "min": 107,
+          "pad": 30.729,
+          "status": "passed"
+        },
+        {
+          "avg": 124.262,
+          "min": 107,
+          "pad": 18.606,
+          "status": "passed"
+        },
+        {
+          "avg": 124.92,
+          "min": 108,
+          "pad": 31.189,
+          "status": "passed"
+        },
+        {
+          "avg": 124.974,
+          "min": 103,
+          "pad": 29.526,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 126.428,
+          "min": 103,
+          "pad": 17.744,
+          "status": "passed"
+        },
+        {
+          "avg": 124.374,
+          "min": 106,
+          "pad": 17.223,
+          "status": "passed"
+        },
+        {
+          "avg": 123.228,
+          "min": 98,
+          "pad": 30.108,
+          "status": "passed"
+        },
+        {
+          "avg": 122.79,
+          "min": 104,
+          "pad": 30.599,
+          "status": "passed"
+        },
+        {
+          "avg": 122.692,
+          "min": 104,
+          "pad": 29.346,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 123.95,
+      "baseline_mean_npu_min": 105.8,
+      "baseline_mean_pad": 27.89,
+      "agentic_mean_npu_avg": 123.9,
+      "agentic_mean_npu_min": 103.0,
+      "agentic_mean_pad": 25.0,
+      "delta_us": -0.05,
+      "delta_pct": -0.04,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 16,
+      "M": 1,
+      "K": 192,
+      "N": 96,
+      "Mp": 32,
+      "Kp": 256,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        32
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 125.879,
+          "min": 109,
+          "pad": 19.277,
+          "status": "passed"
+        },
+        {
+          "avg": 129.729,
+          "min": 113,
+          "pad": 33.795,
+          "status": "passed"
+        },
+        {
+          "avg": 127.925,
+          "min": 109,
+          "pad": 31.821,
+          "status": "passed"
+        },
+        {
+          "avg": 130.903,
+          "min": 108,
+          "pad": 37.622,
+          "status": "passed"
+        },
+        {
+          "avg": 128.144,
+          "min": 108,
+          "pad": 33.765,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 128.101,
+          "min": 109,
+          "pad": 19.297,
+          "status": "passed"
+        },
+        {
+          "avg": 131.929,
+          "min": 110,
+          "pad": 33.715,
+          "status": "passed"
+        },
+        {
+          "avg": 130.625,
+          "min": 112,
+          "pad": 34.105,
+          "status": "passed"
+        },
+        {
+          "avg": 128.416,
+          "min": 111,
+          "pad": 34.325,
+          "status": "passed"
+        },
+        {
+          "avg": 127.974,
+          "min": 109,
+          "pad": 35.148,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 128.52,
+      "baseline_mean_npu_min": 109.4,
+      "baseline_mean_pad": 31.26,
+      "agentic_mean_npu_avg": 129.41,
+      "agentic_mean_npu_min": 110.2,
+      "agentic_mean_pad": 31.32,
+      "delta_us": 0.89,
+      "delta_pct": 0.69,
+      "winner": "TIE"
+    },
+    {
+      "shape_idx": 17,
+      "M": 1,
+      "K": 96,
+      "N": 96,
+      "Mp": 32,
+      "Kp": 128,
+      "Np": 128,
+      "tile": [
+        32,
+        32,
+        64
+      ],
+      "pad_impl": "manual_copy",
+      "needs_padding": true,
+      "baseline_trials": [
+        {
+          "avg": 126.758,
+          "min": 105,
+          "pad": 31.059,
+          "status": "passed"
+        },
+        {
+          "avg": 127.754,
+          "min": 108,
+          "pad": 31.861,
+          "status": "passed"
+        },
+        {
+          "avg": 129.001,
+          "min": 105,
+          "pad": 18.766,
+          "status": "passed"
+        },
+        {
+          "avg": 131.106,
+          "min": 112,
+          "pad": 20.008,
+          "status": "passed"
+        },
+        {
+          "avg": 127.614,
+          "min": 106,
+          "pad": 24.196,
+          "status": "passed"
+        }
+      ],
+      "agentic_trials": [
+        {
+          "avg": 129.732,
+          "min": 108,
+          "pad": 31.25,
+          "status": "passed"
+        },
+        {
+          "avg": 129.821,
+          "min": 110,
+          "pad": 31.851,
+          "status": "passed"
+        },
+        {
+          "avg": 128.254,
+          "min": 109,
+          "pad": 18.756,
+          "status": "passed"
+        },
+        {
+          "avg": 128.358,
+          "min": 110,
+          "pad": 31.51,
+          "status": "passed"
+        },
+        {
+          "avg": 127.083,
+          "min": 110,
+          "pad": 18.916,
+          "status": "passed"
+        }
+      ],
+      "baseline_pass_count": 5,
+      "agentic_pass_count": 5,
+      "baseline_mean_npu_avg": 128.45,
+      "baseline_mean_npu_min": 107.2,
+      "baseline_mean_pad": 25.18,
+      "agentic_mean_npu_avg": 128.65,
+      "agentic_mean_npu_min": 109.4,
+      "agentic_mean_pad": 26.46,
+      "delta_us": 0.2,
+      "delta_pct": 0.16,
+      "winner": "TIE"
+    }
+  ]
+}
