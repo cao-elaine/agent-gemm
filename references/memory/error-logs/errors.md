@@ -185,3 +185,69 @@ Maintained by the agentic NPU optimizer. New entries appended by Phase 4.
 - **Pattern**: Even with k≥128 (which works on other Kp=1024 shapes), the combination of Np=3072 (N=2560 padded) with K=960 and M=128 causes bf16 accuracy failure
 - **Hypothesis**: The very large N dimension (3072) changes the accumulation behavior such that even per-row errors accumulate beyond atol=1e-1
 - **Fix**: No tile workaround found; use i8/i16 for (M=128, K=960, N=2560) bf16 workloads
+- **Extended (2026-03-21 session)**: All 34 remaining novel tile candidates exhaustively tested. 34/34 AccuracyFail. No exceptions — confirmed categorical failure for all (m,n,k) combinations with m∈{16,32}, n∈{16,32,64,128,256,512} k∈{16,32,64,128,256,512}.
+
+### [2026-03-21] bf16 MemoryExceeded (timeout) patterns on large Np shapes
+
+- **Shapes affected**: (1024,768,768), (1024,768,3072), (1024,3072,768) — all large Np
+- **Trigger**: Small tile sizes (especially m=16 or n=16 with k≤64) on shapes with large Np (768 or 3072). Stage count (M//m × N//n × K//k) exceeds compilation limit.
+- **Examples**:
+  - (1024,768,768) tile=(16,16,16): 64×48×48=147456 stages → MemoryExceeded (timeout)
+  - (1024,768,768) tile=(32,16,32): 32×48×24=36864 stages → MemoryExceeded (timeout)
+  - (1024,3072,768): tiles with m=16 or n≤32 nearly all timeout
+- **Pattern**: Confirms that for Np=768 or Np=3072, tiles with very small m or n values cause massive stage counts due to the large N quotient. The n=128 tile gives N//n=6 or 24, keeping stage count manageable; n=16 gives N//n=48 or 192, exploding stage count.
+- **Fix**: For Np=768 and Np=3072 shapes, use m≥32 and n≥64 to keep stage counts reasonable.
+
+### [2026-03-22] i8 correctness failures on tiles with very small m×n product (m≤16, n≤32 or m≤32, n≤16)
+
+- **Trigger**: Tiles where both m and n are very small (m≤16 AND n≤32, or m≤32 AND n≤16) on i8 shapes with any shape size
+- **Error**: Script completes and produces output, but correctness check fails — stdout shows array mismatch values like `[ 53, -40, -15, ..., 21, 94, 99],...`; no "PASSED!" printed
+- **Root cause**: Likely the same program memory overflow described above for small tiles. When the pipeline program overflows memory, instead of a hard compile-time error, it partially executes and produces silently corrupted results. i8 should be exact (atol=1e-5), so any deviation is a hard failure.
+- **Distinguishing feature**: Unlike the documented MemoryExceeded (which is a compile/runtime crash), this failure mode allows the script to run to completion but produces numerically wrong output.
+- **Fix**: Avoid tiles with m≤16 AND n≤32 (or m≤32 AND n≤16) on i8. Use m≥32 and n≥32 minimum, or m≥64/n≥64 for larger shapes.
+- **Confirmed examples** (2026-03-22 exploration session, 25 failures total):
+  - (64,128,128) i8 tile=(16,16,64) → correctness fail
+  - (64,128,128) i8 tile=(16,32,32) → correctness fail
+  - (128,128,64) i8 tile=(16,16,64), (16,32,32), (32,16,32), (16,32,16) → all correctness fail
+  - (256,256,512) i8 tile=(16,16,64), (16,32,32), (32,16,32) → correctness fail
+  - (512,512,64) i8 tile=(16,16,64), (16,32,32), (32,16,32), (16,32,16) → correctness fail
+- **Note**: i16 and bf16 tiles with the same stage counts fail with a hard error (MemoryExceeded/timeout); i8 uniquely produces silent corruption. This makes i8 correctness failures harder to detect if the error parser only checks for "PASSED!".
+
+### [2026-03-22] bf16 "CMake developer warning" failure on certain tile/shape combos
+
+- **Trigger**: Specific bf16 tile + shape combinations, especially medium-to-large shapes with small m or n values; also large asymmetric shapes (Mp=2048, small Np)
+- **Error**: `This warning is for project developers. Use -Wno-dev to suppress it.` appears as the last stderr line; no PASSED! output; script fails
+- **Root cause**: A CMake/build warning is printed after a deeper build failure (likely program memory overflow or resource exhaustion), drowning out the actual error message. The underlying failure is the same as the MemoryExceeded/program-overflow pattern but the error text is hidden by CMake output.
+- **Confirmed examples** (2026-03-22, 22 failures total):
+  - (256,256,256) bf16 tile=(16,16,64); (256,512,512) bf16 tile=(16,16,64), (16,16,32)
+  - (2048,768,768) bf16 tiles with small n: (128,64,32), (128,32,32), (64,32,32), (128,16,32), (256,16,32)
+  - (1024,64,768) bf16 tiles: (16,16,16), (256,16,32), (16,16,64), (16,16,32)
+  - (2048,64,1024) bf16: 9 tiles including (128,16,64), (64,16,64), (128,16,32), (64,16,32), (32,16,64) etc.
+- **Fix**: Treat this error the same as MemoryExceeded. For bf16 on large shapes, apply the same rule: use m≥32 and n≥64 to keep stage counts manageable.
+
+### [2026-03-22] Timeout failures on large i16 shapes with very small tiles
+
+- **Trigger**: Tiles with m=16 or n=16 on large i16 shapes (Mp=1024, Np=768, Kp=768 or larger)
+- **Pattern**: Compilation exceeds the 180s timeout — confirmed for (1024,768,768) i16 with (16,16,16), (16,16,256), (16,16,128), (16,16,64), (16,32,32) and many others (109 timeout failures this session)
+- **Contrast**: The same (16,16,k) tiles compile in ~10s on small shapes (64–256 padded dims). The compile time grows with stage count: (1024,768,768) with m=16, n=16 → 64×48×k stages → massive pipeline graph.
+- **Extends existing MemoryExceeded documentation**: confirms the stage-count overflow issue applies to i16 large shapes just as it does to bf16. Previously confirmed only for bf16 shapes.
+- **Fix**: Same as general small-tile rule — use m≥64 and n≥64 on shapes with any dimension ≥768.
+
+### [2026-03-21] n=16 tiles unexpectedly pass on (1024,768,768) bf16
+
+- **Shape**: (1024,768,768), dtype=bf16
+- **Passing tiles with n=16**: (128,16,64)=1543µs, (64,16,64)=1773µs, (64,16,32)=1816µs, (32,16,256)=2108µs, (32,16,64)=2159µs
+- **Anomaly**: These have N//n = 768//16 = 48, which is non-power-of-2 and not in DIVISIBILITY_ONLY_DIMS. Per the standard rules these should fail UnresolvableMapping, but they pass.
+- **Hypothesis**: The NPU may accept non-power-of-2 N//n quotients for smaller n values (n=16) where the mapping constraint is satisfied by a different mechanism.
+- **Performance**: All these tiles are 2–3× slower than (64,64,64)=757µs. They provide coverage but are not optimal choices.
+
+### [2026-03-22] Accuracy failure mode differs between padded-run and direct-dims-run for (128,3072,1024) bf16
+
+- **Shape**: (128,3072,1024), dtype=bf16
+- **Padded-run failure** (using --use-padding, original M=128,K=960,N=2560 → padded Mp=128,Kp=1024,Np=3072): All tested tiles including (32,64,128), (32,64,256), (32,32,32) fail accuracy (confirmed 2026-03-21, 40+ tiles exhaustively tested)
+- **Direct-dims-run behavior** (passing (128,3072,1024) directly without --use-padding): tile (32,64,128) PASSES accuracy, 5/5 trials at 794.2µs avg. Tile (32,32,32) still fails accuracy even in direct mode.
+- **Root cause**: The correctness check compares against different ground-truth sizes. Padded run: A@B where A=128×960, B=960×2560 (original small matrices, accumulated in bf16 over K=960 → accumulation error). Direct run: A@B where A=128×1024, B=1024×3072 (full padded size, different random inputs, k=128 tile gives 8 K-tiles → lower accumulation error).
+- **Practical implication**: For SmolVLA M=128,K=960,N=2560 workloads, bf16 is unreliable due to accumulation errors on the original dimensions. The direct-dims pass is for a different computation (padded shape, different inputs).
+- **Script limitation**: N=3072 cannot be used with --use-padding flag (exceeds script's ALLOWED_N max of 2048). Direct-dims mode required for any testing of this shape.
+- **Confirmed passing tile on direct dims** (2026-03-22): (32,64,128) @ 794.2µs avg / 739µs min. Tile (32,32,32) fails accuracy even in direct mode.
+- **Fix**: No tile workaround for the padded/original-size case. Use i8 or i16 for (M=128, K=960, N=2560) in production.

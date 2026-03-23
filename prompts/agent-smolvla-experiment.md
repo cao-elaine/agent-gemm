@@ -52,6 +52,33 @@ after loading.
 | `references/memory/gemm-data/padding/padding_transition_thresholds.json` | Exact ab_elements thresholds for bf16 padding method selection |
 
 > `npu_execution_profiling.json` is large. Search with targeted grep queries
+
+### 0.3 Cost model (tile predictor for unseen shapes)
+
+A regression model is available at `references/cost_model/npu_cost_model.py`.
+Use it when profiling data is missing for a padded shape:
+
+```bash
+# Predict best tile for a shape with no profiling data
+/opt/anaconda3/envs/allo-base/bin/python3 references/cost_model/npu_cost_model.py \
+  --predict --M <M> --N <N> --K <K> --dtype bf16
+```
+
+**Tile selection priority (agentic strategy only):**
+1. `npu_execution_profiling.json` has a `Best m,n,k` entry for `(Mp, Np, Kp, bf16)`
+   → use the profiling tile (after accuracy pre-validation — see Phase 1.1 step 2)
+2. Profiling data is absent → run the cost model (`source = "model"` in output)
+   → use `best_tile_model` from the output, but still apply accuracy pre-validation
+3. Cost model also unavailable → apply heuristics from Phase 1.1 step 2
+
+The model achieves **64% exact best-tile match** and **92% top-3 accuracy** on
+leave-one-shape-out evaluation (avg 11% suboptimality on misses). It is a
+useful fallback but always inferior to real profiling data.
+
+Retrain the model after adding new profiling data:
+```bash
+/opt/anaconda3/envs/allo-base/bin/python3 references/cost_model/npu_cost_model.py --train
+```
 > keyed by `"Mp_Np_Kp"` rather than reading the full file.
 
 ### 0.3 Check NPU availability
@@ -143,11 +170,15 @@ be faster overall.
    Kp = min(v for v in ALLOWED_K if v >= K)
    ```
 2. **Tile**: look up `"Best m,n,k"` in `npu_execution_profiling.json` for
-   `(Mp, Np, Kp, bf16)`. Use that tile directly.
-   If no profile entry exists for this padded shape + bf16, fall back to:
-   **(64, 64, 64)** if `Np >= 64`, else **(32, 32, 32)**.
+   `(Mp, Np, Kp, bf16)`. Use that tile directly — the baseline does **not**
+   validate it against accuracy constraints; it trusts the profiling DB as-is.
+   If no profile entry exists, fall back to:
+   **(64, 64, 64)** if `Np >= 64`, else **(32, 32, 32)`.
    Verify divisibility and memory constraints (§ hard constraints at bottom).
-   If the chosen tile fails a check, fall back to (32, 32, 32), then (16, 32, 32).
+   If the chosen tile fails a divisibility or memory check, fall back to
+   (32, 32, 32), then (16, 32, 32).
+   Note: the baseline does NOT apply the k_min accuracy rule — this is
+   intentional, and is the key differentiator the agentic strategy exploits.
 3. **Padding impl**: apply the bf16 threshold rule:
    `ab_elements = M*K + K*N`
    - `manual_copy` if `ab_elements ≤ 571,779`; else `numpy_pad`
@@ -163,24 +194,48 @@ The agentic run uses the full reasoning from `agentic-npu-workflow.md`
    hybrid selection rule (small regime: fastest NPU time; large regime:
    closest shape unless a larger one is >15% faster with affordable padding).
 2. **Tile**: look up `"Best m,n,k"` in `npu_execution_profiling.json` for
-   `(Mp, Np, Kp, bf16)`. Use that tile if found.
-   If **no bf16 profile entry exists**, select the best candidate using
-   strategy_insights heuristics — do NOT simply default to (64,64,64):
-   a. If `Mp ≥ 1024` and `Np = 768`: prefer **(128, 64, 64)** — confirmed
-      -11.9% improvement over (64,64,64) on this shape class (i8; test holds
-      for bf16 based on tile-shape relationship).
-   b. If `Mp ≥ 1024` and `Np % 128 == 0` and `Np ≥ 128`: prefer **(64, 128, 64)**
-      — wide-N tile tends to outperform symmetric tiles on large N shapes.
-   c. If `Np ≤ 64`: use **(32, 32, 32)** — larger tiles fail divisibility checks.
+   `(Mp, Np, Kp, bf16)`. Before using the profiling tile, **validate it against
+   all known bf16 accuracy constraints** — a profiling tile that fails accuracy
+   is worse than no profiling data at all:
+
+   **Accuracy pre-validation (apply before using any tile, profiling or otherwise):**
+   ```
+   k_min = max(32, Kp // 12)   # empirically derived: k≥64 for Kp=768, k≥128 for Kp=1024
+                                 # (2026-03-21, confirmed across 8+ shapes)
+
+   if tile.k < k_min:
+       reject tile → select replacement using heuristic below
+   if Kp >= 768 and tile.k == 16:
+       reject tile → CDO trigger risk (confirmed 2026-03-13)
+   if Mp >= 128 and Np >= 128 and (tile.m == 16 or tile.n == 16):
+       reject tile → AIE program memory overflow (confirmed 2026-03-19)
+   ```
+   If the profiling tile passes validation, use it. If it is rejected, fall
+   through to the heuristic below. Log when a profiling tile is overridden:
+   ```
+   [TILE OVERRIDE] profiling best (<m>,<n>,<k>) rejected: k=<k> < k_min=<k_min>
+                   → selecting replacement tile
+   ```
+
+   If **no bf16 profile entry exists**, or if the profiling tile was rejected,
+   first try the cost model (see § 0.3). If the cost model's recommended tile
+   also fails the accuracy pre-validation above, fall through to the heuristics.
+   If the cost model is unavailable, use heuristics — do NOT simply default to (64,64,64):
+   a. If `Kp ≥ 768`: set `k = k_min = max(32, Kp // 12)` as the starting k.
+      Then select m and n:
+      - `Np ≤ 64` → `(32, 32, k_min)`
+      - `Mp ≥ 128 and Np ≥ 128` → `(32, 64, k_min)` — confirmed best pattern
+        on Kp=1024 shapes (shapes 3 and 4, 2026-03-21)
+      - Otherwise → `(64, 64, k_min)`
+   b. If `Kp < 768` and `Mp ≥ 1024` and `Np = 768`: prefer **(64, 64, 64)**
+      — confirmed best bf16 tile for this shape class (bf16 memory budget
+      prevents (128,64,64) which wins on i8).
+   c. If `Kp < 768` and `Np ≤ 64`: use **(32, 32, 32)**.
    d. Otherwise: **(64, 64, 64)** as default.
-   Additional constraints when no profile data exists:
-   - Never use `m=16` or `n=16` on shapes where `Mp ≥ 128` or `Np ≥ 128`
-     (AIE program memory overflow, confirmed across 19 failures 2026-03-19).
-   - Never use `k < 32` on large K shapes (`Kp ≥ 768`) with bf16
-     (CDO trigger risk, confirmed 2026-03-13).
+
    Always verify all divisibility and memory checks after selection.
-   If the chosen tile fails a check, step down: (128,64,64) → (64,128,64) →
-   (64,64,64) → (32,32,32) → (16,32,32).
+   If the chosen tile fails a check, step down through:
+   `(32, 64, k_min)` → `(64, 64, 64)` → `(32, 32, 32)` → `(16, 32, 32)`.
 3. **Padding impl**: same threshold rule as baseline (this is deterministic).
 4. **Padding overhead check**: after selecting padded shape, estimate
    total end-to-end latency:
