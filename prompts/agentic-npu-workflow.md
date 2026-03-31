@@ -69,8 +69,8 @@ For each dimension, find all valid padded values from the ALLOWED lists where
 `Xp >= X`. These are the candidates.
 
 ```
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 128, 256, 512, 960, 1024, 2048, 3072]
+ALLOWED_N = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
 ```
 
@@ -136,9 +136,9 @@ Record the final chosen (Mp, Np, Kp).
    - Otherwise: use **(64, 64, 64)** — most consistently optimal across all dtypes.
 
 3. Before finalising the tile, verify ALL of the following:
-   - `Mp % m == 0` and `(Mp//m) % 4 == 0`
-   - `Np % n == 0` and `(Np//n) % 4 == 0`
-   - `Kp % k == 0` and `(Kp//k) % 4 == 0`
+   - `Mp % m == 0` and `any((Mp//m) % c == 0 for c in (3,4,5))`
+   - `Np % n == 0` and `any((Np//n) % c == 0 for c in (3,4,5))`
+   - `Kp % k == 0` (K has no bundling constraint)
    - `m ≤ Mp`, `n ≤ Np`, `k ≤ Kp`
    - `(m*n + n*k + k*m) * dsize ≤ 32,256 bytes`
      (dsize: i8=1, i16=2, bf16=2)
@@ -181,9 +181,9 @@ Est. NPU time:  <X> µs  (from profile: <yes/no>)
 Est. pad time:  <Y> µs  (from knowledge base: approx)
 
 Checks passed:
-  [ ] Mp % m == 0 and (Mp//m) % 4 == 0
-  [ ] Np % n == 0 and (Np//n) % 4 == 0
-  [ ] Kp % k == 0 and (Kp//k) % 4 == 0
+  [ ] Mp % m == 0 and any((Mp//m)%c==0 for c in (3,4,5))
+  [ ] Np % n == 0 and any((Np//n)%c==0 for c in (3,4,5))
+  [ ] Kp % k == 0  (no bundling constraint on K)
   [ ] tile memory ≤ 32,256 bytes
   [ ] tile not in known failing list
   [ ] tile not (128,128,128)
@@ -451,13 +451,13 @@ M=<M>, N=<N>, K=<K>, dtype=<dtype>
 These are NEVER negotiable. Violating any of these causes a build or runtime error.
 
 ```
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 128, 256, 512, 960, 1024, 2048, 3072]
+ALLOWED_N = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
 
-Mp % m == 0    AND    (Mp//m) % 4 == 0
-Np % n == 0    AND    (Np//n) % 4 == 0
-Kp % k == 0    AND    (Kp//k) % 4 == 0
+Mp % m == 0    AND    any((Mp//m) % c == 0 for c in (3,4,5))   # bundling: row_num
+Np % n == 0    AND    any((Np//n) % c == 0 for c in (3,4,5))   # bundling: col_num
+Kp % k == 0    (K has no bundling constraint)
 
 m ≤ Mp,  n ≤ Np,  k ≤ Kp
 (m*n + n*k + k*m) * dsize ≤ 32,256 bytes   (dsize: i8=1, i16=2, bf16=2)
@@ -466,6 +466,10 @@ TyI == TyO  (except int4 input → int8 output)
 
 ENABLE_AGGRESSIVE_PORT_UTILIZATION_PATCH = "1"  must be set before df.build
 ```
+
+GEMM call: `GEMM(Mp, Np, Kp, Pm, Pn, Pk, TyI, TyO, col_num=col_num, row_num=row_num)`
+where col_num/row_num ∈ {3,4,5} is auto-selected (try 4→3→5) to satisfy bundling constraint.
+Script uses `--col-num auto` by default.
 
 Tile hard blacklist: **(128, 128, 128)** — fails on every tested shape and dtype.
 
@@ -479,7 +483,7 @@ These apply to every run. They exist because skipping any one of them has caused
 real failures or significant regressions in past runs.
 
 **Do not skip validation steps.** A tile that looks right can still fail the
-`(Mp//m) % 4 == 0` check or the memory formula. Run all checks listed in 1.4 every
+bundling constraint or the memory formula. Run all checks listed in 1.4 every
 time, even when the tile seems obvious.
 
 **The profile is the ground truth.** When `npu_execution_profiling.json` has an

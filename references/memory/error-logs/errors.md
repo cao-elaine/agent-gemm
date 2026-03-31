@@ -251,3 +251,185 @@ Maintained by the agentic NPU optimizer. New entries appended by Phase 4.
 - **Script limitation**: N=3072 cannot be used with --use-padding flag (exceeds script's ALLOWED_N max of 2048). Direct-dims mode required for any testing of this shape.
 - **Confirmed passing tile on direct dims** (2026-03-22): (32,64,128) @ 794.2µs avg / 739µs min. Tile (32,32,32) fails accuracy even in direct mode.
 - **Fix**: No tile workaround for the padded/original-size case. Use i8 or i16 for (M=128, K=960, N=2560) in production.
+
+### [2026-03-24] bf16 accuracy failure on (128,960,1024): k<128 rule confirmed; n=16 tiles pass with k≥128
+
+- **Shape**: (128,960,1024) padded from (M=128,K=960,N=960), dtype=bf16
+- **Passing tiles (9)**: (32,64,128), (16,32,256), (16,64,128), (32,16,256), (32,32,128), (16,16,256), (16,32,128), (32,16,128), (16,16,128) — all have k≥128
+- **Failing tiles**: All tiles with k<128 fail accuracy (12 AccuracyFail); tiles with k=16 and large stage counts fail MemoryExceeded (6 MemoryExceeded)
+- **Key result**: n=16 tiles unexpectedly pass on Np=960 when k≥128. (32,16,256) is best at 517µs — faster than (32,64,128)@635µs. The n=16,k=256 combination outperforms larger n tiles.
+- **Pattern**: Confirms the k≥128 accuracy requirement for Kp=1024 extends to Np=960 shapes. Also confirms n=16 tiles are valid on Np=960 when k is large enough.
+
+### [2026-03-24] Direct-mode K=960 bf16 passes accuracy where padded Kp=1024 fails
+
+- **Shape**: M=128, K=960, N=2560 (run in direct mode, tile (64,64,64))
+- **Observation**: Direct-mode K=960 with k=64 (tile (64,64,64)) PASSES accuracy (5/5 trials, ~651µs avg). The same shape padded to Kp=1024 requires k≥128 for accuracy.
+- **Root cause**: In direct mode the script compares A@B where A=128×960 and B=960×2560 using K=960/k K-tiles. With Kp=1024, even though the extra 64 K-elements are zero-padded, the internal tiling structure changes — Kp/k=1024/64=16 tiles vs K/k=960/64=15 tiles — and the rounding behavior differs. The accumulation error with 16 K-tiles on 1024-size exceeds atol=1e-1 while 15 K-tiles on 960-size does not.
+- **Practical implication**: The k_min accuracy guard (k≥128 for Kp=1024) does NOT apply when running in direct mode (no --use-padding). Only apply k_min when Kp > K (i.e., when K-padding was actually applied).
+
+### [2026-03-24] bf16 K=3072 (128,960,3072) — all tiles fail (confirmation of known limit)
+
+- **Shape**: (128,960,3072) padded from (M=128,K=2560,N=960), dtype=bf16
+- **All 27 tiles tested**: All fail with UnknownError (script-level exception before producing output — consistent with K=3072 CDO/accuracy failure pattern)
+- **Pattern**: Confirms K=3072 bf16 hard limit. No tile workaround exists for any shape with Kp=3072.
+
+### [2026-03-24] (64,128,1024) bf16: small shape accuracy requires k≥128; best tile (16,32,128)@151µs
+
+- **Shape**: (64,128,1024) padded from (M=50,K=960,N=96), dtype=bf16
+- **Passing tiles (4)**: (16,32,256)@154µs, (16,16,256)@169µs, (16,32,128)@151µs, (16,16,128)@170µs — all k≥128
+- **Failing tiles (4)**: k=64 and k=32 tiles all fail accuracy; (16,32,16) fails MemoryExceeded; (16,16,16) fails MemoryExceeded
+- **New best**: (16,32,128)@151.5µs beats prior best (32,32,32)@150.0µs — marginal improvement of ~1%
+- **Pattern**: k≥128 accuracy requirement for Kp=1024 extends to small shapes (Mp=64, Np=128). All m=16 tiles valid on Mp=64 (only bundling option).
+
+### [2026-03-24] D=3520 bf16 — categorical failure: col_num/row_num=5 with Pn=55 unsupported
+
+- **Dimension**: N=3520 (Plan A: M=128,N=3520,K=512) and M=3520 (Plan B: M=3520,N=512,K=512), dtype=bf16
+- **All tiles tested**: (64,64,64) acc_fail, (64,64,32) acc_fail (Plan A); (64,64,64) acc_fail, (16,64,64) acc_fail (Plan B)
+- **Confirmed from background task**: M=3520 with m=16, n=64, k=64 (row_num=4, col_num=4) compiles but produces `bfloat16 have accuracy issue`. Additionally, at least one prior tile attempt failed at compile time with `SystemExit: 1` from peano_clang linker — indicating some 3520 tiles fail compilation entirely before accuracy can be checked.
+- **Root cause**: 3520//64=55, and 55 is only divisible by 5 (col_num=5 only). The workarounds available for other col_num=5 dims (use m≥64 or smaller m for row_num=4) do not resolve the issue here — the tile pool is exhausted. Even m=16 with row_num=4 (Pm=220) fails accuracy.
+- **Pattern**: Extends the col_num/row_num=5 gradient — N=160,320,640,1600,2240 (lower Pn) work with tile restrictions; N=3200 (Pn=50) needs special tile; N=3520 (Pn=55) is the first dimension that fails entirely regardless of tile. The Pn=55 boundary appears to be where col_num=5 bf16 accumulation error becomes irrecoverable.
+- **Fix**: D=3520 is not usable in bf16. Pad to D=3584 (Pn=56, col_num=4) which is fully confirmed valid.
+
+### [2026-03-24] (64,960,128) bf16: all 12 tile candidates pass; best tile (16,64,32)@200µs
+
+- **Shape**: (64,960,128) padded from (M=50,K=96,N=960), dtype=bf16
+- **All 12 tiles pass**: No accuracy failures, no MemoryExceeded. Small Kp=128 means only 1–8 K-tiles; no accumulation error issues.
+- **Best tile**: (16,64,32)@200.2µs; closely followed by (16,64,64)@205µs and (16,64,16)@205µs
+- **Pattern**: n=64 orientation is fastest on Np=960 with Kp=128. Small Kp removes the k≥threshold accuracy constraint entirely — all k values work.
+
+### [2026-03-25] bf16 accuracy failures: Kp=768 requires k≥64 (not k≥128) for most shapes; large Np breaks even k≥64
+
+- **Shapes affected**: All shapes with Kp=768 tested in 2026-03-25 session (1938 inputs → 250 combos)
+- **Confirmed passing k values on Kp=768**: k=32 passes on small-N shapes (Np=128–512), k=64 and k=128 and k=256 pass broadly
+- **Confirmed failing**: k=16 fails accuracy on ALL Kp=768 shapes without exception (31 failures)
+- **k=32 behavior**: Passes on small-N shapes (Np≤512), fails accuracy on large-N shapes (Np≥768) — pattern: (64,2048,768) k=32 fails but (64,512,768) k=32 passes
+- **Rule**: For Kp=768 bf16: use k≥64 for Np≤512; use k≥128 for Np≥768. Never use k=16 on any Kp=768 shape.
+- **Confirmed examples** (2026-03-25, 40 AccuracyFail entries with k≤32):
+  - (64,128,768) k=16: AccuracyFail; k=128,k=256: PASSED
+  - (256,768,768) k=32: AccuracyFail; k=64: PASSED
+  - (512,960,768) k=32: AccuracyFail; k=64 (via (32,64,128)): PASSED
+
+### [2026-03-25] bf16 accuracy failures: Kp=2048 — zero tiles pass across all shapes tested
+
+- **Shapes**: All shapes with Kp=2048 in this session (32 combos across Mp=64,128,256,512 and Np=32..3072)
+- **Result**: 0 passes out of 112 runs. 70 AccuracyFail, 37 CDOError, 5 Timeout
+- **Pattern**: Kp=2048 with bf16 fails across all tile sizes and all shape combinations. Previously documented only for specific shapes; now confirmed as a categorical failure for bf16+Kp=2048.
+- **Fix**: Use i8 or i16 for any workload requiring Kp=2048. No tile workaround exists.
+
+### [2026-03-25] bf16 Kp=3072 — confirmed categorical failure across all tested shapes
+
+- **Shapes**: 136 trials across all Mp/Np combinations with Kp=3072
+- **Result**: 0 passes. All fail with AccuracyFail, CDOError, or Timeout.
+- **Confirms**: Prior documentation extended — Kp=3072 bf16 fails for ALL M and N values, not just specific shapes previously tested.
+
+### [2026-03-25] bf16 Kp=1024 accuracy: k≥128 required; fails for large Mp×Np products
+
+- **Pattern**: k<128 fails accuracy on ALL Kp=1024 shapes (0 passes out of 94 trials with k<128)
+- **k=128 and k=256 do pass** but only when Mp×Np is not too large: passes when Mp×Np≤65536, increasingly rare above that
+- **Large shapes fail even with k≥128**: (512,512,1024), (512,768,1024), (512,1024,1024), (512,2048,1024) all fail all tiles
+- **Practical rule for bf16 Kp=1024**: Use k≥128; expect failures for Mp×Np>65536 (i.e., Mp=512 with Np≥512 or any shape with very large M×N product)
+
+### [2026-03-25] bf16 Np=3072 accuracy failures: only (128,3072,512) passes
+
+- **General rule**: Np=3072 with bf16 almost always fails accuracy
+- **Exception**: (128,3072,512) passes with tiles (32,128,64)@411µs, (32,128,32)@419µs, (16,128,64)@603µs, (16,128,32)@598µs
+- **Why (128,3072,512) works**: Small Kp=512 means few K-tiles (Kp/k=4–8), keeping accumulation error low despite large N
+- **All other Np=3072 combinations tested fail**: (64,3072,512), (256,3072,512), (512,3072,512) all fail even with small Kp
+- **Pattern**: Even within Np=3072, only Mp=128 succeeds. Mp=64/256/512 with Np=3072 fail regardless of Kp
+
+### [2026-03-25] CDO error: n=128, k=16 on all Kp values — broadly confirmed across all shapes
+
+- **Trigger**: tile n=128 combined with k=16 on bf16 regardless of shape size or Kp
+- **Error**: `ValueError: Failed to generate cdo`
+- **Scope**: 79 CDO failures across Kp={768,1024,2048,3072} and all tested Mp/Np combinations (64,128,256,512) in the 2026-03-25 session (1234 trials over 252 shapes)
+- **Pattern**: n=128, k=16 is universally bad for bf16 CDO generation. Previous documentation focused on K=2048; this session confirms the issue extends to Kp=768 and Kp=1024 for ALL tested shapes when n=128 and k=16.
+- **Safe alternatives**: Use k=32 or k=64 with n=128 to avoid CDO. k=32 triggers CDO on ~10 shapes; k=64 is much safer but may still fail accuracy on large Kp.
+- **Confirmed examples**: (128,512,768) tile=(32,128,16) CDO; (128,768,768) tile=(32,128,16) CDO; (256,512,1024) tile=(64,128,16) CDO; (512,512,768) tile=(32,128,16) CDO; (512,2048,1024) tile=(32,128,16) CDO
+
+### [2026-03-25] bf16 Kp=1024 accuracy: fails for large (512,*,1024) shapes even with k≥128 — confirmed exceptions
+
+- **Prior rule**: Use k≥128 for Kp=1024 bf16 accuracy; expect failures for Mp×Np>65536
+- **New data from 2026-03-25 (1234 trials)**: (512,*,1024) shapes pass for small-N cases but fail for large-N:
+  - (512,64,1024) PASSES tiles (16,16,256)@277µs, (32,16,128)@247µs, (16,16,128)@284µs — Np=64, Np×Mp=32768 ≤ 65536
+  - (512,128,1024) PASSES tiles (32,16,256)@344µs, (32,32,128)@273µs — Np=128, Mp×Np=65536 = boundary
+  - (512,256,1024) PASSES 2 tiles — Np=256, Mp×Np=131072 > 65536 but passes when n<64
+  - (512,512,1024), (512,768,1024), (512,1024,1024), (512,2048,1024) — 0 passes, all accuracy fail or CDO
+- **Refined rule**: For bf16 Kp=1024, Mp×Np threshold is approximately 65536–131072; above 131072 (Mp=512, Np≥512), no tiles pass.
+
+### [2026-03-28] bf16 accuracy failures: small-M shapes (Mp=32 or 64) with any K≥32 — all tiles fail for certain shape families
+
+- **Shapes confirmed failing**: (128,96,512), (64,96,256), (64,96,32), (32,96,256), (32,96,128) — all dtype=bf16
+- **Pattern**: When Mp is very small (32 or 64) due to M≤50 padding, and Np is small (32–256), bf16 accuracy fails across ALL tile sizes tried, including (8,32,64), (16,32,32), (32,32,32), (8,32,32). Not a K-accumulation issue (Kp as low as 32 still fails).
+- **Key difference from prior "small MN large K" rule**: This failure occurs even with small Kp (Kp=32, 128, 256) — not just large K. The original M=1–50 padded to Mp=32–64 with small N is fundamentally problematic for bf16 correctness.
+- **Confirmed failing shapes** (2026-03-28 experiment, all tiles exhausted):
+  - (128,96,512) [M=128,K=320,N=96]: all tiles fail accuracy (32,32,32), (16,32,32), (16,32,16), (16,8,64)
+  - (64,96,256) [M=50,K=256,N=96]: all tiles fail accuracy (16,32,64), (32,32,32), (16,32,32), (16,32,16), (16,8,64)
+  - (64,96,32) [M=50,K=32,N=96]: all tiles fail accuracy (16,32,32), (32,32,32), (16,32,16), (8,32,32)
+  - (32,96,256) [M=1,K=192,N=96]: all tiles fail accuracy (8,32,64), (32,32,32), (16,32,32), (16,32,16), (16,8,64)
+  - (32,96,128) [M=1,K=96,N=96]: all tiles fail accuracy (8,32,64), (32,32,32), (16,32,32), (16,32,16)
+- **Hypothesis**: Np=96 with very small original M (M≤50) causes bf16 correctness to fail. The N=96 padded dimension may interact with the bundling/col_num=3 or 4 computation in a way that accumulates errors. Alternatively, the very small M×N product (≤4096) means any rounding error in the computation exceeds atol=1e-1 relative to the small output values.
+- **Fix**: Use i8 or i16 for any shape with M≤50 and N≤96 in bf16. No tile workaround found.
+
+### [2026-03-28] bf16 compilation failure: (128,2560,960) fails for all tiles
+
+- **Shape**: M=128, K=960, N=2560 padded to (128,2560,960), dtype=bf16
+- **Error**: Compilation failure (clang++ invocation visible in stderr) — not an accuracy issue
+- **Tiles tried**: (32,64,32), (32,64,64), (64,64,64), (32,32,32) — all fail at compile time
+- **Pattern**: N=2560 with Kp=960 and M=128 causes compilation failure in the MLIR-AIE backend. The large N=2560 dimension may cause program memory overflow during MLIR-AIE compilation.
+- **Fix**: No tile workaround found for bf16. Use i8 or i16 for this shape.
+
+### [2026-03-25] 64_3072_* and 256_3072_* and 512_3072_* — all tiles fail bf16 (confirmed categorical failures)
+
+- **Shapes**: All 45 trials with Mp=64 and Np=3072 — 0 passes (AccuracyFail, CDOError)
+- **Shapes**: All 45 trials with Mp=256 and Np=3072 — 0 passes
+- **Shapes**: All 45 trials with Mp=512 and Np=3072 — 0 passes
+- **Contrast**: 128_3072_512 — 4 passes with Kp=512 tiles; all other 128_3072_* shapes (Kp≠512) fail
+- **Refined rule for Np=3072 bf16**: Only (128,3072,512) is proven to work. Mp=64,256,512 with Np=3072 fail categorically regardless of Kp. Mp=128 with Np=3072 only works when Kp=512 (small K).
+
+### [2026-03-29] bf16 compilation failure: Mp=256 shapes fail universally on this hardware
+
+- **Pattern**: All padded shapes with Mp=256 fail clang++ compilation regardless of tile choice, dtype=bf16
+- **Error**: Compilation failure (clang++ invocation fails in MLIR-AIE backend) — not an accuracy issue
+- **Confirmed failing shapes** (2026-03-29 experiment, 291 shapes, all inconclusive):
+  - (256,96,512), (256,192,512), (256,288,512) [M=235, various N, K=320]
+  - (256,320,960), (256,384,960), (256,960,960) [M=235, various N, K=960]
+  - (256,2560,960) [M=235, K=960, N=2560]
+  - All 12 M=235 shapes (padded to Mp=256) confirmed inconclusive
+- **Scope**: All 12+ shapes with Mp=256 in the SmolVLA full experiment (291 shapes, bf16) are inconclusive. No tile combination succeeds compilation, including tiles with very few pipeline stages (Pm=4, Pn=3, Pk=4 = 48 total pipeline stages).
+- **Contrast with prior Mp=256 data**: Earlier tiling-exploration sessions found (256,960,Kp) shapes passing (e.g., [2026-03-25] entry). This may be hardware-configuration or session-specific. The SmolVLA full experiment environment shows universal Mp=256 compilation failure.
+- **Pre-screening rule**: Add Mp=256 to the likely-uncompilable list for bf16 in this hardware configuration. Mark such shapes inconclusive without running to save experiment time.
+
+### [2026-03-29] NPU hardware unavailable — KMQ device error
+
+- **Trigger**: NPU hardware not accessible at session start; persists for entire session
+- **Error**: `terminate called after throwing an instance of 'xrt_core::system_error'\n  what():  Failed to open KMQ device (err=22): Invalid argument\nAborted (core dumped)`
+- **Root cause**: The KMQ (Kernel Message Queue) device used by XRT to communicate with the AMD Ryzen AI NPU cannot be opened. `errno=22` (EINVAL) indicates the device is in an invalid state — likely firmware crash or driver state corruption from a prior session. `/dev/accel/accel0` exists and is world-writable but returns EINVAL on open. `xrt-smi` reports "0 devices found".
+- **Detection note**: `allo.backend.aie.is_available()` returns **True** even when the NPU is unavailable — it only checks the `MLIR_AIE_INSTALL_DIR` env var. Do NOT rely on `is_available()` alone. Always run a test command and verify "PASSED!" appears in stdout before starting a full session.
+- **Fix**: Requires hardware reset (power cycle or driver reload with root privileges). Cannot be resolved from user-space without root access.
+- **Impact**: 1843 planned bf16 tile runs for smolvla_retile_m32_m64.json shapes could not execute; all recorded as `npu_unavailable` in agent-tiling-profile.json.
+- **Confirmed session**: 2026-03-29, smolvla_retile_m32_m64 experiment (all M=32 and M=64 SmolVLA shapes, bf16).
+- **Updated 2026-03-30**: NPU recovered (no hardware reset needed) after ~30 minutes idle. This crash is self-resolving, unlike persistent KMQ failures requiring reboot.
+
+### [2026-03-30] NPU hardware transient crash: m=64, n=16 tiles on large-N shapes
+
+- **Trigger**: Tiles with m=64 AND n=16 on shapes with Np≥480; also some tiles with m=32, n=16 at Np≥672
+- **Error**: Same KMQ device error as above (`Aborted (core dumped)`, `Failed to open KMQ device`) but **transient** — NPU self-recovers after 30–60s without a hardware reset
+- **Confirmed crash-inducing tiles** (2026-03-30, smolvla_retile_m32_m64 session):
+  - (64,480,512) bf16 tiles (64,16,32), (64,16,64), (64,16,128): NPU crash, self-recovered after ~30s
+  - (64,480,960) bf16 tiles (64,16,32), (64,16,64): NPU crash, self-recovered
+  - (64,3072,768) bf16 tiles (64,16,32), (64,16,64), (64,16,128), (64,32,32), (64,32,64): repeated crashes
+- **Pattern**: The m=64 dimension combined with n=16 on large-N shapes (Np≥480) causes hardware state corruption that is recoverable within 30–60s. Distinct from the persistent KMQ failure (which requires 30+ minutes or hardware reset).
+- **Root cause**: Unknown. Likely a hardware resource exhaustion or DMA alignment issue in the AIE tile when m=64 (Pm=1, single tile) is combined with n=16 on large-N shapes — the combination of full-M coverage with narrow-N tiling may stress the interconnect.
+- **Fix**: Skip m=64, n=16 tiles on shapes with Np≥480. Use m=32, n=16 or m=64, n=32 instead — both work reliably on these shapes.
+- **Important**: Repeated transient crashes can compound into a PERSISTENT KMQ failure state (see next entry).
+
+### [2026-03-30] NPU persistent KMQ failure caused by accumulated transient crashes
+
+- **Trigger**: After the smolvla_retile_m32_m64 session ran multiple m=64,n=16 tiles on large-N shapes, causing ≥3 rapid successive transient NPU crashes, the NPU entered a persistent error state.
+- **Error**: Same KMQ device error (`Failed to open KMQ device (err=22): Invalid argument`); `/sys/class/accel/accel0/device/power/runtime_status` = "error"
+- **Persistence**: Did NOT self-recover after 30 minutes (unlike the single-crash transient case documented 2026-03-29). Requires hardware reset with root privileges.
+- **Impact**: The full SmolVLA bf16 experiment (291 shapes, 2538 planned NPU runs) was entirely blocked. All 282 runnable shapes marked `npu_unavailable`; 9 shapes prescreened. No NPU data collected.
+- **Confirmed session**: 2026-03-30, smolvla-baseline-agentic experiment.
+- **Root cause**: Accumulated state corruption. Each transient crash leaves the hardware slightly degraded; after several crashes in rapid succession, the firmware does not recover spontaneously.
+- **Fix**: Requires `sudo modprobe -r amdxdna && sudo modprobe amdxdna` or a full power cycle. Cannot be resolved from user-space.
+- **Prevention**: The m=64,n=16 on Np≥480 tile guard (above) eliminates the crash-inducing tiles. With that guard in place, no transient crashes should occur during normal bf16 profiling.

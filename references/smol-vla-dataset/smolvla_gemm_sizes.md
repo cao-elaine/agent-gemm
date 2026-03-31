@@ -14,9 +14,10 @@ Convention: **Y[M, N] = X[M, K] × W[K, N]**
 | Variable | Meaning |
 |----------|---------|
 | B | Batch size = 1|
-| L | Text sequence length = 128|
-| C | Action chunk length = 50|
+| L | Text sequence length = 115, 128, 179, 235| num_image * 64 + 1 (state token) + 48 (text token)
+| C | Action chunk length = 50, 30, 20, 60, 32|
 | S_conn | Connector output tokens = 64 (~64, if 16-patch groups from 1024 patches) |
+| A_dim | action expert hidden dimension 960 * factor, factor = 0.1,... ,0.75|
 
 ---
 
@@ -76,13 +77,13 @@ Convention: **Y[M, N] = X[M, K] × W[K, N]**
 
 | Layer | M | K | N | Notes |
 |-------|---|---|---|-------|
-| q_proj | B×C | 960 | 96 | Q from action tokens |
-| k_proj | B×L | 320 | 96 | KV reused from text stream |
-| v_proj | B×L | 320 | 96 | KV reused from text stream |
-| o_proj | B×C | 96 | 960 | |
-| gate_proj | B×C | 96 | 256 | SwiGLU |
-| up_proj | B×C | 96 | 256 | SwiGLU |
-| down_proj | B×C | 256 | 96 | |
+| q_proj | B×C | 960 | A_dim | Q from action tokens |
+| k_proj | B×L | 320 | A_dim | KV reused from text stream |
+| v_proj | B×L | 320 | A_dim | KV reused from text stream |
+| o_proj | B×C | A_dim | 960 | |
+| gate_proj | B×C | A_dim | 256 | SwiGLU |
+| up_proj | B×C | A_dim | 256 | SwiGLU |
+| down_proj | B×C | 256 | A_dim | |
 
 ---
 
@@ -91,10 +92,10 @@ Convention: **Y[M, N] = X[M, K] × W[K, N]**
 | Layer | M | K | N | Notes |
 |-------|---|---|---|-------|
 | state_proj | B | 960 | 32 | Per-sample, no token dim |
-| action_in_proj | B×C | 32 | 96 | Action input projection |
-| action_out_proj | B×C | 96 | 32 | Action output projection |
-| action_time_mlp_in | B | 192 | 96 | Time embedding MLP input |
-| action_time_mlp_out | B | 96 | 96 | Time embedding MLP output |
+| action_in_proj | B×C | 32 | A_dim | Action input projection |
+| action_out_proj | B×C | A_dim | 32 | Action output projection |
+| action_time_mlp_in | B | 192 | A_dim | Time embedding MLP input |
+| action_time_mlp_out | B | A_dim | A_dim | Time embedding MLP output |
 
 ---
 
@@ -113,16 +114,16 @@ M values resolved using B=1, L=128, C=50, S_conn=64.
 | 128 | 960 | 2560 | Text gate/up proj | 2 per layer × 16 |
 | 128 | 2560 | 960 | Text down proj | 1 per layer × 16 |
 | 128 | 960 | 49280 | LM head | 1 |
-| 50 | 960 | 96 | Action Q proj | 1 per layer × 16 |
-| 128 | 320 | 96 | Action K/V proj (KV from text stream) | 2 per layer × 16 |
-| 50 | 96 | 960 | Action O proj | 1 per layer × 16 |
-| 50 | 96 | 256 | Action gate/up proj | 2 per layer × 16 |
-| 50 | 256 | 96 | Action down proj | 1 per layer × 16 |
+| 50 | 960 | A_dim | Action Q proj | 1 per layer × 16 |
+| 128 | 320 | A_dim | Action K/V proj (KV from text stream) | 2 per layer × 16 |
+| 50 | A_dim | 960 | Action O proj | 1 per layer × 16 |
+| 50 | A_dim | 256 | Action gate/up proj | 2 per layer × 16 |
+| 50 | 256 | A_dim | Action down proj | 1 per layer × 16 |
 | 1 | 960 | 32 | state_proj | 1 |
-| 50 | 32 | 96 | action_in_proj | 1 |
-| 50 | 96 | 32 | action_out_proj | 1 |
-| 1 | 192 | 96 | action_time_mlp_in | 1 |
-| 1 | 96 | 96 | action_time_mlp_out | 1 |
+| 50 | 32 | A_dim | action_in_proj | 1 |
+| 50 | A_dim | 32 | action_out_proj | 1 |
+| 1 | 192 | A_dim | action_time_mlp_in | 1 |
+| 1 | A_dim | A_dim | action_time_mlp_out | 1 |
 
 ---
 

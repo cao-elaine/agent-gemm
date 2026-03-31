@@ -1,126 +1,3625 @@
 {
-  "description": "Unique GEMM shapes from SmolVLA requiring NPU execution. Derived from smolvla_gemm_sizes.md using B=1, L=128, C=50, S_conn=64. Shapes where any dimension exceeds 4000 (modality_projection K=12288, lm_head N=49280) are excluded. embed_tokens is excluded as it is a row-gather (not a GEMM). Each entry lists all model layers that map to the same (M, K, N) triple.",
+  "description": "Unique GEMM shapes from SmolVLA across all variable combinations. L in {115,128,179,235}, C in {50,30,20,60,32}, A_dim = 960*factor for factor in {0.1,...,0.75} -> {96,192,288,384,480,576,672,720}. Shapes with M<2, K>4096, or N>4096 excluded.",
   "parameters": {
     "B": 1,
-    "L": 128,
-    "C": 50,
-    "S_conn": 64
+    "L_values": [
+      115,
+      128,
+      179,
+      235
+    ],
+    "C_values": [
+      50,
+      30,
+      20,
+      60,
+      32
+    ],
+    "S_conn": 64,
+    "A_dim_values": [
+      96,
+      192,
+      288,
+      384,
+      480,
+      576,
+      672,
+      720
+    ],
+    "A_dim_factors": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.75
+    ]
   },
   "excluded": [
-    { "reason": "K > 4000", "layer": "modality_projection", "M": 64,  "K": 12288, "N": 960  },
-    { "reason": "N > 4000", "layer": "lm_head",             "M": 128, "K": 960,   "N": 49280 },
-    { "reason": "not a GEMM (row-gather)", "layer": "embed_tokens", "M": 128, "K": 960, "N": 49280 }
+    {
+      "reason": "K > 4096",
+      "layer": "modality_projection",
+      "M": 64,
+      "K": 12288,
+      "N": 960
+    },
+    {
+      "reason": "N > 4096",
+      "layer": "lm_head",
+      "M": "L",
+      "K": 960,
+      "N": 49280
+    },
+    {
+      "reason": "not a GEMM (row-gather)",
+      "layer": "embed_tokens",
+      "M": "L",
+      "K": 960,
+      "N": 49280
+    },
+    {
+      "reason": "M < 2 (per-sample)",
+      "layers": [
+        "state_proj",
+        "action_time_mlp_in",
+        "action_time_mlp_out"
+      ]
+    }
   ],
   "shapes": [
     {
-      "M": 1024, "K": 768, "N": 768,
+      "M": 20,
+      "K": 32,
+      "N": 96,
       "layers": [
-        { "section": "Vision Encoder", "name": "q_proj" },
-        { "section": "Vision Encoder", "name": "k_proj" },
-        { "section": "Vision Encoder", "name": "v_proj" },
-        { "section": "Vision Encoder", "name": "out_proj" },
-        { "section": "Vision Encoder", "name": "patch_embedding" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 1024, "K": 768, "N": 3072,
+      "M": 20,
+      "K": 32,
+      "N": 192,
       "layers": [
-        { "section": "Vision Encoder", "name": "mlp.fc1" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 1024, "K": 3072, "N": 768,
+      "M": 20,
+      "K": 32,
+      "N": 288,
       "layers": [
-        { "section": "Vision Encoder", "name": "mlp.fc2" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 128, "K": 960, "N": 960,
+      "M": 20,
+      "K": 32,
+      "N": 384,
       "layers": [
-        { "section": "Text Layers (x16)", "name": "q_proj" },
-        { "section": "Text Layers (x16)", "name": "o_proj" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 128, "K": 960, "N": 320,
+      "M": 20,
+      "K": 32,
+      "N": 480,
       "layers": [
-        { "section": "Text Layers (x16)", "name": "k_proj" },
-        { "section": "Text Layers (x16)", "name": "v_proj" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 128, "K": 960, "N": 2560,
+      "M": 20,
+      "K": 32,
+      "N": 576,
       "layers": [
-        { "section": "Text Layers (x16)", "name": "gate_proj" },
-        { "section": "Text Layers (x16)", "name": "up_proj" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 128, "K": 2560, "N": 960,
+      "M": 20,
+      "K": 32,
+      "N": 672,
       "layers": [
-        { "section": "Text Layers (x16)", "name": "down_proj" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 960, "N": 96,
+      "M": 20,
+      "K": 32,
+      "N": 720,
       "layers": [
-        { "section": "Action Expert (x16)", "name": "q_proj" }
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
       ]
     },
     {
-      "M": 128, "K": 320, "N": 96,
+      "M": 20,
+      "K": 96,
+      "N": 32,
       "layers": [
-        { "section": "Action Expert (x16)", "name": "k_proj" },
-        { "section": "Action Expert (x16)", "name": "v_proj" }
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 96, "N": 960,
+      "M": 20,
+      "K": 96,
+      "N": 256,
       "layers": [
-        { "section": "Action Expert (x16)", "name": "o_proj" }
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 96, "N": 256,
+      "M": 20,
+      "K": 96,
+      "N": 960,
       "layers": [
-        { "section": "Action Expert (x16)", "name": "gate_proj" },
-        { "section": "Action Expert (x16)", "name": "up_proj" }
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 256, "N": 96,
+      "M": 20,
+      "K": 192,
+      "N": 32,
       "layers": [
-        { "section": "Action Expert (x16)", "name": "down_proj" }
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
       ]
     },
     {
-      "M": 1, "K": 960, "N": 32,
+      "M": 20,
+      "K": 192,
+      "N": 256,
       "layers": [
-        { "section": "Projections", "name": "state_proj" }
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 32, "N": 96,
+      "M": 20,
+      "K": 192,
+      "N": 960,
       "layers": [
-        { "section": "Projections", "name": "action_in_proj" }
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
       ]
     },
     {
-      "M": 50, "K": 96, "N": 32,
+      "M": 20,
+      "K": 256,
+      "N": 96,
       "layers": [
-        { "section": "Projections", "name": "action_out_proj" }
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
       ]
     },
     {
-      "M": 1, "K": 192, "N": 96,
+      "M": 20,
+      "K": 256,
+      "N": 192,
       "layers": [
-        { "section": "Projections", "name": "action_time_mlp_in" }
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
       ]
     },
     {
-      "M": 1, "K": 96, "N": 96,
+      "M": 20,
+      "K": 256,
+      "N": 288,
       "layers": [
-        { "section": "Projections", "name": "action_time_mlp_out" }
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 256,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 256,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 256,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 256,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 256,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 288,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 288,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 288,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 384,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 384,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 384,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 480,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 480,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 480,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 576,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 576,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 576,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 672,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 672,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 672,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 720,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 720,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 720,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 20,
+      "K": 960,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 32,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 96,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 96,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 96,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 192,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 192,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 192,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 256,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 288,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 288,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 288,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 384,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 384,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 384,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 480,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 480,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 480,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 576,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 576,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 576,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 672,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 672,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 672,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 720,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 720,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 720,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 30,
+      "K": 960,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 32,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 96,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 96,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 96,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 192,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 192,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 192,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 256,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 288,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 288,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 288,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 384,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 384,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 384,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 480,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 480,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 480,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 576,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 576,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 576,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 672,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 672,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 672,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 720,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 720,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 720,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 32,
+      "K": 960,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 32,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 96,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 96,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 96,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 192,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 192,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 192,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 256,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 288,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 288,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 288,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 384,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 384,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 384,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 480,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 480,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 480,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 576,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 576,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 576,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 672,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 672,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 672,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 720,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 720,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 720,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 50,
+      "K": 960,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 32,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_in_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 96,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 96,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 96,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 192,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 192,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 192,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 256,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 288,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 288,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 288,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 384,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 384,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 384,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 480,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 480,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 480,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 576,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 576,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 576,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 672,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 672,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 672,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 720,
+      "N": 32,
+      "layers": [
+        {
+          "section": "Projections",
+          "name": "action_out_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 720,
+      "N": 256,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 720,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 60,
+      "K": 960,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "q_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 320,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 960,
+      "N": 320,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "k_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 960,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "q_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 960,
+      "N": 2560,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 115,
+      "K": 2560,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 320,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 960,
+      "N": 320,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "k_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 960,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "q_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 960,
+      "N": 2560,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 128,
+      "K": 2560,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 320,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 960,
+      "N": 320,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "k_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 960,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "q_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 960,
+      "N": 2560,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 179,
+      "K": 2560,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 96,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 192,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 288,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 384,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 480,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 576,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 672,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 320,
+      "N": 720,
+      "layers": [
+        {
+          "section": "Action Expert",
+          "name": "k_proj"
+        },
+        {
+          "section": "Action Expert",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 960,
+      "N": 320,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "k_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "v_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 960,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "q_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "o_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 960,
+      "N": 2560,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "gate_proj"
+        },
+        {
+          "section": "Text Layers",
+          "name": "up_proj"
+        }
+      ]
+    },
+    {
+      "M": 235,
+      "K": 2560,
+      "N": 960,
+      "layers": [
+        {
+          "section": "Text Layers",
+          "name": "down_proj"
+        }
+      ]
+    },
+    {
+      "M": 1024,
+      "K": 768,
+      "N": 768,
+      "layers": [
+        {
+          "section": "Vision Encoder",
+          "name": "q_proj"
+        },
+        {
+          "section": "Vision Encoder",
+          "name": "k_proj"
+        },
+        {
+          "section": "Vision Encoder",
+          "name": "v_proj"
+        },
+        {
+          "section": "Vision Encoder",
+          "name": "out_proj"
+        },
+        {
+          "section": "Vision Encoder",
+          "name": "patch_embedding"
+        }
+      ]
+    },
+    {
+      "M": 1024,
+      "K": 768,
+      "N": 3072,
+      "layers": [
+        {
+          "section": "Vision Encoder",
+          "name": "mlp.fc1"
+        }
+      ]
+    },
+    {
+      "M": 1024,
+      "K": 3072,
+      "N": 768,
+      "layers": [
+        {
+          "section": "Vision Encoder",
+          "name": "mlp.fc2"
+        }
       ]
     }
   ]

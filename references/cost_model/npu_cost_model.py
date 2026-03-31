@@ -50,8 +50,8 @@ MODEL_FILE     = os.path.join(SCRIPT_DIR, "model.npz")
 EVAL_REPORT    = os.path.join(SCRIPT_DIR, "evaluation_report.md")
 
 # ── Hardware constants ─────────────────────────────────────────────────────────
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 128, 256, 512, 960, 1024, 2048, 3072]
+ALLOWED_N = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
 TILE_POOL  = [16, 32, 64, 128, 256, 512]
 MAX_TILE_MEM_BYTES = 32256
@@ -63,22 +63,23 @@ DTYPE_ENC = {"i8": 0, "i16": 1, "bf16": 2}
 
 # ── Tile validity ──────────────────────────────────────────────────────────────
 
-def _is_power_of_2(n: int) -> bool:
-    return n > 0 and (n & (n - 1)) == 0
-
 def valid_tiles_for_dim(Dp: int, is_K: bool = False) -> list:
-    """Return all valid tile values for a padded dimension."""
+    """Return all valid tile values for a padded dimension.
+
+    K dimension: only divisibility required (Kp % k == 0).
+    M/N dimensions: bundling constraint — (Dp//t) must be divisible by
+    at least one col_num/row_num ∈ {3, 4, 5}.
+    """
     result = []
     for t in TILE_POOL:
         if t > Dp or Dp % t != 0:
             continue
         if is_K:
-            result.append(t)           # K: only divisibility required
-        elif Dp in DIVISIBILITY_ONLY_DIMS:
-            result.append(t)           # 768/3072: only divisibility required
+            result.append(t)
         else:
             q = Dp // t
-            if q % 4 == 0 and _is_power_of_2(q):
+            # q < 3: GEMM auto-adjusts col_num/row_num down to q → always valid
+            if q < 3 or any(q % c == 0 for c in (3, 4, 5)):
                 result.append(t)
     return result
 

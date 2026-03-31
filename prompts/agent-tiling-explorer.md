@@ -157,8 +157,8 @@ For each (M, N, K) generated in 1.1, apply the same padding logic as the
 main workflow:
 
 ```
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 128, 256, 512, 960, 1024, 2048, 3072]
+ALLOWED_N = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
 
 Mp = smallest value in ALLOWED_M where Mp >= M
@@ -189,33 +189,28 @@ valid_t_K = [t for t in [16, 32, 64, 128, 256, 512]
              if Kp % t == 0 and t <= Kp]
 ```
 
-**M and N dimensions**: apply the full quotient rule, with known exceptions:
+**M and N dimensions**: the bundling constraint — the quotient (Dp//t) must be
+divisible by at least one `col_num`/`row_num` ∈ {3, 4, 5}:
 ```
-# Dimensions where the power-of-2 quotient rule is relaxed in practice:
-DIVISIBILITY_ONLY_DIMS = {768, 3072}   # confirmed working with non-power-of-2 quotients
-
 valid_t = [
     t for t in [16, 32, 64, 128, 256, 512]
     if Dp % t == 0
     and t <= Dp
-    and (
-        Dp in DIVISIBILITY_ONLY_DIMS      # relaxed: only divisibility required
-        or (
-            (Dp // t) % 4 == 0            # quotient divisible by 4
-            and (Dp // t) & ((Dp // t) - 1) == 0  # quotient is a power of 2
-        )
-    )
+    and any((Dp // t) % c == 0 for c in (3, 4, 5))  # bundling constraint
 ]
 ```
 
-The power-of-2 quotient check is normally required because the AIE tile-mapping
-engine throws `AssertionError: Unresolvable mapping` when quotients are not
-powers of 2. However, dimensions 768 and 3072 are confirmed exceptions — tiles
-like (64,64,64) on Np=768 (quotient=12) and Np=3072 (quotient=48) pass in
-practice despite failing the strict check. **These two values must be treated as
-divisibility-only** or the entire tile space for these common dimensions goes
-unexplored. Any new dimension that empirically works with a non-power-of-2
-quotient should be added to `DIVISIBILITY_ONLY_DIMS`.
+The GEMM function signature is `GEMM(Mp, Np, Kp, Pm, Pn, Pk, TyI, TyO, col_num=4, row_num=4)`
+where `col_num`/`row_num` ∈ {3, 4, 5}. The constraint `Pn % col_num == 0` must
+hold for the selected col_num. Since col_num can be 3, 4, or 5, a tile is valid
+if its quotient is divisible by ANY of these values.
+
+**Example**: N=960, n=64 → Pn=15. 15%4≠0 (rejected with default), but 15%3=0
+and 15%5=0 → valid with col_num=3 or 5. N=960 is in ALLOWED_N.
+
+The script auto-selects the best col_num/row_num (tries 4 first, then 3, then 5)
+via `--col-num auto` (default). This replaces the old DIVISIBILITY_ONLY_DIMS
+exception — the generalized rule handles 768 (12%4=0), 3072 (48%4=0), and 960 (15%3=0).
 
 **Step B — Cross-product and memory filter**
 
@@ -665,18 +660,16 @@ Files updated this session:
 These are NEVER negotiable. Violating any causes a build or runtime error.
 
 ```
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 128, 256, 512, 960, 1024, 2048, 3072]
+ALLOWED_N = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
 
 For each padded dim Dp and tile t:
   Dp % t == 0                           (t divides Dp)
   t <= Dp                               (tile never exceeds padded dim)
   For M and N (not K):
-    (Dp // t) % 4 == 0                  (quotient divisible by 4)
-    (Dp // t) is a power of 2           (required by AIE tile mapper)
-    EXCEPTION: Dp ∈ {768, 3072} → only divisibility required
-               (confirmed working despite non-power-of-2 quotients)
+    any((Dp//t) % c == 0 for c in (3,4,5))   # bundling constraint
+    (GEMM col_num/row_num ∈ {3,4,5} is auto-selected; try 4 first, then 3, then 5)
   For K: only divisibility required — no quotient constraint
 (m*n + n*k + k*m) * dsize <= 32,256    (dsize: i8=1, i16=2, bf16=2)
 m, n, k <= 1024

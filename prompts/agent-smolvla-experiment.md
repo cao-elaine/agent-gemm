@@ -3,12 +3,18 @@
 # SmolVLA NPU Experiment — Baseline vs Agentic Comparison
 
 Benchmarks every unique GEMM shape from the SmolVLA model on the NPU, comparing
-two decision strategies side-by-side: a naive **baseline** that always picks the
-closest padded shape, versus an **agentic** run that
-reasons from profiling data, error logs, and strategy insights to pick the best
-possible padded shape and tile. All experiments use **bf16** dtype. Each (shape,
-group) pair is run **5 trials** and results are averaged. Results are written to
-both JSON and Markdown under `references/experiment-results/`.
+three decision strategies side-by-side:
+
+- **Baseline 0** — fixed tile only: always uses (64,64,64) or (32,32,32) with
+  no profiling lookup. Represents the floor — what you get with zero data.
+- **Baseline 2** — profiling-best tile: closest-fit padded shape + best tile
+  from `npu_execution_profiling.json`. Fails gracefully when data is missing.
+- **Agentic** — full reasoning: padded shape selection across three strategies,
+  k_min accuracy pre-validation, cost model fallback, and strategy insights.
+
+All experiments use **bf16** dtype. Each (shape, group) pair is run **3 trials**
+and results are averaged. Results are written to both JSON and Markdown under
+`references/experiment-results/`.
 
 **Execution mode: fully autonomous. No time limit.**
 Execute all phases end-to-end without pausing, asking for confirmation, or
@@ -24,7 +30,7 @@ run until the full experiment is finished.
 
 ```
 dtype         = bf16          # fixed for this experiment — do not change
-trials        = 5             # number of NPU executions per (shape, group)
+trials        = 3             # number of NPU executions per (shape, group)
 shapes_file   = references/smol-vla-dataset/smolvla_gemm_shapes.json
 ```
 
@@ -99,7 +105,7 @@ os.environ["ENABLE_AGGRESSIVE_PORT_UTILIZATION_PATCH"] = "1"
 
 This must remain set for the entire session.
 
-### 0.5 Determine output paths
+### 0.5 Determine output paths and resume state
 
 ```
 date_str  = current date as YYYYMMDD
@@ -109,6 +115,24 @@ md_out    = <out_dir>/results.md
 ```
 
 Create `out_dir` with `os.makedirs(..., exist_ok=True)`.
+
+**Resume logic**: if `results.json` already exists in `out_dir`, load it and
+extract the set of already-completed shapes:
+
+```python
+import json, os
+completed = set()
+if os.path.exists(json_out):
+    existing = json.load(open(json_out))
+    for s in existing.get('shapes', []):
+        if s.get('winner') not in (None,):   # any recorded result counts
+            completed.add((s['M'], s['K'], s['N']))
+    print(f"[RESUME] Found {len(completed)} already-completed shapes in {json_out}")
+    print(f"[RESUME] Remaining: {len(all_shapes) - len(completed)} shapes to run")
+```
+
+Skip any shape in Phase 2 whose `(M, K, N)` is in `completed`. Preserve existing
+results in the JSON — do not overwrite them. Append only new results.
 
 ### 0.6 Context summary
 
@@ -148,139 +172,111 @@ Log each skipped shape:
 Shapes that pass both checks proceed to Phase 1.1. Skipped shapes are recorded
 in results with `winner = "prescreened_skip"` and no trial data.
 
-### 1.1 For each shape: compute both strategies
+### 1.1 For each shape: compute all three strategies
 
 Work through all 17 shapes in `smolvla_gemm_shapes.json`. For each (M, N, K):
 
-#### Baseline strategy
+#### Baseline 0 strategy — fixed tile, no data lookup
 
-The baseline always picks the **closest padded shape** (no strategy comparison,
-no evaluation of alternatives) and uses the **best known tile from profiling**
-for that shape. It does not reason about whether a different padded shape might
-be faster overall.
+The simplest possible policy: pick the closest padded shape and use a fixed
+default tile with no profiling lookup whatsoever.
+
+1. **Padded shape**: same closest-fit rule as Baseline 2 (see below).
+2. **Tile**: always **(64, 64, 64)** unless any padded dimension < 64, in which
+   case use **(32, 32, 32)**. No profiling lookup, no cost model, no heuristics.
+   Verify divisibility (§ hard constraints). If the chosen tile fails divisibility,
+   step down: (64,64,64) → (32,32,32) → (16,32,32).
+   Do NOT apply k_min or any accuracy rule — Baseline 0 is intentionally naive.
+3. **Padding impl**: same threshold rule as all other strategies:
+   `ab_elements = M*K + K*N`
+   - `manual_copy` if `ab_elements ≤ 571,779`; else `numpy_pad`
+   - If M==Mp and N==Np and K==Kp: `pad_impl = none`
+
+#### Baseline 2 strategy — profiling best tile
+
+Picks the closest padded shape and uses the best tile from profiling data. Does
+not reason about whether a different padded shape might be faster overall.
 
 1. **Padded shape**: for each dimension, take the smallest value from ALLOWED
    lists that is ≥ the dimension — always, with no further comparison.
    ```
-   ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-   ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
-   ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+   ALLOWED_M = [32, 64, 96, 128, 160, 192, 256, 288, 320, 384, 448, 480, 512, 576, 640, 672, 960, 1024, 1152, 1280, 1344, 1536, 1600, 1728, 1792, 1920, 2048, 2112, 2240, 2304, 2496, 2560, 2688, 2816, 2880, 3072, 3200, 3264, 3328, 3456, 3584, 3648, 3840, 4032, 4096]
+   ALLOWED_N = [32, 64, 96, 128, 160, 192, 256, 288, 320, 384, 448, 480, 512, 576, 640, 672, 768, 960, 1024, 1152, 1280, 1344, 1536, 1600, 1728, 1792, 1920, 2048, 2112, 2240, 2304, 2496, 2560, 2688, 2816, 2880, 3072, 3200, 3264, 3328, 3456, 3584, 3648, 3840, 4032, 4096]
+   ALLOWED_K = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
    Mp = min(v for v in ALLOWED_M if v >= M)
    Np = min(v for v in ALLOWED_N if v >= N)
    Kp = min(v for v in ALLOWED_K if v >= K)
    ```
 2. **Tile**: look up `"Best m,n,k"` in `npu_execution_profiling.json` for
-   `(Mp, Np, Kp, bf16)`. Use that tile directly — the baseline does **not**
+   `(Mp, Np, Kp, bf16)`. Use that tile directly — Baseline 2 does **not**
    validate it against accuracy constraints; it trusts the profiling DB as-is.
    If no profile entry exists, fall back to:
-   **(64, 64, 64)** if `Np >= 64`, else **(32, 32, 32)`.
+   **(64, 64, 64)** if `Np >= 64`, else **(32, 32, 32)**.
    Verify divisibility and memory constraints (§ hard constraints at bottom).
    If the chosen tile fails a divisibility or memory check, fall back to
    (32, 32, 32), then (16, 32, 32).
-   Note: the baseline does NOT apply the k_min accuracy rule — this is
-   intentional, and is the key differentiator the agentic strategy exploits.
-3. **Padding impl**: apply the bf16 threshold rule:
-   `ab_elements = M*K + K*N`
-   - `manual_copy` if `ab_elements ≤ 571,779`; else `numpy_pad`
-   - If M==Mp and N==Np and K==Kp: `pad_impl = none`
+3. **Padding impl**: same threshold rule as above.
 
 #### Agentic strategy
 
-The agentic run uses the full reasoning from `agentic-npu-workflow.md`
-(Phases 1.1–1.5). Specifically:
+The agent makes all decisions autonomously using whatever data and insights are
+available. There is no fixed algorithm to follow — the agent reads the profiling
+DB, knowledge base, error logs, and cost model output, then chooses the padded
+shape and tile it believes will be fastest for this specific shape.
 
-1. **Padded shape**: run all three strategies (sorted_first_fit, hashmap_27,
-   preprocessed_map) using `npu_execution_profiling.json`, then apply the
-   hybrid selection rule (small regime: fastest NPU time; large regime:
-   closest shape unless a larger one is >15% faster with affordable padding).
-2. **Tile**: look up `"Best m,n,k"` in `npu_execution_profiling.json` for
-   `(Mp, Np, Kp, bf16)`. Before using the profiling tile, **validate it against
-   all known bf16 accuracy constraints** — a profiling tile that fails accuracy
-   is worse than no profiling data at all:
+Available information (loaded in Phase 0):
+- `npu_execution_profiling.json` — real measured latencies for (padded shape, tile, dtype)
+- `strategy_insights.md` — accumulated patterns and rules from prior sessions
+- `errors.md` — known failure modes to avoid
+- Cost model — tile predictor for shapes with no profiling data
 
-   **Accuracy pre-validation (apply before using any tile, profiling or otherwise):**
-   ```
-   k_min = max(32, Kp // 12)   # empirically derived: k≥64 for Kp=768, k≥128 for Kp=1024
-                                 # (2026-03-21, confirmed across 8+ shapes)
+The agent should reason about:
+- Which padded shape (from ALLOWED lists) minimises both padding waste and NPU time
+- Which tile the data suggests will be fastest for that padded shape
+- Whether the profiling DB has data for this shape, and if so what it says
+- Any patterns from strategy_insights.md relevant to this shape's dimensions
 
-   if tile.k < k_min:
-       reject tile → select replacement using heuristic below
-   if Kp >= 768 and tile.k == 16:
-       reject tile → CDO trigger risk (confirmed 2026-03-13)
-   if Mp >= 128 and Np >= 128 and (tile.m == 16 or tile.n == 16):
-       reject tile → AIE program memory overflow (confirmed 2026-03-19)
-   ```
-   If the profiling tile passes validation, use it. If it is rejected, fall
-   through to the heuristic below. Log when a profiling tile is overridden:
-   ```
-   [TILE OVERRIDE] profiling best (<m>,<n>,<k>) rejected: k=<k> < k_min=<k_min>
-                   → selecting replacement tile
-   ```
+**Constraints** (non-negotiable):
+- Padded dims must be in ALLOWED_M / ALLOWED_N / ALLOWED_K
+- Tile must satisfy divisibility, bundling constraint, and memory budget (§ hard constraints)
+- If no profiling data exists for a shape, use the cost model first (Phase 0.3).
+  If the cost model also returns no useful prediction, reason from first principles:
+  - Enumerate valid tiles (divisibility + bundling + memory budget all satisfied)
+  - For overhead-limited shapes (Mp ≤ 64): tile choice has low impact; pick the largest
+    valid square tile that fits (e.g. m=Mp if Mp%3=0 or auto-adjust applies)
+  - For medium shapes (64 < Mp ≤ 256): prefer larger m (reduces Pm, fewer loop iterations)
+  - Prefer square-ish tiles; avoid m=16 unless forced (low parallelism for M≤128)
+  - Never emit a bare heuristic fallback without explaining the reasoning in `reasoning_summary`
 
-   If **no bf16 profile entry exists**, or if the profiling tile was rejected,
-   first try the cost model (see § 0.3). If the cost model's recommended tile
-   also fails the accuracy pre-validation above, fall through to the heuristics.
-   If the cost model is unavailable, use heuristics — do NOT simply default to (64,64,64):
-   a. If `Kp ≥ 768`: set `k = k_min = max(32, Kp // 12)` as the starting k.
-      Then select m and n:
-      - `Np ≤ 64` → `(32, 32, k_min)`
-      - `Mp ≥ 128 and Np ≥ 128` → `(32, 64, k_min)` — confirmed best pattern
-        on Kp=1024 shapes (shapes 3 and 4, 2026-03-21)
-      - Otherwise → `(64, 64, k_min)`
-   b. If `Kp < 768` and `Mp ≥ 1024` and `Np = 768`: prefer **(64, 64, 64)**
-      — confirmed best bf16 tile for this shape class (bf16 memory budget
-      prevents (128,64,64) which wins on i8).
-   c. If `Kp < 768` and `Np ≤ 64`: use **(32, 32, 32)**.
-   d. Otherwise: **(64, 64, 64)** as default.
-
-   Always verify all divisibility and memory checks after selection.
-   If the chosen tile fails a check, step down through:
-   `(32, 64, k_min)` → `(64, 64, 64)` → `(32, 32, 32)` → `(16, 32, 32)`.
-3. **Padding impl**: same threshold rule as baseline (this is deterministic).
-4. **Padding overhead check**: after selecting padded shape, estimate
-   total end-to-end latency:
-   ```
-   padding_est  = estimated padding time (from padding_transition_thresholds.json
-                  and known padding benchmarks in strategy_insights.md)
-   npu_est      = best known NPU time for (Mp, Np, Kp, bf16) from profiling,
-                  or ~157µs baseline overhead if shape is unprofiled
-   total_est    = padding_est + npu_est
-   overhead_ratio = padding_est / npu_est
-   ```
-   If `overhead_ratio > 1.5` (padding costs more than 1.5× the NPU work):
-   - Check whether a smaller alternate padded shape (e.g. a different Kp if K
-     is just above a boundary) would reduce total_est.
-   - Apply the hybrid selection rule from strategy_insights.md: for large inputs,
-     closest shape wins unless an alternative is >15% faster with affordable padding.
-   - Document the overhead ratio in the per-shape plan output.
-5. **Use profiling, error logs, and insights** to inform every choice.
+**Padding impl**: deterministic threshold rule — same as all other strategies:
+`ab_elements = M*K + K*N`; `manual_copy` if ≤ 571,779, else `numpy_pad`; `none` if no padding needed.
 
 ### 1.2 Print the plan table
 
 Before running anything:
 
 ```
-╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                           SMOLVLA EXPERIMENT PLAN  —  dtype=bf16                                    ║
-╠════════════╦═══════╦════════════════╦══════════════════════════╦══════════════════════════════════╣
-║  Shape     ║ Layer(s)              ║ Baseline                 ║ Agentic                          ║
-║  M,K,N     ║                       ║ Padded / Tile / Pad impl ║ Padded / Tile / Pad impl         ║
-╠════════════╬═══════╬════════════════╬══════════════════════════╬══════════════════════════════════╣
-║ 1024,768,768 ║ vision q/k/v/o, patch║ 1024,768,768 (64,64,64) np ║ ...                          ║
-║ ...        ║ ...                   ║ ...                      ║ ...                              ║
-╚════════════╩═══════╩════════════════╩══════════════════════════╩══════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                    SMOLVLA EXPERIMENT PLAN  —  dtype=bf16                                           ║
+╠══════════════╦═══════════════════╦════════════════════════════╦════════════════════════════╦════════════════════════╣
+║  Shape M,K,N ║ Layer(s)          ║ Baseline 0 (fixed tile)    ║ Baseline 2 (profiling)     ║ Agentic                ║
+║              ║                   ║ Padded / Tile / Impl       ║ Padded / Tile / Impl       ║ Padded / Tile / Impl   ║
+╠══════════════╬═══════════════════╬════════════════════════════╬════════════════════════════╬════════════════════════╣
+║ 1024,768,768 ║ vision q/k/v/o    ║ 1024,768,768 (64,64,64) np ║ 1024,768,768 (64,64,64) np ║ ...                   ║
+║ ...          ║ ...               ║ ...                        ║ ...                        ║ ...                   ║
+╚══════════════╩═══════════════════╩════════════════════════════╩════════════════════════════╩════════════════════════╝
 
-Total runs: <17 shapes × 2 groups × 5 trials = 170 NPU executions>
-Estimated wall time: ~<170 × avg_compile_time> min  (30–120s per compile)
+Total runs: <291 shapes × 3 groups × 3 trials = 2619 NPU executions>
+Estimated wall time: ~<2619 × avg_compile_time> min  (30–120s per compile)
 ```
 
 ---
 
 ## Phase 2 — Execute all runs
 
-Work through every shape. For each shape, run the **baseline group first**
-(5 trials), then the **agentic group** (5 trials). Do not ask for confirmation
-before any run.
+Work through every shape. For each shape, run **Baseline 0 first** (3 trials),
+then **Baseline 2** (3 trials), then the **agentic group** (3 trials). Do not
+ask for confirmation before any run.
 
 ### 2.1 Per-trial execution
 
@@ -301,9 +297,17 @@ Omit `--use-padding` and `--pad-*` when `pad_impl = none`.
 Record from each trial:
 - `npu_avg_us` from `Avg NPU execution time: <X>us`
 - `npu_min_us` from `Min NPU execution time: <X>us`
-- `padding_us` from `[bf16] Padding time: <X>us`
+- `padding_us` from `[bf16] Padding time: <X>us` (0 if pad_impl=none)
+- `unpadding_us` from `[bf16] Unpadding time: <X>us` (0 if pad_impl=none)
 - `status`: `passed` or `failed`
 - Any error message
+
+**Timing includes padding + NPU execution + unpadding only.**
+Do NOT include profiling lookup time, cost model inference time, agent reasoning
+time, or compilation time in any measurement.
+`total_us = padding_us + npu_avg_us + unpadding_us` is the comparison metric.
+`npu_avg_us` and `padding_us` come directly from the script output and already
+exclude everything else — record them as-is.
 
 **bf16 correctness tolerance**: `atol = 1e-1` (limited mantissa precision expected).
 
@@ -314,7 +318,8 @@ Record from each trial:
 
 Before each compile:
 ```
-[shape <i>/17 | <group> trial <t>/5]  M=<M> K=<K> N=<N>  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  compiling...
+[shape <i>/291 | <group> trial <t>/3]  M=<M> K=<K> N=<N>  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  compiling...
+# <group> is one of: baseline_0 | baseline_2 | agentic
 ```
 
 After each trial:
@@ -327,7 +332,8 @@ After each trial:
 
 On failure, classify using the same tree as `agentic-npu-workflow.md` § 2.4.
 
-- **Baseline failures**: apply the tile fallback sequence (64,64,64) →
+- **Baseline 0 failures**: apply fallback (32,32,32) → (16,32,32). Record tile used.
+- **Baseline 2 failures**: apply the tile fallback sequence (64,64,64) →
   (32,32,32) → (16,32,32). Record which tile was actually used for the trial.
   If all fallbacks fail, record `status = failed` for that trial with
   `npu_avg_us = null`.
@@ -339,15 +345,18 @@ On failure, classify using the same tree as `agentic-npu-workflow.md` § 2.4.
 
 ### 2.4 Per-shape mini-summary
 
-After all 10 trials for a shape (5 baseline + 5 agentic) are complete, print:
+After all 9 trials for a shape (3 × 3 groups) are complete, print:
 
 ```
 ── M=<M> K=<K> N=<N>  [<layer(s)>] ──────────────────────────────
-  BASELINE  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)
-    Trial 1: <avg>µs   Trial 2: <avg>µs   ...   Mean: <X>µs
-  AGENTIC   padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)
-    Trial 1: <avg>µs   Trial 2: <avg>µs   ...   Mean: <X>µs
-  Winner: <BASELINE|AGENTIC|TIE>  Δ = <X>µs (<Y>%)
+  BASELINE_0  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  [fixed]
+    Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
+  BASELINE_2  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  [profiling]
+    Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
+  AGENTIC     padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)
+    Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
+  Best: <BASELINE_0|BASELINE_2|AGENTIC>  (by mean_total_us)
+  vs B0: Δ(B2)=<X>µs (<Y>%)   Δ(AG)=<X>µs (<Y>%)
 ────────────────────────────────────────────────────────────────────
 ```
 
@@ -401,6 +410,19 @@ outperforming expectations, or a cross-shape pattern. Do not restate known rules
 
 Write both output files after all runs and memory updates are complete.
 
+**JSON serialization rule**: before calling `json.dump`, replace every `float('nan')`
+and `math.nan` value with `None` (serializes as JSON `null`). Never write bare `NaN`
+to JSON — it is not valid JSON and breaks parsers.
+```python
+import math
+def sanitize(obj):
+    if isinstance(obj, float) and math.isnan(obj): return None
+    if isinstance(obj, dict): return {k: sanitize(v) for k,v in obj.items()}
+    if isinstance(obj, list): return [sanitize(v) for v in obj]
+    return obj
+json.dump(sanitize(data), f, indent=2)
+```
+
 ### 4.1 JSON results — `references/experiment-results/test_n_<date>/results.json`
 
 ```json
@@ -408,96 +430,123 @@ Write both output files after all runs and memory updates are complete.
   "experiment": "SmolVLA NPU Baseline vs Agentic",
   "date": "<YYYY-MM-DD>",
   "dtype": "bf16",
-  "trials_per_group": 5,
+  "trials_per_group": 3,
   "shapes": [
     {
       "M": <M>, "K": <K>, "N": <N>,
       "layers": [ "<section>/<name>", ... ],
-      "baseline": {
+      "baseline_0": {
         "padded": {"M": <Mp>, "N": <Np>, "K": <Kp>},
         "tile": [<m>, <n>, <k>],
         "pad_impl": "<manual_copy|numpy_pad|none>",
+        "tile_source": "fixed",
         "trials": [
-          { "trial": 1, "status": "<passed|failed>", "npu_avg_us": <float|null>, "npu_min_us": <float|null>, "padding_us": <float|null> },
-          ...
+          { "trial": 1, "status": "<passed|failed>", "npu_avg_us": <float|null>, "npu_min_us": <float|null>, "padding_us": <float|null>, "unpadding_us": <float|null> }
         ],
         "mean_npu_avg_us": <float|null>,
         "mean_padding_us": <float|null>,
+        "mean_unpadding_us": <float|null>,
+        "mean_total_us": <float|null>,
+        "pass_count": <N>
+      },
+      "baseline_2": {
+        "padded": {"M": <Mp>, "N": <Np>, "K": <Kp>},
+        "tile": [<m>, <n>, <k>],
+        "pad_impl": "<manual_copy|numpy_pad|none>",
+        "tile_source": "<profiling|fallback_fixed>",
+        "trials": [
+          { "trial": 1, "status": "<passed|failed>", "npu_avg_us": <float|null>, "npu_min_us": <float|null>, "padding_us": <float|null>, "unpadding_us": <float|null> }
+        ],
+        "mean_npu_avg_us": <float|null>,
+        "mean_padding_us": <float|null>,
+        "mean_unpadding_us": <float|null>,
+        "mean_total_us": <float|null>,
         "pass_count": <N>
       },
       "agentic": {
         "padded": {"M": <Mp>, "N": <Np>, "K": <Kp>},
         "tile": [<m>, <n>, <k>],
         "pad_impl": "<manual_copy|numpy_pad|none>",
-        "strategy_source": "<hashmap_27|sorted_first_fit|preprocessed_map>",
+        "reasoning_summary": "<one sentence: why this padded shape and tile>",
+        "tile_source": "<profiling|model|heuristic>",
         "trials": [
-          { "trial": 1, "status": "<passed|failed>", "npu_avg_us": <float|null>, "npu_min_us": <float|null>, "padding_us": <float|null> },
-          ...
+          { "trial": 1, "status": "<passed|failed>", "npu_avg_us": <float|null>, "npu_min_us": <float|null>, "padding_us": <float|null>, "unpadding_us": <float|null> }
         ],
         "mean_npu_avg_us": <float|null>,
         "mean_padding_us": <float|null>,
+        "mean_unpadding_us": <float|null>,
+        "mean_total_us": <float|null>,
         "pass_count": <N>
       },
-      "winner": "<baseline|agentic|tie|inconclusive>",
-      "delta_us": <float|null>,
-      "delta_pct": <float|null>
+      "winner": "<baseline_0|baseline_2|agentic|tie|inconclusive|prescreened_skip>",
+      "delta_b2_vs_b0_us": <float|null>,
+      "delta_b2_vs_b0_pct": <float|null>,
+      "delta_ag_vs_b0_us": <float|null>,
+      "delta_ag_vs_b0_pct": <float|null>,
+      "delta_ag_vs_b2_us": <float|null>,
+      "delta_ag_vs_b2_pct": <float|null>
     }
   ],
   "summary": {
     "shapes_tested": 17,
-    "agentic_wins": <N>,
-    "baseline_wins": <N>,
-    "ties": <N>,
-    "inconclusive": <N>,
-    "mean_delta_pct": <float>
+    "winner_counts": {"baseline_0": <N>, "baseline_2": <N>, "agentic": <N>, "tie": <N>, "inconclusive": <N>},
+    "mean_delta_ag_vs_b0_pct": <float>,
+    "mean_delta_ag_vs_b2_pct": <float>,
+    "mean_delta_b2_vs_b0_pct": <float>
   }
 }
 ```
 
 `winner` logic:
-- Both groups have ≥ 1 passing trial → compare `mean_npu_avg_us`; winner is
-  the lower one. "tie" if within 2% of each other.
-- One or both groups have 0 passing trials → `"inconclusive"`.
+- All three groups with ≥ 1 passing trial → winner is the group with lowest
+  `mean_total_us` (= mean_padding_us + mean_npu_avg_us + mean_unpadding_us).
+  "tie" if top two are within 2% of each other.
+- For shapes with pad_impl=none in all groups: mean_total_us = mean_npu_avg_us.
+- Any group has 0 passing trials → that group is `"inconclusive"` for that shape.
 - Shape was flagged in Phase 1.0 → `"prescreened_skip"` (no trial data).
-- `delta_us = agentic_mean - baseline_mean` (negative = agentic faster).
-- `delta_pct = delta_us / baseline_mean * 100`.
+- All `delta_*` fields compare `mean_total_us`; use the reference group as
+  denominator; negative = faster.
 
 ### 4.2 Markdown results — `references/experiment-results/test_n_<date>/results.md`
 
 ```markdown
 # SmolVLA NPU Experiment Results
-**Date**: <YYYY-MM-DD>  |  **dtype**: bf16  |  **Trials per group**: 5
+**Date**: <YYYY-MM-DD>  |  **dtype**: bf16  |  **Trials per group**: 3
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
 | Shapes tested | 17 |
+| Baseline 0 wins | <N> |
+| Baseline 2 wins | <N> |
 | Agentic wins | <N> |
-| Baseline wins | <N> |
 | Ties (within 2%) | <N> |
 | Inconclusive | <N> |
-| Mean Δ (agentic vs baseline) | <X>% |
+| Mean Δ agentic vs Baseline 0 | <X>% |
+| Mean Δ agentic vs Baseline 2 | <X>% |
+| Mean Δ Baseline 2 vs Baseline 0 | <X>% |
 
 ## Per-Shape Results
 
 ### <M>×<K>×<N>  —  `<layer(s)>`
 
-| | Baseline | Agentic |
-|-|----------|---------|
-| Padded shape | (<Mp>,<Np>,<Kp>) | (<Mp>,<Np>,<Kp>) |
-| Tile | (<m>,<n>,<k>) | (<m>,<n>,<k>) |
-| Pad impl | <method> | <method> |
-| Strategy | closest-fit + profiling best tile | <strategy_source> |
-| Trial 1 avg (µs) | <X> | <X> |
-| Trial 2 avg (µs) | <X> | <X> |
-| Trial 3 avg (µs) | <X> | <X> |
-| Trial 4 avg (µs) | <X> | <X> |
-| Trial 5 avg (µs) | <X> | <X> |
-| **Mean avg (µs)** | **<X>** | **<X>** |
-| Pass count | <N>/5 | <N>/5 |
+| | Baseline 0 | Baseline 2 | Agentic |
+|-|------------|------------|---------|
+| Padded shape | (<Mp>,<Np>,<Kp>) | (<Mp>,<Np>,<Kp>) | (<Mp>,<Np>,<Kp>) |
+| Tile | (<m>,<n>,<k>) | (<m>,<n>,<k>) | (<m>,<n>,<k>) |
+| Tile source | fixed | profiling/fallback | <source> |
+| Pad impl | <method> | <method> | <method> |
+| Trial 1 total (µs) | <X> | <X> | <X> |
+| Trial 2 total (µs) | <X> | <X> | <X> |
+| Trial 3 total (µs) | <X> | <X> | <X> |
+| Mean NPU (µs) | <X> | <X> | <X> |
+| Mean pad (µs) | <X> | <X> | <X> |
+| **Mean total (µs)** | **<X>** | **<X>** | **<X>** |
+| Pass count | <N>/3 | <N>/3 | <N>/3 |
 
-**Winner: <BASELINE | AGENTIC | TIE>**  Δ = <X>µs (<Y>%)
+**Winner: <BASELINE_0 \| BASELINE_2 \| AGENTIC \| TIE>**
+Δ(B2 vs B0)=<X>µs (<Y>%)   Δ(AG vs B0)=<X>µs (<Y>%)   Δ(AG vs B2)=<X>µs (<Y>%)
 
 ---
 
@@ -521,7 +570,104 @@ Write both output files after all runs and memory updates are complete.
 
 ---
 
-## Phase 5 — Print final banner
+## Phase 5 — Generate plots
+
+After writing results files, generate comparison plots using matplotlib.
+Save all plots to `<out_dir>/plots/`. Create the directory first.
+
+```python
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np, json, os
+
+results = json.load(open(json_out))
+os.makedirs(f'{out_dir}/plots', exist_ok=True)
+
+shapes   = [s for s in results['shapes'] if s['winner'] not in ('prescreened_skip',)]
+labels   = [f"{s['M']}×{s['K']}×{s['N']}" for s in shapes]
+b0_means = [s['baseline_0']['mean_total_us'] or 0 for s in shapes]
+b2_means = [s['baseline_2']['mean_total_us'] or 0 for s in shapes]
+ag_means = [s['agentic']['mean_total_us']    or 0 for s in shapes]
+x = np.arange(len(labels))
+w = 0.25
+```
+
+### Plot 1 — Grouped bar chart: latency per shape
+
+```python
+fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 6))
+ax.bar(x - w, b0_means, w, label='Baseline 0 (fixed tile)', color='#d9534f')
+ax.bar(x,     b2_means, w, label='Baseline 2 (profiling)',  color='#f0ad4e')
+ax.bar(x + w, ag_means, w, label='Agentic',                 color='#5cb85c')
+ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+ax.set_ylabel('Mean total time (µs)  [pad + NPU + unpad]'); ax.set_title('SmolVLA GEMM Latency by Strategy')
+ax.legend(); plt.tight_layout()
+plt.savefig(f'{out_dir}/plots/latency_grouped_bar.png', dpi=150)
+plt.close()
+```
+
+### Plot 2 — Improvement % over Baseline 0
+
+```python
+def pct(baseline, val):
+    if baseline and val:
+        return (val - baseline) / baseline * 100
+    return None
+
+b2_pct = [pct(b0, b2) for b0, b2 in zip(b0_means, b2_means)]
+ag_pct = [pct(b0, ag) for b0, ag in zip(b0_means, ag_means)]
+
+fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 5))
+ax.bar(x - w/2, b2_pct, w, label='Baseline 2 vs B0', color='#f0ad4e')
+ax.bar(x + w/2, ag_pct, w, label='Agentic vs B0',    color='#5cb85c')
+ax.axhline(0, color='black', linewidth=0.8)
+ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+ax.set_ylabel('Δ vs Baseline 0 (%)  [negative = faster]')
+ax.set_title('Improvement over Fixed-Tile Baseline 0')
+ax.legend(); plt.tight_layout()
+plt.savefig(f'{out_dir}/plots/improvement_over_b0.png', dpi=150)
+plt.close()
+```
+
+### Plot 3 — Win/loss summary bar chart
+
+```python
+counts = results['summary']['winner_counts']
+groups = ['Baseline 0', 'Baseline 2', 'Agentic', 'Tie', 'Inconclusive']
+keys   = ['baseline_0', 'baseline_2', 'agentic', 'tie', 'inconclusive']
+colors = ['#d9534f', '#f0ad4e', '#5cb85c', '#aaaaaa', '#cccccc']
+vals   = [counts.get(k, 0) for k in keys]
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.bar(groups, vals, color=colors)
+ax.set_ylabel('Number of shapes'); ax.set_title('Winner distribution across SmolVLA shapes')
+for i, v in enumerate(vals):
+    if v: ax.text(i, v + 0.1, str(v), ha='center', fontsize=11, fontweight='bold')
+plt.tight_layout()
+plt.savefig(f'{out_dir}/plots/winner_distribution.png', dpi=150)
+plt.close()
+```
+
+### Plot 4 — Agentic vs Baseline 2 delta (head-to-head)
+
+```python
+ag_vs_b2 = [pct(b2, ag) for b2, ag in zip(b2_means, ag_means)]
+colors_bar = ['#5cb85c' if (v is not None and v < 0) else '#d9534f' for v in ag_vs_b2]
+fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 5))
+ax.bar(x, ag_vs_b2, color=colors_bar)
+ax.axhline(0, color='black', linewidth=0.8)
+ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
+ax.set_ylabel('Agentic Δ vs Baseline 2 (%)  [negative = agentic faster]')
+ax.set_title('Agentic vs Baseline 2 — Head-to-Head')
+plt.tight_layout()
+plt.savefig(f'{out_dir}/plots/agentic_vs_baseline2.png', dpi=150)
+plt.close()
+print(f"Plots saved to {out_dir}/plots/")
+```
+
+---
+
+## Phase 6 — Print final banner
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
@@ -530,9 +676,11 @@ Write both output files after all runs and memory updates are complete.
 ║  Date:           <YYYY-MM-DD HH:MM:SS>                               ║
 ║  Shapes tested:  17   dtype: bf16   Trials/group: 5                  ║
 ║  Total NPU runs: <N>  │  Passed: <N>  │  Failed: <N>                 ║
-║  Agentic wins:   <N>  │  Baseline wins: <N>  │  Ties: <N>            ║
-║  Mean Δ (agentic vs baseline): <X>%                                  ║
+║  Baseline 0 wins: <N> │  Baseline 2 wins: <N> │  Agentic wins: <N>  ║
+║  Ties: <N>        │  Inconclusive: <N>                               ║
+║  Mean Δ agentic vs B0: <X>%   vs B2: <X>%                           ║
 ║  Results: references/experiment-results/test_n_<date>/               ║
+║  Plots:   references/experiment-results/test_n_<date>/plots/         ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -541,17 +689,18 @@ Write both output files after all runs and memory updates are complete.
 ## Quick reference — hard constraints
 
 ```
-ALLOWED_M = [32, 64, 128, 256, 512, 1024, 2048, 3072]
-ALLOWED_N = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
-ALLOWED_K = [32, 64, 128, 256, 512, 768, 1024, 2048, 3072]
+ALLOWED_M = [32, 64, 96, 128, 160, 192, 256, 288, 320, 384, 448, 480, 512, 576, 640, 672, 960, 1024, 1152, 1280, 1344, 1536, 1600, 1728, 1792, 1920, 2048, 2112, 2240, 2304, 2496, 2560, 2688, 2816, 2880, 3072, 3200, 3264, 3328, 3456, 3584, 3648, 3840, 4032, 4096]
+ALLOWED_N = [32, 64, 96, 128, 160, 192, 256, 288, 320, 384, 448, 480, 512, 576, 640, 672, 768, 960, 1024, 1152, 1280, 1344, 1536, 1600, 1728, 1792, 1920, 2048, 2112, 2240, 2304, 2496, 2560, 2688, 2816, 2880, 3072, 3200, 3264, 3328, 3456, 3584, 3648, 3840, 4032, 4096]
+ALLOWED_K = [32, 64, 128, 256, 512, 768, 960, 1024, 2048, 3072]
 
 For each padded dim Dp and tile t:
   Dp % t == 0                           (t divides Dp)
-  (Dp // t) % 4 == 0                    (quotient divisible by 4)
-  (Dp // t) is a power of 2             (required by AIE tile mapper)
-  → combined: Dp//t ∈ {4, 8, 16, 32, 64, 128, ...}
-
-t <= Dp                                 (tile never exceeds padded dim)
+  t <= Dp                               (tile never exceeds padded dim)
+  For M and N (not K):
+    any((Dp//t) % c == 0 for c in (3,4,5))   # bundling constraint
+    (GEMM col_num/row_num ∈ {3,4,5}, auto-selected; --col-num auto is default)
+    Example: Np=960, n=64 → Pn=15 → 15%3=0 → valid with col_num=3
+  For K: only Kp % k == 0 required
 (m*n + n*k + k*m) * 2 <= 32,256        (bf16: dsize=2)
 
 ENABLE_AGGRESSIVE_PORT_UTILIZATION_PATCH = "1" must be set before df.build
@@ -564,17 +713,17 @@ Never use `torch_pad`. Never use `torch_pad`. Always use `manual_copy` or `numpy
 
 ## Experiment notes
 
-**Baseline uses the closest padded shape + the profiling best tile.** It
-represents the simplest automated decision: pad to the nearest allowed shape
-and use whatever tile the profiling DB says is best for it — no strategy
-comparison, no evaluation of whether a different padded shape would be faster
-overall. Its purpose is to measure how much additional value the agentic
-shape-selection reasoning adds on top of a good tile choice. Do not apply any
-agentic reasoning to the baseline mid-run.
+**Three-strategy design:**
+- **Baseline 0** is the floor: fixed tile (64,64,64) or (32,32,32) with no data.
+  It measures the minimum achievable without any profiling or reasoning.
+- **Baseline 2** adds profiling lookup: closest-fit shape + best known tile.
+  It measures the value of having profiling data but no shape-selection reasoning.
+- **Agentic** makes all decisions freely using profiling data, insights, error
+  logs, and the cost model — no fixed algorithm. The gap between Baseline 2 and
+  Agentic measures the value of open-ended reasoning over a closest-fit rule.
 
-**Agentic runs update memory; baseline runs do not.** The baseline is a static
-policy and should not influence profiling data or knowledge base entries. Only
-write to memory files based on agentic trial results.
+**Agentic runs update memory; baseline runs do not.** Only write to memory files
+based on agentic trial results.
 
 **Small shapes (M≤64) will always tie.** The NPU fixed launch overhead (~157µs)
 dominates for M≤64 — execution times cluster in 120–170µs regardless of tile or
@@ -587,15 +736,16 @@ dsize=2 means tiles like (128,64,64) that win by -11.9% on i8 physically cannot
 be run for bf16 on most shapes. (64,64,64) is often the practical bf16 optimum
 not because the agent lacks information, but because nothing larger fits.
 
-**5 trials exist to reduce noise.** NPU execution time varies run-to-run.
-Average over all 5 passing trials when computing the mean. If a trial fails,
-exclude it from the average but count it in `pass_count`. If all 5 trials fail
+**3 trials exist to reduce noise.** NPU execution time varies run-to-run.
+Average over all 3 passing trials when computing the mean. If a trial fails,
+exclude it from the average but count it in `pass_count`. If all 3 trials fail
 for a group, mark that group as `"inconclusive"` — do not compare means.
 
-**Padding time is part of the comparison.** When both groups use the same
-`pad_impl`, padding time cancels out. When they differ (e.g. agentic chose
-a shape that avoids padding), this is part of the agentic win. The JSON records
-`mean_padding_us` separately so this can be analysed after the fact.
+**Total time is the comparison metric.** `mean_total_us = mean_padding_us + mean_npu_avg_us + mean_unpadding_us`.
+When all groups use the same pad_impl and padded shape, padding and unpadding
+cancel out and the comparison reduces to NPU time alone. When a strategy avoids
+padding (pad_impl=none) or uses a smaller padded shape, those savings count.
+The JSON records each component separately for analysis.
 
 **Each trial is a full independent invocation of the script.**
 The `npu_avg_us` field from the script output already excludes compile time
@@ -617,6 +767,7 @@ be more accurate.
 **Comparison metric is total NPU execution time, not tile selection quality.**
 Two strategies can make different choices and arrive at the same time — that is
 a tie, not an agentic win. A true agentic win requires measurably lower
-`mean_npu_avg_us` across 5 trials. The `overhead_ratio` column in the plan
+`mean_npu_avg_us` across 3 trials. The `overhead_ratio` column in the plan
 table documents cases where padding dominates — these are the shapes where
 smarter padded-shape selection matters most.
+
