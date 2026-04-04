@@ -1,0 +1,600 @@
+{
+  "experiment": "SmolVLA NPU Baseline vs Agentic",
+  "date": "2026-03-24",
+  "dtype": "bf16",
+  "trials_per_group": 5,
+  "shapes": [
+    {
+      "M": 1024, "K": 768, "N": 768,
+      "layers": [
+        "Vision Encoder/q_proj", "Vision Encoder/k_proj", "Vision Encoder/v_proj",
+        "Vision Encoder/out_proj", "Vision Encoder/patch_embedding"
+      ],
+      "baseline": {
+        "padded": {"M": 1024, "N": 768, "K": 768},
+        "tile": [64, 64, 64],
+        "pad_impl": "none",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 755.032, "npu_min_us": 720, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 753.23,  "npu_min_us": 721, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 765.5,   "npu_min_us": 726, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 751.868, "npu_min_us": 722, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 760.549, "npu_min_us": 719, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 757.24,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 1024, "N": 768, "K": 768},
+        "tile": [64, 64, 64],
+        "pad_impl": "none",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "notes": "Profiling best (64,64,64) passes k_min=64 and no n=16 issue",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 765.87,  "npu_min_us": 723, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 754.354, "npu_min_us": 721, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 752.732, "npu_min_us": 721, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 763.069, "npu_min_us": 721, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 763.859, "npu_min_us": 726, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 759.98,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": 2.74,
+      "delta_pct": 0.36
+    },
+    {
+      "M": 1024, "K": 768, "N": 3072,
+      "layers": ["Vision Encoder/mlp.fc1"],
+      "notes": "Direct mode: N=3072 exceeds script ALLOWED_N max (2048); no --use-padding; profiling key 1024_3072_768 confirms (64,64,64) passes at ~2877µs",
+      "baseline": {
+        "padded": {"M": 1024, "N": 3072, "K": 768},
+        "tile": [64, 64, 64],
+        "pad_impl": "none",
+        "strategy_source": "closest-fit + profiling best tile (direct mode)",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 2862.88, "npu_min_us": 2559, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 2964.97, "npu_min_us": 2570, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 2977.48, "npu_min_us": 2582, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 3005.86, "npu_min_us": 2568, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 2976.12, "npu_min_us": 2542, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 2957.46,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 1024, "N": 3072, "K": 768},
+        "tile": [64, 64, 64],
+        "pad_impl": "none",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "notes": "k=64=k_min for Kp=768; no n=16 issue; profiling best confirmed",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 2994.34, "npu_min_us": 2583, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 3023.77, "npu_min_us": 2598, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 2997.0,  "npu_min_us": 2612, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 2987.66, "npu_min_us": 2546, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 3022.84, "npu_min_us": 2583, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 3005.12,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": 47.66,
+      "delta_pct": 1.61
+    },
+    {
+      "M": 1024, "K": 3072, "N": 768,
+      "layers": ["Vision Encoder/mlp.fc2"],
+      "status": "prescreened_skip",
+      "winner": "prescreened_skip",
+      "reason": "bf16_K_limit",
+      "baseline": null,
+      "agentic": null,
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "M": 128, "K": 960, "N": 960,
+      "layers": ["Text Layers (x16)/q_proj", "Text Layers (x16)/o_proj"],
+      "baseline": {
+        "padded": {"M": 128, "N": 960, "K": 1024},
+        "tile": [32, 16, 256],
+        "pad_impl": "numpy_pad",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 512.683, "npu_min_us": 491, "padding_us": 1254.374},
+          {"trial": 2, "status": "passed", "npu_avg_us": 512.715, "npu_min_us": 486, "padding_us": 1226.219},
+          {"trial": 3, "status": "passed", "npu_avg_us": 672.793, "npu_min_us": 491, "padding_us": 1217.102},
+          {"trial": 4, "status": "passed", "npu_avg_us": 511.888, "npu_min_us": 487, "padding_us": 1214.086},
+          {"trial": 5, "status": "passed", "npu_avg_us": 521.836, "npu_min_us": 484, "padding_us": 1212.724}
+        ],
+        "mean_npu_avg_us": 546.38,
+        "mean_padding_us": 1224.90,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 128, "N": 960, "K": 1024},
+        "tile": [32, 16, 256],
+        "pad_impl": "numpy_pad",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling (n=16 rejection rule overridden per errors.md [2026-03-24]: n=16 tiles pass on (128,960,1024) with k>=128)",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 522.676, "npu_min_us": 492, "padding_us": 1233.694},
+          {"trial": 2, "status": "passed", "npu_avg_us": 521.017, "npu_min_us": 490, "padding_us": 1237.210},
+          {"trial": 3, "status": "passed", "npu_avg_us": 577.29,  "npu_min_us": 485, "padding_us": 1231.308},
+          {"trial": 4, "status": "passed", "npu_avg_us": 740.311, "npu_min_us": 481, "padding_us": 1201.290},
+          {"trial": 5, "status": "passed", "npu_avg_us": 512.637, "npu_min_us": 486, "padding_us": 1220.316}
+        ],
+        "mean_npu_avg_us": 574.79,
+        "mean_padding_us": 1224.76,
+        "pass_count": 5
+      },
+      "winner": "baseline",
+      "delta_us": 28.41,
+      "delta_pct": 5.20,
+      "notes": "Same tile used by both groups; difference is measurement noise (high-outlier trials 3/4); min NPU times are identical (~487µs). overhead_ratio=1224/546=2.24 — padding dominates 2.2x NPU time."
+    },
+    {
+      "M": 128, "K": 960, "N": 320,
+      "layers": ["Text Layers (x16)/k_proj", "Text Layers (x16)/v_proj"],
+      "baseline": {
+        "padded": {"M": 128, "N": 512, "K": 1024},
+        "tile": [32, 64, 128],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 240.817, "npu_min_us": 213, "padding_us": 282.220},
+          {"trial": 2, "status": "passed", "npu_avg_us": 239.754, "npu_min_us": 214, "padding_us": 618.584},
+          {"trial": 3, "status": "passed", "npu_avg_us": 239.433, "npu_min_us": 215, "padding_us": 280.887},
+          {"trial": 4, "status": "passed", "npu_avg_us": 240.412, "npu_min_us": 213, "padding_us": 273.463},
+          {"trial": 5, "status": "passed", "npu_avg_us": 240.212, "npu_min_us": 216, "padding_us": 292.260}
+        ],
+        "mean_npu_avg_us": 240.13,
+        "mean_padding_us": 349.48,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 128, "N": 512, "K": 1024},
+        "tile": [32, 64, 128],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling (k=128 >= k_min=85; no n=16 issue)",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 240.519, "npu_min_us": 212, "padding_us": 395.426},
+          {"trial": 2, "status": "passed", "npu_avg_us": 238.254, "npu_min_us": 214, "padding_us": 286.439},
+          {"trial": 3, "status": "passed", "npu_avg_us": 236.34,  "npu_min_us": 208, "padding_us": 298.381},
+          {"trial": 4, "status": "passed", "npu_avg_us": 235.2,   "npu_min_us": 217, "padding_us": 276.369},
+          {"trial": 5, "status": "passed", "npu_avg_us": 235.203, "npu_min_us": 213, "padding_us": 275.988}
+        ],
+        "mean_npu_avg_us": 237.10,
+        "mean_padding_us": 306.52,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -3.03,
+      "delta_pct": -1.26
+    },
+    {
+      "M": 128, "K": 960, "N": 2560,
+      "layers": ["Text Layers (x16)/gate_proj", "Text Layers (x16)/up_proj"],
+      "notes": "Direct mode: N=2560 exceeds script ALLOWED_N max. Baseline uses (64,64,64) k=64<k_min=80 but PASSES accuracy. Agentic uses non-standard tile (32,64,80) with k=80=k_min. NEW FINDING: direct-mode K=960 bf16 passes accuracy where padded Kp=1024 fails.",
+      "baseline": {
+        "padded": {"M": 128, "N": 2560, "K": 960},
+        "tile": [64, 64, 64],
+        "pad_impl": "none",
+        "strategy_source": "closest-fit fallback (direct mode)",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 654.554, "npu_min_us": 623, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 654.596, "npu_min_us": 623, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 657.203, "npu_min_us": 617, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 669.28,  "npu_min_us": 622, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 662.23,  "npu_min_us": 623, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 651.57,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 128, "N": 2560, "K": 960},
+        "tile": [32, 64, 80],
+        "pad_impl": "none",
+        "strategy_source": "heuristic (k_min=80; Mp>=128 Np>=128; non-standard k=80 divides K=960)",
+        "tile_source": "heuristic",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 660.736, "npu_min_us": 612, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 650.651, "npu_min_us": 612, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 650.193, "npu_min_us": 611, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 646.995, "npu_min_us": 616, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 653.051, "npu_min_us": 615, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 652.33,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": 0.76,
+      "delta_pct": 0.12
+    },
+    {
+      "M": 128, "K": 2560, "N": 960,
+      "layers": ["Text Layers (x16)/down_proj"],
+      "status": "prescreened_skip",
+      "winner": "prescreened_skip",
+      "reason": "bf16_K_limit",
+      "baseline": null,
+      "agentic": null,
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "M": 50, "K": 960, "N": 96,
+      "layers": ["Action Expert (x16)/q_proj"],
+      "status": "prescreened_skip",
+      "winner": "prescreened_skip",
+      "reason": "bf16_accuracy_small_MN_large_K",
+      "baseline": null,
+      "agentic": null,
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "M": 128, "K": 320, "N": 96,
+      "layers": ["Action Expert (x16)/k_proj", "Action Expert (x16)/v_proj"],
+      "baseline": {
+        "padded": {"M": 128, "N": 128, "K": 512},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "notes": "Baseline does NOT apply k_min rule; uses profiling best (32,32,32) which passes accuracy at Kp=512",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 148.23,  "npu_min_us": 128, "padding_us": 24.327},
+          {"trial": 2, "status": "passed", "npu_avg_us": 150.746, "npu_min_us": 127, "padding_us": 22.763},
+          {"trial": 3, "status": "passed", "npu_avg_us": 148.734, "npu_min_us": 128, "padding_us": 22.302},
+          {"trial": 4, "status": "passed", "npu_avg_us": 148.407, "npu_min_us": 125, "padding_us": 28.083},
+          {"trial": 5, "status": "passed", "npu_avg_us": 152.141, "npu_min_us": 128, "padding_us": 23.235}
+        ],
+        "mean_npu_avg_us": 149.65,
+        "mean_padding_us": 24.14,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 128, "N": 128, "K": 512},
+        "tile": [64, 64, 64],
+        "pad_impl": "manual_copy",
+        "strategy_source": "cost_model",
+        "tile_source": "cost_model (profiling best (32,32,32) rejected: k=32 < k_min=42 for Kp=512; cost model recommends (64,64,64))",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 158.999, "npu_min_us": 137, "padding_us": 23.155},
+          {"trial": 2, "status": "passed", "npu_avg_us": 161.364, "npu_min_us": 134, "padding_us": 24.828},
+          {"trial": 3, "status": "passed", "npu_avg_us": 160.268, "npu_min_us": 129, "padding_us": 23.865},
+          {"trial": 4, "status": "passed", "npu_avg_us": 159.731, "npu_min_us": 136, "padding_us": 23.515},
+          {"trial": 5, "status": "passed", "npu_avg_us": 159.697, "npu_min_us": 134, "padding_us": 23.645}
+        ],
+        "mean_npu_avg_us": 160.01,
+        "mean_padding_us": 23.80,
+        "pass_count": 5
+      },
+      "winner": "baseline",
+      "delta_us": 10.36,
+      "delta_pct": 6.92,
+      "notes": "k_min rule overly conservative for Kp=512. k=32 passes accuracy at this small K. Agentic (64,64,64) slower by 6.9%."
+    },
+    {
+      "M": 50, "K": 96, "N": 960,
+      "layers": ["Action Expert (x16)/o_proj"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 64, "N": 960, "K": 128},
+        "tile": [16, 64, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 203.971, "npu_min_us": 180, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 202.775, "npu_min_us": 177, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 202.726, "npu_min_us": 182, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 206.484, "npu_min_us": 182, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 199.253, "npu_min_us": 176, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 203.04,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 64, "N": 960, "K": 128},
+        "tile": [16, 64, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 203.215, "npu_min_us": 178, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 199.287, "npu_min_us": 178, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 201.283, "npu_min_us": 184, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 202.607, "npu_min_us": 178, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 205.321, "npu_min_us": 180, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 202.34,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -0.70,
+      "delta_pct": -0.35
+    },
+    {
+      "M": 50, "K": 96, "N": 256,
+      "layers": ["Action Expert (x16)/gate_proj", "Action Expert (x16)/up_proj"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 64, "N": 256, "K": 128},
+        "tile": [32, 64, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 134.983, "npu_min_us": 117, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 135.583, "npu_min_us": 116, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 133.101, "npu_min_us": 112, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 133.912, "npu_min_us": 113, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 133.196, "npu_min_us": 109, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 134.16,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 64, "N": 256, "K": 128},
+        "tile": [32, 64, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 134.706, "npu_min_us": 113, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 135.144, "npu_min_us": 113, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 132.015, "npu_min_us": 107, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 134.292, "npu_min_us": 114, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 130.909, "npu_min_us": 109, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 133.41,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -0.75,
+      "delta_pct": -0.56
+    },
+    {
+      "M": 50, "K": 256, "N": 96,
+      "layers": ["Action Expert (x16)/down_proj"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 64, "N": 128, "K": 256},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 131.42,  "npu_min_us": 113, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 132.61,  "npu_min_us": 110, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 127.851, "npu_min_us": 113, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 130.663, "npu_min_us": 115, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 131.552, "npu_min_us": 113, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 130.82,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 64, "N": 128, "K": 256},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 131.365, "npu_min_us": 114, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 131.248, "npu_min_us": 109, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 132.165, "npu_min_us": 107, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 128.705, "npu_min_us": 112, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 132.674, "npu_min_us": 110, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 131.23,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": 0.41,
+      "delta_pct": 0.31
+    },
+    {
+      "M": 1, "K": 960, "N": 32,
+      "layers": ["Projections/state_proj"],
+      "status": "prescreened_skip",
+      "winner": "prescreened_skip",
+      "reason": "bf16_accuracy_small_MN_large_K",
+      "baseline": null,
+      "agentic": null,
+      "delta_us": null,
+      "delta_pct": null
+    },
+    {
+      "M": 50, "K": 32, "N": 96,
+      "layers": ["Projections/action_in_proj"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 64, "N": 128, "K": 32},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 134.282, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 131.774, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 131.681, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 130.466, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 129.954, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 131.63,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 64, "N": 128, "K": 32},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 132.496, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 129.529, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 130.668, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 129.08,  "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 132.266, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 130.81,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -0.82,
+      "delta_pct": -0.62
+    },
+    {
+      "M": 50, "K": 96, "N": 32,
+      "layers": ["Projections/action_out_proj"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 64, "N": 32, "K": 128},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 125.673, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 125.497, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 125.826, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 123.756, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 126.318, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 125.41,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 64, "N": 32, "K": 128},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 122.363, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 123.785, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 127.352, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 124.886, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 123.786, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 124.43,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -0.98,
+      "delta_pct": -0.78
+    },
+    {
+      "M": 1, "K": 192, "N": 96,
+      "layers": ["Projections/action_time_mlp_in"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 32, "N": 128, "K": 256},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 129.407, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 127.957, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 129.432, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 128.856, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 128.323, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 128.80,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 32, "N": 128, "K": 256},
+        "tile": [32, 32, 32],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 131.483, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 133.073, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 127.5,   "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 131.207, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 129.966, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 130.65,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": 1.85,
+      "delta_pct": 1.44
+    },
+    {
+      "M": 1, "K": 96, "N": 96,
+      "layers": ["Projections/action_time_mlp_out"],
+      "overhead_limited": true,
+      "baseline": {
+        "padded": {"M": 32, "N": 128, "K": 128},
+        "tile": [32, 32, 64],
+        "pad_impl": "manual_copy",
+        "strategy_source": "closest-fit + profiling best tile",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 129.078, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 129.414, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 129.626, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 130.643, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 129.041, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 129.56,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "agentic": {
+        "padded": {"M": 32, "N": 128, "K": 128},
+        "tile": [32, 32, 64],
+        "pad_impl": "manual_copy",
+        "strategy_source": "preprocessed_map",
+        "tile_source": "profiling",
+        "trials": [
+          {"trial": 1, "status": "passed", "npu_avg_us": 127.502, "npu_min_us": null, "padding_us": null},
+          {"trial": 2, "status": "passed", "npu_avg_us": 128.788, "npu_min_us": null, "padding_us": null},
+          {"trial": 3, "status": "passed", "npu_avg_us": 129.177, "npu_min_us": null, "padding_us": null},
+          {"trial": 4, "status": "passed", "npu_avg_us": 129.824, "npu_min_us": null, "padding_us": null},
+          {"trial": 5, "status": "passed", "npu_avg_us": 127.368, "npu_min_us": null, "padding_us": null}
+        ],
+        "mean_npu_avg_us": 128.53,
+        "mean_padding_us": null,
+        "pass_count": 5
+      },
+      "winner": "tie",
+      "delta_us": -1.03,
+      "delta_pct": -0.79
+    }
+  ],
+  "summary": {
+    "shapes_tested": 17,
+    "shapes_run": 13,
+    "prescreened_skip": 4,
+    "agentic_wins": 0,
+    "baseline_wins": 2,
+    "ties": 11,
+    "inconclusive": 0,
+    "mean_delta_pct_over_run_shapes": 0.89,
+    "notes": "Shape 4 baseline win is same-tile measurement noise (min times identical). Shape 9 baseline win is genuine: agentic k_min rule too conservative for Kp=512. 7 overhead-limited shapes (Mp<=64) tie as predicted. Key new finding: direct-mode K=960 bf16 passes accuracy where padded Kp=1024 fails."
+  }
+}

@@ -1,0 +1,9 @@
+[
+  {"M": 128, "N": 960, "K": 960,  "note": "q_proj / o_proj"},
+  {"M": 128, "N": 320, "K": 960,  "note": "k_proj / v_proj"},
+  {"M": 128, "N": 960, "K": 2560, "note": "down_proj"},
+  {"M": 128, "N": 2560,"K": 960,  "note": "gate_proj / up_proj (1 existing entry, needs more tiles)"},
+  {"M": 50,  "N": 96,  "K": 960,  "note": "action Q proj (M pads to 64, K pads to 1024)"},
+  {"M": 50,  "N": 960, "K": 96,   "note": "action O proj (M pads to 64, N=960 direct)"},
+  
+]
