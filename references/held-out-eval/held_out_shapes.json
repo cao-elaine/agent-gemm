@@ -1,0 +1,10495 @@
+{
+  "description": "50 held-out SmolVLA padded shapes removed from the profiling DB for agent evaluation. Seed=42. The agent should NOT have access to this file.",
+  "total": 50,
+  "dtype": "bf16",
+  "shapes": [
+    {
+      "padded_key": "32_288_256",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 148.763,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 152.806,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 154.806,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 154.887,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 155.275,
+          "count": 9
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 156.155,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 157.211,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 157.941,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 159.089,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 159.95,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 161.684,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 161.841,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 162.663,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 162.945,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 163.057,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 163.381,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 164.496,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 166.729,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 168.168,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_192_960",
+      "Mp": 32,
+      "Np": 192,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 192,
+          "Mp": 32,
+          "Np": 192,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 192,
+          "Mp": 32,
+          "Np": 192,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 192,
+          "Mp": 32,
+          "Np": 192,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 166.141,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 170.338,
+          "count": 10
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 172.018,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 183.08,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 215.645,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 217.03,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          16,
+          64,
+          32
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "192_576_512",
+      "Mp": 192,
+      "Np": 576,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 576,
+          "Mp": 192,
+          "Np": 576,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 279.585,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 333.691,
+          "count": 6
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "32_960_128",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 168.168,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 175.076,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 175.584,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 175.765,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 178.745,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 180.614,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 183.033,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 183.788,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 184.305,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 186.15,
+          "count": 9
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 186.531,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 186.845,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 205.963,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 245.261,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 283.776,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 284.854,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 286.068,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 286.698,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 290.039,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 294.038,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 312.931,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 313.831,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 406.062,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 406.236,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_480_960",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 301.724,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 307.897,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 316.436,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 344.074,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 498.844,
+          "count": 7
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          64,
+          32,
+          16
+        ],
+        [
+          64,
+          32,
+          32
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          64,
+          16,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "192_192_512",
+      "Mp": 192,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 192,
+          "Mp": 192,
+          "Np": 192,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 214.457,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 270.65,
+          "count": 6
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "64_256_512",
+      "Mp": 64,
+      "Np": 256,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 256,
+          "Mp": 64,
+          "Np": 256,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 142.932,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 145.474,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 147.798,
+          "count": 2
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 149.09,
+          "count": 37
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 149.884,
+          "count": 2
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 150.666,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 152.599,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 154.23,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 154.556,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 154.76,
+          "count": 2
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 155.891,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 156.158,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 156.646,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 156.836,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 157.871,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 157.891,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            16
+          ],
+          "avg_us": 159.474,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 163.099,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 165.337,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            32
+          ],
+          "avg_us": 166.021,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            32
+          ],
+          "avg_us": 166.688,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 166.869,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 167.61,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 168.228,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            16
+          ],
+          "avg_us": 168.278,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 169.002,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 169.427,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 169.713,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            16
+          ],
+          "avg_us": 169.805,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 177.446,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 179.885,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 180.605,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 182.888,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 183.839,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 184.287,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 184.57,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            128,
+            32
+          ],
+          "avg_us": 199.482,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 202.106,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            32
+          ],
+          "avg_us": 202.22,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            16
+          ],
+          "avg_us": 202.596,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 203.732,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            128,
+            16
+          ],
+          "avg_us": 204.941,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            256,
+            16
+          ],
+          "avg_us": 204.956,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 207.568,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 209.056,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 210.862,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 359.801,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "128_96_512",
+      "Mp": 128,
+      "Np": 96,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 96,
+          "Mp": 128,
+          "Np": 96,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 96,
+          "Mp": 128,
+          "Np": 96,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 145.808,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 151.303,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 153.239,
+          "count": 1
+        },
+        {
+          "tile": [
+            128,
+            32,
+            64
+          ],
+          "avg_us": 170.5,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "128_672_512",
+      "Mp": 128,
+      "Np": 672,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 672,
+          "Mp": 128,
+          "Np": 672,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 672,
+          "Mp": 128,
+          "Np": 672,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 290.45,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 316.22,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 359.918,
+          "count": 13
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "128_480_512",
+      "Mp": 128,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 480,
+          "Mp": 128,
+          "Np": 480,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 480,
+          "Mp": 128,
+          "Np": 480,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 223.508,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 238.943,
+          "count": 13
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 265.85,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "64_32_512",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 125.49,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 128.743,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 131.101,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 131.111,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 131.118,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 131.646,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 132.318,
+          "count": 38
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 132.624,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 133.43,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 135.742,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 135.904,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 136.193,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 136.673,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 136.875,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 137.965,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 138.002,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 138.334,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 139.242,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 139.434,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 139.582,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 140.595,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 141.464,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 144.034,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 144.329,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 145.158,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 145.584,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 148.496,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          16,
+          16,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_96_256",
+      "Mp": 32,
+      "Np": 96,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 96,
+          "Mp": 32,
+          "Np": 96,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 96,
+          "Mp": 32,
+          "Np": 96,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 96,
+          "Mp": 32,
+          "Np": 96,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 122.138,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 124.245,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 124.808,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 125.856,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 129.745,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 130.096,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 130.183,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 130.341,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 130.568,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 130.727,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 131.401,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 132.094,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 134.08,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 134.648,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 134.84,
+          "count": 9
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 137.682,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 145.814,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          8,
+          32,
+          64
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          16,
+          8,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_256_128",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 129.087,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 129.748,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 130.38,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 131.077,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 132.343,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 134.078,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 135.956,
+          "count": 20
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 137.01,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 137.153,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 137.355,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 137.386,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            16
+          ],
+          "avg_us": 137.92,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            32
+          ],
+          "avg_us": 138.075,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 139.541,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 140.5,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            16
+          ],
+          "avg_us": 140.637,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 140.862,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 141.557,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 141.93,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 142.095,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 142.532,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 143.125,
+          "count": 2
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 145.42,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            256,
+            16
+          ],
+          "avg_us": 149.409,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            16
+          ],
+          "avg_us": 153.587,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            32
+          ],
+          "avg_us": 157.413,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 159.893,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 160.878,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 161.088,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 161.974,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 167.33,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 167.378,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 170.807,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_768_32",
+      "Mp": 64,
+      "Np": 768,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 720,
+          "Mp": 64,
+          "Np": 768,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 720,
+          "Mp": 64,
+          "Np": 768,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        256,
+        16
+      ],
+      "actual_best_avg_us": 145.83,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            128,
+            16
+          ],
+          "avg_us": 144.475,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 147.85,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 148.685,
+          "count": 2
+        },
+        {
+          "tile": [
+            16,
+            256,
+            16
+          ],
+          "avg_us": 151.769,
+          "count": 13
+        },
+        {
+          "tile": [
+            16,
+            256,
+            32
+          ],
+          "avg_us": 157.911,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 162.972,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 167.163,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 182.059,
+          "count": 2
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 217.349,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 326.201,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 328.386,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "128_192_512",
+      "Mp": 128,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 192,
+          "Mp": 128,
+          "Np": 192,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 192,
+          "Mp": 128,
+          "Np": 192,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 172.36,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 177.313,
+          "count": 13
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 177.57,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 185.265,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 187.467,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "64_32_768",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 576,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 672,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 720,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 576,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 672,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 720,
+          "N": 32,
+          "Mp": 64,
+          "Np": 32,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 133.742,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 137.004,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 137.741,
+          "count": 19
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 138.093,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 138.211,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 138.945,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 139.11,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 139.526,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 139.54,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 139.942,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 140.222,
+          "count": 20
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 141.511,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 142.812,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 142.998,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 143.653,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 148.039,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 149.568,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 150.779,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 153.925,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 156.135,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          64,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          64,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_576_960",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 576,
+          "Mp": 64,
+          "Np": 576,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 576,
+          "Mp": 64,
+          "Np": 576,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_avg_us": 289.788,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 302.175,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 366.127,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 367.957,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 371.874,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 406.476,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 458.646,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 560.221,
+          "count": 7
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 1015.23,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          64,
+          32
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          16,
+          32
+        ],
+        [
+          64,
+          32,
+          16
+        ],
+        [
+          64,
+          32,
+          32
+        ],
+        [
+          64,
+          64,
+          16
+        ],
+        [
+          64,
+          64,
+          32
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          64,
+          16,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_672_256",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 672,
+          "Mp": 64,
+          "Np": 672,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 672,
+          "Mp": 64,
+          "Np": 672,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 202.823,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 208.645,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 210.237,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 211.861,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 211.911,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 212.128,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 213.039,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 213.619,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 214.756,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 214.775,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 217.898,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 225.028,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 225.465,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 225.497,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 226.278,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 226.439,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 231.701,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 309.211,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 312.514,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 388.851,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 417.475,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 503.378,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_32_256",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 192,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 192,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 192,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 121.953,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 123.045,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 123.057,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 123.57,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 123.757,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 124.209,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 125.034,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 125.329,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 125.525,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 126.744,
+          "count": 11
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 126.978,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 127.243,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 128.046,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 128.05,
+          "count": 10
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 128.722,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 129.296,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 129.965,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 130.263,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 130.433,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 133.548,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          128,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_960_512",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 306.597,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 320.045,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 324.457,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 326.215,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            16
+          ],
+          "avg_us": 326.245,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            32
+          ],
+          "avg_us": 327.475,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 327.642,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 328.168,
+          "count": 19
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 328.591,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 378.561,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 380.777,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 381.675,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 384.033,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 384.495,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 385.071,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 387.039,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 388.138,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 388.168,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 389.462,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 391.209,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 398.331,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 405.744,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 426.183,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 430.063,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 437.529,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 446.674,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 457.745,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 460.984,
+          "count": 19
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 573.937,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_576_32",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 576,
+          "Mp": 64,
+          "Np": 576,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 576,
+          "Mp": 64,
+          "Np": 576,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        16
+      ],
+      "actual_best_avg_us": 130.47,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 135.679,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 138.351,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 141.965,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            32
+          ],
+          "avg_us": 142.004,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 142.429,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 143.717,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 144.321,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            16
+          ],
+          "avg_us": 151.143,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 155.835,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 159.111,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 195.388,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 199.358,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 218.295,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 235.256,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 239.41,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 279.785,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 313.72,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "256_576_512",
+      "Mp": 256,
+      "Np": 576,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 576,
+          "Mp": 256,
+          "Np": 576,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 315.462,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 329.957,
+          "count": 4
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 346.97,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 432.797,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 531.229,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 790.835,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_960_128",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 96,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 96,
+          "N": 960,
+          "Mp": 64,
+          "Np": 960,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 200.239,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 202.683,
+          "count": 9
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 247.407,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 254.669,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            16
+          ],
+          "avg_us": 256.357,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 257.162,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            32
+          ],
+          "avg_us": 257.608,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 260.917,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 263.715,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 274.231,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 285.206,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 291.958,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 292.501,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 294.452,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 301.904,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 302.266,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 304.755,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 316.881,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 317.99,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 321.534,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 370.065,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 371.462,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 374.576,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 386.263,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 390.877,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 396.644,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 397.073,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 398.95,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 402.138,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 402.509,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 411.263,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 595.145,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 601.452,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 608.435,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 621.847,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_32_512",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 288,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 384,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 480,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 288,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 384,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 480,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 288,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 384,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 480,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 123.072,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 125.89,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 127.999,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 128.49,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 128.848,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 129.267,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 129.512,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 130.306,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 130.616,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 130.663,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 130.849,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 131.497,
+          "count": 56
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 131.862,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 132.766,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 132.979,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 134.0,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 135.07,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 136.596,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 139.749,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          16,
+          16,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_384_960",
+      "Mp": 64,
+      "Np": 384,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 384,
+          "Mp": 64,
+          "Np": 384,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 384,
+          "Mp": 64,
+          "Np": 384,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 202.635,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 204.757,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 218.55,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 221.739,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 226.412,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 232.248,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 245.368,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 314.923,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 317.85,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 320.531,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 602.19,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          128,
+          32
+        ],
+        [
+          16,
+          128,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          64,
+          32
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          32,
+          128,
+          16
+        ],
+        [
+          32,
+          128,
+          32
+        ],
+        [
+          64,
+          128,
+          16
+        ],
+        [
+          64,
+          128,
+          32
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          16,
+          32
+        ],
+        [
+          64,
+          32,
+          16
+        ],
+        [
+          64,
+          32,
+          32
+        ],
+        [
+          64,
+          64,
+          16
+        ],
+        [
+          64,
+          64,
+          32
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          64,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_384_960",
+      "Mp": 32,
+      "Np": 384,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 384,
+          "Mp": 32,
+          "Np": 384,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 384,
+          "Mp": 32,
+          "Np": 384,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 384,
+          "Mp": 32,
+          "Np": 384,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 190.767,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 193.865,
+          "count": 10
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 217.377,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 219.713,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 232.844,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 310.461,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 315.088,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          128,
+          16
+        ],
+        [
+          16,
+          128,
+          32
+        ],
+        [
+          32,
+          128,
+          16
+        ],
+        [
+          32,
+          128,
+          32
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          16,
+          64,
+          32
+        ],
+        [
+          32,
+          32,
+          64
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_672_256",
+      "Mp": 32,
+      "Np": 672,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 672,
+          "Mp": 32,
+          "Np": 672,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 672,
+          "Mp": 32,
+          "Np": 672,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 672,
+          "Mp": 32,
+          "Np": 672,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 203.532,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 205.928,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 207.328,
+          "count": 18
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 209.213,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 209.71,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 211.398,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 212.465,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 212.563,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 213.399,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 213.535,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 213.953,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 214.738,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "128_384_512",
+      "Mp": 128,
+      "Np": 384,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 384,
+          "Mp": 128,
+          "Np": 384,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 384,
+          "Mp": 128,
+          "Np": 384,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 186.107,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 189.829,
+          "count": 13
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 229.087,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 234.695,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 241.502,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "32_256_256",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 192,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 192,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 192,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 131.328,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 136.171,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 137.185,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 137.576,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 138.437,
+          "count": 11
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 139.756,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            16
+          ],
+          "avg_us": 140.7,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 141.233,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 141.658,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 142.679,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 142.682,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 143.662,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 144.996,
+          "count": 3
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 145.175,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 146.333,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 146.498,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 146.91,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            32
+          ],
+          "avg_us": 148.151,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 149.11,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 149.434,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 149.469,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 150.578,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            16
+          ],
+          "avg_us": 150.833,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 151.436,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 151.63,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 158.68,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 159.437,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            16
+          ],
+          "avg_us": 162.967,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 164.277,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 166.287,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            256,
+            16
+          ],
+          "avg_us": 167.833,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 169.356,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 169.41,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            32
+          ],
+          "avg_us": 169.828,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 171.651,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_480_256",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 174.477,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 176.029,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 177.623,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 177.702,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 178.378,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 179.548,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 180.412,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 180.962,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 181.612,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 181.733,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 185.254,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 185.596,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 185.632,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 186.733,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 187.912,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 189.022,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 196.82,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 203.919,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 205.131,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 205.626,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 233.853,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 245.382,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 249.528,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 249.584,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 251.059,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 253.101,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 552.854,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_576_32",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 32,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 32,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 32,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 129.86,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 130.817,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 131.221,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 133.592,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 137.294,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 139.715,
+          "count": 9
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 144.792,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 145.793,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 151.711,
+          "count": 10
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 210.672,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 218.129,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 238.535,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "256_480_512",
+      "Mp": 256,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 480,
+          "Mp": 256,
+          "Np": 480,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 380.974,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 383.22,
+          "count": 4
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 442.211,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 466.623,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 647.912,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 707.166,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "192_480_512",
+      "Mp": 192,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 480,
+          "Mp": 192,
+          "Np": 480,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 363.318,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 473.996,
+          "count": 6
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "32_32_128",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 32,
+          "Mp": 32,
+          "Np": 32,
+          "Kp": 128,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 117.413,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 119.073,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 122.04,
+          "count": 20
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 122.124,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 124.719,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 125.173,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 125.884,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 126.112,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 126.234,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 128.854,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 129.093,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 130.868,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 132.829,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 133.54,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 133.835,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 136.757,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 137.429,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          128,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_672_32",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 672,
+          "Mp": 64,
+          "Np": 672,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 672,
+          "Mp": 64,
+          "Np": 672,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 144.617,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 147.784,
+          "count": 7
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 152.029,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 163.388,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 165.31,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 168.576,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 171.176,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 183.075,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 208.555,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 259.221,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 309.999,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 311.009,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "256_192_512",
+      "Mp": 256,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 192,
+          "Mp": 256,
+          "Np": 192,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 190.899,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 196.105,
+          "count": 4
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 196.384,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 237.195,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 244.073,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 329.41,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_96_32",
+      "Mp": 64,
+      "Np": 96,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 96,
+          "Mp": 64,
+          "Np": 96,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 96,
+          "Mp": 64,
+          "Np": 96,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 124.078,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 124.719,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 126.417,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 127.784,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 130.067,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 130.177,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            16
+          ],
+          "avg_us": 132.852,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 133.842,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 137.342,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 141.907,
+          "count": 3
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          8,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "192_672_512",
+      "Mp": 192,
+      "Np": 672,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 672,
+          "Mp": 192,
+          "Np": 672,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 680.771,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 681.837,
+          "count": 3
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_192_960",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 192,
+          "Mp": 64,
+          "Np": 192,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 192,
+          "Mp": 64,
+          "Np": 192,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 171.302,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 173.952,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 175.239,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 190.12,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 220.72,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 221.507,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 221.585,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 221.923,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 221.963,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          64,
+          32
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          64,
+          32
+        ],
+        [
+          64,
+          16,
+          32
+        ],
+        [
+          64,
+          32,
+          16
+        ],
+        [
+          64,
+          32,
+          32
+        ],
+        [
+          64,
+          64,
+          16
+        ],
+        [
+          64,
+          64,
+          32
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          64,
+          16,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "128_768_512",
+      "Mp": 128,
+      "Np": 768,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 720,
+          "Mp": 128,
+          "Np": 768,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 720,
+          "Mp": 128,
+          "Np": 768,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 219.531,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 226.886,
+          "count": 2
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 242.04,
+          "count": 14
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 248.067,
+          "count": 2
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_576_256",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 576,
+          "Mp": 32,
+          "Np": 576,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        16
+      ],
+      "actual_best_avg_us": 185.641,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 186.237,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 186.656,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 187.404,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 187.835,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 188.475,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 188.634,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 188.847,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 191.152,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 191.245,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 191.385,
+          "count": 9
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 193.215,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 194.319,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 195.712,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 196.552,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 197.612,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 199.003,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 213.006,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 216.247,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 216.952,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 217.716,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 233.306,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 234.589,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 234.669,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 239.944,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 375.267,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_256_768",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 576,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 672,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 720,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 576,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 672,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 720,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 576,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 672,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 720,
+          "N": 256,
+          "Mp": 32,
+          "Np": 256,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 150.767,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 154.794,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 154.847,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 155.956,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 158.647,
+          "count": 56
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 158.986,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 159.925,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 160.071,
+          "count": 2
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 161.582,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 162.301,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 163.198,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 163.327,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 164.266,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 166.701,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 176.688,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            32
+          ],
+          "avg_us": 177.074,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 178.384,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 179.47,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 180.094,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 183.267,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 185.939,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 191.372,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 193.4,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 196.44,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            256,
+            32
+          ],
+          "avg_us": 228.549,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          16,
+          128,
+          16
+        ],
+        [
+          32,
+          128,
+          16
+        ],
+        [
+          16,
+          256,
+          16
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          32,
+          256,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_288_960",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 288,
+          "Mp": 32,
+          "Np": 288,
+          "Kp": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 241.419,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 245.703,
+          "count": 10
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 247.377,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 252.653,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          32,
+          32,
+          32
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          32,
+          16,
+          32
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "32_960_512",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 288,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 384,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 480,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 288,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 384,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 480,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 288,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 384,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 480,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        16,
+        16
+      ],
+      "actual_best_avg_us": 301.035,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 314.924,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 321.86,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 322.229,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 322.945,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 323.143,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 324.13,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 326.221,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 327.12,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 327.495,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 328.075,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 328.127,
+          "count": 28
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 329.191,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 330.271,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 356.933,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 360.342,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 387.225,
+          "count": 10
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 412.974,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 443.081,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_192_256",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 192,
+          "Mp": 64,
+          "Np": 192,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 192,
+          "Mp": 64,
+          "Np": 192,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 135.363,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 137.003,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 138.161,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 138.459,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 139.353,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 140.167,
+          "count": 7
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 140.168,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 141.482,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 141.858,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 148.408,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 148.552,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 149.242,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 150.713,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            16
+          ],
+          "avg_us": 151.711,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 152.093,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            16
+          ],
+          "avg_us": 152.324,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 152.437,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 152.962,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 153.457,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 153.798,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            32
+          ],
+          "avg_us": 153.858,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 155.824,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            64,
+            16
+          ],
+          "avg_us": 156.049,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 156.338,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 159.048,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 159.181,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 159.358,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 159.464,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 159.677,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 161.474,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 161.727,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 162.803,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 163.545,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 164.036,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 165.302,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 168.365,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 168.964,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "256_768_512",
+      "Mp": 256,
+      "Np": 768,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 720,
+          "Mp": 256,
+          "Np": 768,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 249.812,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            64,
+            64
+          ],
+          "avg_us": 263.616,
+          "count": 6
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 300.694,
+          "count": 2
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 342.85,
+          "count": 2
+        },
+        {
+          "tile": [
+            64,
+            128,
+            32
+          ],
+          "avg_us": 350.348,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            128,
+            16
+          ],
+          "avg_us": 354.132,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            32
+          ],
+          "avg_us": 537.043,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            128,
+            64
+          ],
+          "avg_us": 540.628,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            16
+          ],
+          "avg_us": 939.267,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            32
+          ],
+          "avg_us": 955.574,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "avg_us": 969.27,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          64,
+          128,
+          64
+        ],
+        [
+          32,
+          128,
+          16
+        ],
+        [
+          16,
+          32,
+          32
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_480_32",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 480,
+          "Mp": 64,
+          "Np": 480,
+          "Kp": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 134.556,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 137.99,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 142.352,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 143.822,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 147.818,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 153.558,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 159.424,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 164.607,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 184.233,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 184.376,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 252.807,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 384.942,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "64_288_256",
+      "Mp": 64,
+      "Np": 288,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 288,
+          "Mp": 64,
+          "Np": 288,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 288,
+          "Mp": 64,
+          "Np": 288,
+          "Kp": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 154.552,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            32,
+            32,
+            16
+          ],
+          "avg_us": 156.68,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            32,
+            64
+          ],
+          "avg_us": 156.913,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            32
+          ],
+          "avg_us": 156.946,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 157.46,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            16
+          ],
+          "avg_us": 158.771,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            32,
+            128
+          ],
+          "avg_us": 158.958,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            32
+          ],
+          "avg_us": 160.243,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 160.268,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 160.376,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            128
+          ],
+          "avg_us": 160.987,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            16
+          ],
+          "avg_us": 161.548,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            32
+          ],
+          "avg_us": 161.763,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            64
+          ],
+          "avg_us": 162.697,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 163.657,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 167.585,
+          "count": 1
+        },
+        {
+          "tile": [
+            64,
+            16,
+            128
+          ],
+          "avg_us": 168.118,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 171.681,
+          "count": 7
+        },
+        {
+          "tile": [
+            16,
+            32,
+            64
+          ],
+          "avg_us": 171.817,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            16
+          ],
+          "avg_us": 174.479,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 178.637,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 193.317,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            32
+          ],
+          "avg_us": 196.288,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            64
+          ],
+          "avg_us": 197.668,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            16
+          ],
+          "avg_us": 198.941,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            256
+          ],
+          "avg_us": 209.961,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 320.458,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "padded_key": "192_96_512",
+      "Mp": 192,
+      "Np": 96,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 96,
+          "Mp": 192,
+          "Np": 96,
+          "Kp": 512,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 175.134,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            64,
+            32,
+            64
+          ],
+          "avg_us": 179.063,
+          "count": 6
+        }
+      ],
+      "actual_failing_tiles": []
+    },
+    {
+      "padded_key": "32_960_768",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 576,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 672,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 720,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 576,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 672,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 720,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 576,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 672,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 720,
+          "N": 960,
+          "Mp": 32,
+          "Np": 960,
+          "Kp": 768,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ],
+      "actual_best_tile": [
+        16,
+        16,
+        128
+      ],
+      "actual_best_avg_us": 300.735,
+      "actual_working_tiles": [
+        {
+          "tile": [
+            16,
+            16,
+            256
+          ],
+          "avg_us": 308.794,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            16,
+            128
+          ],
+          "avg_us": 313.048,
+          "count": 28
+        },
+        {
+          "tile": [
+            32,
+            16,
+            128
+          ],
+          "avg_us": 334.424,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            64
+          ],
+          "avg_us": 334.436,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            256
+          ],
+          "avg_us": 344.075,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            16,
+            32
+          ],
+          "avg_us": 346.045,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "avg_us": 414.648,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            32
+          ],
+          "avg_us": 418.307,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "avg_us": 422.306,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            128
+          ],
+          "avg_us": 424.087,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            128
+          ],
+          "avg_us": 470.701,
+          "count": 1
+        },
+        {
+          "tile": [
+            16,
+            32,
+            32
+          ],
+          "avg_us": 494.292,
+          "count": 7
+        },
+        {
+          "tile": [
+            32,
+            64,
+            32
+          ],
+          "avg_us": 545.057,
+          "count": 1
+        },
+        {
+          "tile": [
+            32,
+            64,
+            64
+          ],
+          "avg_us": 549.859,
+          "count": 1
+        }
+      ],
+      "actual_failing_tiles": [
+        [
+          16,
+          32,
+          32
+        ],
+        [
+          32,
+          64,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          64
+        ],
+        [
+          16,
+          64,
+          16
+        ],
+        [
+          32,
+          32,
+          16
+        ],
+        [
+          16,
+          16,
+          32
+        ],
+        [
+          16,
+          32,
+          16
+        ],
+        [
+          32,
+          16,
+          16
+        ]
+      ]
+    }
+  ]
+}

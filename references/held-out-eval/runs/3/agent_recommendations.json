@@ -1,0 +1,357 @@
+{
+  "description": "Agent tiling recommendations for 50 held-out SmolVLA shapes",
+  "dtype": "bf16",
+  "generated": "2026-04-08T00:00:00",
+  "shapes": [
+    {
+      "padded_key": "128_192_512",
+      "Mp": 128, "Np": 192, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 128_160_512=[64,32,64] is the nearest match (Np=160). Phase 1.2: Kp=512 dominant k=64 (52%). Mp=128 strategy_insights rule: m=64 wins when Np//32 has factor 3 or 5; 192//32=6 has factor 3, so m=64. n=32 for Np=192 (192//32=6, Pn=6 divisible by 3). Rejected [32,64,32] (would be n=64 but 192/64=3 ✓; however proxy 128_160_512 gives n=32). Best tile pattern for Mp=128 small-Np+medium-Kp: [64,32,64]."
+    },
+    {
+      "padded_key": "128_384_512",
+      "Mp": 128, "Np": 384, "Kp": 512,
+      "recommended_tile": [64, 64, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 128_320_512=[64,64,64] (Np=320, sole working tile). Phase 1.2: Kp=512 dominant k=64. strategy_insights: m=64 wins for Np//32 having factor 3 or 5; 384//32=12 has factor 3, so m=64 preferred. n=64: 384/64=6 (Pn=6, 6%3=0). 128_448_512=[32,16,128] is less relevant (Np=448 uses n=16 which is Mp≥128 anti-pattern). Rejected n=16 per held-out correction: n=16 for large Np is Mp-limited, applies only for Mp≤64."
+    },
+    {
+      "padded_key": "128_480_512",
+      "Mp": 128, "Np": 480, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 128_448_512=[32,16,128] (n=16) and 128_512_512=[32,64,32] (n=64 invalid for 480). n=64 does not divide 480 (480/64=7.5). n=32: Pn=15 (15%3=0 ✓). Phase 1.2: Kp=512 k=64. strategy_insights held-out correction: n=16 for large Np is valid for Mp≤64 only; for Mp=128 prefer n=32 or n=64. m=64 (Mp=128 rule: ~65% of shapes). Rejected [32,16,128] (n=16 rule does not apply for Mp=128)."
+    },
+    {
+      "padded_key": "128_672_512",
+      "Mp": 128, "Np": 672, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights held-out corrections explicitly states: '128_672_512: n=16 tile [32,16,64] ran 1.265x slower than best [64,32,64]'. DB proxies 128_640_512=[32,32,128] and 128_576_512=[32,64,64] also support m=64 or m=32 with n=32. Phase 1.2: Kp=512 k=64. n=32: 672/32=21 (Pn=21, 21%3=0 ✓). m=64: Pm=2. Rejected [32,16,64]: strategy_insights explicitly shows it is 26.5% slower for this shape."
+    },
+    {
+      "padded_key": "128_768_512",
+      "Mp": 128, "Np": 768, "Kp": 512,
+      "recommended_tile": [64, 64, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights held-out corrections explicitly states: '128_768_512: n=16 tile [32,16,64] ran 1.518x slower than best [64,64,64]'. DB proxy 128_640_512=[32,32,128] is less relevant. Phase 1.2: Kp=512 k=64. n=64: 768/64=12 (Pn=12, 12%4=0 ✓). m=64: Pm=2. Rejected [32,16,64]: 51.8% slower per held-out corrections."
+    },
+    {
+      "padded_key": "128_96_512",
+      "Mp": 128, "Np": 96, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "low",
+      "reasoning_summary": "Phase 1.1: DB proxy 128_128_512=[32,32,32] is closest. errors.md documents bf16 accuracy failures for (128,96,512) [M=128,K=320,N=96]: tiles (32,32,32), (16,32,32), (16,32,16), (16,8,64) all fail. This is a known-failing shape for bf16 accuracy. Phase 1.2: Kp=512 k=64. n=32: 96/32=3 (Pn=3, 3%3=0 ✓). m=64: Pm=2. Recommending [64,32,64] as best available, but this shape is expected to fail accuracy; consider i8 or i16."
+    },
+    {
+      "padded_key": "192_192_512",
+      "Mp": 192, "Np": 192, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 192_288_512=[64,32,64] is the nearest match (Np=288). Phase 1.2: Kp=512 dominant k=64. strategy_insights: Mp=192 m=64 strongly preferred (~80%), Pm=192//64=3 (3%3=0 ✓). n=32: 192/32=6 (Pn=6, 6%3=0 ✓). n=64 also valid (192/64=3, Pn=3 ✓) but n=32 matches proxy. Rejected [64,64,64]: no DB support at this Np regime for Mp=192."
+    },
+    {
+      "padded_key": "192_480_512",
+      "Mp": 192, "Np": 480, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 192_384_512=[64,64,64] and 192_512_512=[64,64,32]. n=64 does not divide 480 (480/64=7.5). n=32: Pn=15 (15%3=0 ✓). Phase 1.2: Kp=512 k=64. strategy_insights: Mp=192 m=64 preferred (~80%), Pm=3 (3%3=0 ✓). n=32 is the closest valid power-of-2 to n=64. Rejected [64,64,64]: n=64 not valid for Np=480."
+    },
+    {
+      "padded_key": "192_576_512",
+      "Mp": 192, "Np": 576, "Kp": 512,
+      "recommended_tile": [64, 64, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 192_512_512=[64,64,32] and 192_768_512=[64,64,64]. Np=576 lies between these; 192_768_512 is stronger support for [64,64,64]. Phase 1.2: Kp=512 k=64. n=64: 576/64=9 (Pn=9, 9%3=0 ✓). m=64: Pm=3 (3%3=0 ✓). strategy_insights correction: n=16 for large Np+Kp applies only to Mp≤64; for Mp=192 use n=64. Rejected [64,32,64]: proxy at higher Np supports n=64."
+    },
+    {
+      "padded_key": "192_672_512",
+      "Mp": 192, "Np": 672, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 192_512_512=[64,64,32] and 192_768_512=[64,64,64]. n=64 does not divide 672 (672/64=10.5). n=32: Pn=21 (21%3=0 ✓). Phase 1.2: Kp=512 k=64. m=64: Pm=3 (3%3=0 ✓). Rejected n=64: not valid for Np=672. With n=32 and k=64 per Kp=512 rule, [64,32,64] matches the proxy pattern for similar Mp=192 shapes."
+    },
+    {
+      "padded_key": "192_96_512",
+      "Mp": 192, "Np": 96, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 192_288_512=[64,32,64] is the nearest match for (Mp=192, Kp=512). Phase 1.2: Kp=512 k=64. n=32: 96/32=3 (Pn=3, 3%3=0 ✓). m=64: Pm=3 (3%3=0 ✓). errors.md accuracy failure for Np=96 applies to M≤50 only; here M=179 padded to Mp=192, so no accuracy risk. Rejected [64,16,32]: n=16 gives Pn=6 but proxy uses n=32."
+    },
+    {
+      "padded_key": "256_192_512",
+      "Mp": 256, "Np": 192, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 256_128_512=[64,32,64] and 256_288_512=[64,32,128]. Both support m=64. Phase 1.2: Kp=512 k=64 dominant. m=64: Pm=4 (4%4=0 ✓). n=32: 192/32=6 (Pn=6, 6%3=0 ✓). n=64 also valid (192/64=3) but n=32 consistent with proxies. strategy_insights: Mp=256 rule revised — not uncompilable, use m=64 normal tile selection. k=64 per Kp=512 rule."
+    },
+    {
+      "padded_key": "256_480_512",
+      "Mp": 256, "Np": 480, "Kp": 512,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 256_448_512=[32,16,128] and 256_512_512=[64,64,64]. n=64 does not divide 480. n=32: Pn=15 (15%3=0 ✓). Phase 1.2: Kp=512 k=64. m=64: Pm=4 ✓. strategy_insights: Mp=256 exception note says 'some shapes (Np=320, Np=480) use m=32' but m=64 is the ~75% default. 256_512_512 proxy strongly supports [64,64,64] style with n=64 (invalid here); with n=32 substitution: [64,32,64]. Rejected [32,16,128]: n=16 anti-pattern for Mp=256."
+    },
+    {
+      "padded_key": "256_576_512",
+      "Mp": 256, "Np": 576, "Kp": 512,
+      "recommended_tile": [64, 64, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 256_512_512=[64,64,64] and 256_672_512=[64,32,128]. Np=576 is between these; 256_512_512 supports [64,64,64]. Phase 1.2: Kp=512 k=64. n=64: 576/64=9 (Pn=9, 9%3=0 ✓). m=64: Pm=4 ✓. strategy_insights: Mp=256 correction removes uncompilable flag. Tile [64,64,64] consistent with 256_512_512 proxy. Rejected [64,32,128]: k=128 from 256_672_512 proxy but Np=576 is closer to 512."
+    },
+    {
+      "padded_key": "256_768_512",
+      "Mp": 256, "Np": 768, "Kp": 512,
+      "recommended_tile": [64, 64, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 256_672_512=[64,32,128] and 256_960_512=[64,64,32]. n=64: 768/64=12 (Pn=12, 12%4=0 ✓). Phase 1.2: Kp=512 k=64. m=64: Pm=4 ✓. 256_512_512=[64,64,64] and 256_960_512=[64,64,32] both support m=64+n=64 orientation. k=64 over k=32 per Kp=512 dominant. Rejected [64,32,128]: proxy at Np=672 but Np=768 aligns better with 256_960_512 pattern."
+    },
+    {
+      "padded_key": "32_192_960",
+      "Mp": 32, "Np": 192, "Kp": 960,
+      "recommended_tile": [32, 16, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_96_960=[32,16,64] and 32_320_960=[32,16,64]. Both nearest neighbors bracket Np=192 and agree on [32,16,64]. Phase 1.2: Kp=960 absolute rule: k=64 universally (119/119 in DB). n=16: 192/16=12 (Pn=12, 12%4=0 ✓). m=32: Mp=32, m=32 is the only option. Rejected [32,32,64]: n=32 proxy 32_288_960=[32,32,64]? No — 32_96_960 and 32_320_960 both show n=16 for this Np range."
+    },
+    {
+      "padded_key": "32_256_128",
+      "Mp": 32, "Np": 256, "Kp": 128,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_512_128=[32,64,32], 32_768_128=[32,64,32], 32_1024_128=[32,64,32]. All agree on n=64, k=32. Phase 1.2: Kp=128 dominant k=32. strategy_insights held-out correction: '32_256_128: best=[32,64,32]; n=32 tile 1.103x slower'. n=64: 256/64=4 (Pn=4, 4%4=0 ✓). Rejected [32,32,32]: n=32 confirmed 10.3% slower per held-out corrections."
+    },
+    {
+      "padded_key": "32_256_256",
+      "Mp": 32, "Np": 256, "Kp": 256,
+      "recommended_tile": [16, 64, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_384_256=[32,64,32] and 32_512_256=[32,64,32] support n=64. Phase 1.2: Kp=256 dominant k=32. strategy_insights held-out correction: '32_256_256: best=[16,64,32]; n=32 tile 1.098x slower'. n=64: 256/64=4 (Pn=4, 4%4=0 ✓). m=16: Pm=2. strategy_insights Mp=32 rule: Np≥288 AND Kp≥256 m=16 wins roughly half the time; Np=256 with Kp=256 borderline — held-out data confirms m=16."
+    },
+    {
+      "padded_key": "32_256_768",
+      "Mp": 32, "Np": 256, "Kp": 768,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_512_768=[32,64,32] and 32_768_768=[32,64,32] both agree on n=64, k=32. Phase 1.2: Kp=768 k=32 passes for Np≤512 (errors.md). strategy_insights held-out correction: '32_256_768: best=[32,64,32]; n=32 tile 1.084x slower'. n=64: 256/64=4 (Pn=4, 4%4=0 ✓). k=32 valid for Np=256≤512 with Kp=768. Rejected [32,32,32]: confirmed 8.4% slower per held-out data."
+    },
+    {
+      "padded_key": "32_288_256",
+      "Mp": 32, "Np": 288, "Kp": 256,
+      "recommended_tile": [16, 32, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_192_256=[32,32,16] and 32_384_256=[32,64,32]. strategy_insights held-out correction: '32_288_256: best=[16,32,64]'. Phase 1.2: Kp=256 k=32 and k=64 roughly equal; held-out data shows k=64 wins here. strategy_insights Mp=32 rule: Np≥288 AND Kp≥256 m=16 preferred in ~50% of cases — held-out confirms m=16 here. n=32: 288/32=9 (Pn=9, 9%3=0 ✓). Rejected [32,64,32]: n=64 does not divide 288."
+    },
+    {
+      "padded_key": "32_288_960",
+      "Mp": 32, "Np": 288, "Kp": 960,
+      "recommended_tile": [16, 32, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_320_960=[32,16,64] and 32_96_960=[32,16,64]. strategy_insights held-out correction: '32_288_960: best=[16,32,64]'. Phase 1.2: Kp=960 absolute k=64. n=32: 288/32=9 (Pn=9, 9%3=0 ✓). m=16: strategy_insights Mp=32 Np≥288 rule confirms m=16. Rejected [32,16,64]: held-out data explicitly shows [16,32,64] outperforms this variant for Np=288."
+    },
+    {
+      "padded_key": "32_32_128",
+      "Mp": 32, "Np": 32, "Kp": 128,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 32_64_128=[32,32,32] is nearest match. Very small overhead-dominated shape (Mp×Np=1024). Phase 1.2: Kp=128 k=32 common for small shapes. n=32: 32/32=1 (only valid option). m=32: only option for Mp=32. strategy_insights: small overhead-limited shapes prefer k=32. Rejected k=64: strategy_insights small-total-shape correction prefers k=32 for Mp×Np≤2048."
+    },
+    {
+      "padded_key": "32_32_256",
+      "Mp": 32, "Np": 32, "Kp": 256,
+      "recommended_tile": [32, 32, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxy 32_64_256=[32,32,32]. strategy_insights held-out correction: '32_32_256: best k=16 or k=32; k=64 tile 1.071x slower'. DB proxy 32_192_256=[32,32,16] confirms k=16 is common in this regime. Phase 1.2: Kp=256 small shape; k=16 or k=32 both win. k=16: 256/16=16 ✓. n=32: only valid n for Np=32. Rejected [32,32,32]: k=32 marginally worse than k=16 per held-out data."
+    },
+    {
+      "padded_key": "32_32_512",
+      "Mp": 32, "Np": 32, "Kp": 512,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxy 32_64_512=[32,32,32]. strategy_insights held-out correction: '32_32_512: best k=32; k=64 tile 1.057x slower'. Phase 1.2: Kp=512 overhead-limited small shape (Mp×Np=1024). k=32 preferred per small-total-shape rule. n=32: only valid option for Np=32. Rejected [32,32,64]: confirmed 5.7% slower per held-out data."
+    },
+    {
+      "padded_key": "32_384_960",
+      "Mp": 32, "Np": 384, "Kp": 960,
+      "recommended_tile": [16, 32, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_320_960=[32,16,64] and 32_480_960=[32,32,64]. strategy_insights held-out correction: '32_384_960: best=[16,32,64]; m=32 tile 1.027x slower'. Phase 1.2: Kp=960 absolute k=64. n=32: 384/32=12 (Pn=12, 12%4=0 ✓). m=16: strategy_insights Mp=32 Np≥288 rule confirms m=16 preference. Rejected [32,16,64]: held-out data shows [16,32,64] wins, not the n=16 variant."
+    },
+    {
+      "padded_key": "32_576_256",
+      "Mp": 32, "Np": 576, "Kp": 256,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_512_256=[32,64,32] and 32_768_256=[32,64,32]. Both agree on n=64, k=32. Phase 1.2: Kp=256 dominant k=32. n=64: 576/64=9 (Pn=9, 9%3=0 ✓). m=32: Mp=32. Pattern is consistent across Np=512 and 768 — same tile applies at Np=576. Rejected [16,64,32]: m=16 dominant only at Np=960 (32_960_256=[16,64,32]); Np=576 sits in m=32 regime."
+    },
+    {
+      "padded_key": "32_576_32",
+      "Mp": 32, "Np": 576, "Kp": 32,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_512_32=[32,64,32] and 32_768_32=[32,64,32] bracket Np=576. strategy_insights held-out correction: '32_576_32: best=[32,64,32]; agent used n=32 → 1.073x slower'. Phase 1.2: Kp=32 k=32. n=64: 576/64=9 (Pn=9, 9%3=0 ✓). Kp=32+Np≥480 rule from strategy_insights: prefer n=64. Rejected [32,32,32]: confirmed 7.3% slower per held-out data."
+    },
+    {
+      "padded_key": "32_672_256",
+      "Mp": 32, "Np": 672, "Kp": 256,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_512_256=[32,64,32] and 32_768_256=[32,64,32] both prefer n=64, which does not divide 672 (672/64=10.5). Valid power-of-2 n for Np=672: n=16 (Pn=42) or n=32 (Pn=21, 21%3=0 ✓). Phase 1.2: Kp=256 k=32. With n=64 invalid, n=32 is the next best choice matching the proxy tile orientation. m=32. Rejected n=64: not a divisor of 672."
+    },
+    {
+      "padded_key": "32_960_128",
+      "Mp": 32, "Np": 960, "Kp": 128,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_768_128=[32,64,32] and 32_1024_128=[32,64,32]. Both agree on [32,64,32]. Phase 1.2: Kp=128 dominant k=32 for large Np. n=64: 960/64=15 (Pn=15, 15%3=0 ✓). m=32: Mp=32. Pattern is stable across Np=512–1024 for (Mp=32, Kp=128). Rejected [16,64,32]: m=16 trend emerges only at Np≥960 in Kp=256 family; Kp=128 proxies consistently use m=32."
+    },
+    {
+      "padded_key": "32_960_512",
+      "Mp": 32, "Np": 960, "Kp": 512,
+      "recommended_tile": [16, 16, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_768_512=[32,64,32] and 32_576_512=[16,16,256] are less relevant. strategy_insights empirical section explicitly: '32_960_512: [16,16,16]' and 'overhead-limited regime where (16,16,16) wins: Mp≤64, Np≥960, Kp≥512'. Phase 1.2: Kp=512 but shape is in the overhead-dominated large-Np regime. n=16: 960/16=60 (60%3=0 ✓). m=16. k=16: 512/16=32. Rejected [32,64,32]: strategy_insights explicitly overrides with [16,16,16] for this regime."
+    },
+    {
+      "padded_key": "32_960_768",
+      "Mp": 32, "Np": 960, "Kp": 768,
+      "recommended_tile": [16, 16, 128],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 32_768_768=[32,64,32] and 32_1024_768=[32,64,32]. strategy_insights empirical section explicitly: '32_960_768: [16,16,128]' as a verified example for n=16 winning on large Np+Kp for Mp≤64. Phase 1.2: Kp=768 k=128 required for Np≥768 (errors.md). n=16: 960/16=60 (60%3=0 ✓). k=128: 768/128=6 (6%3=0 ✓). Rejected [32,64,32]: DB proxies are for smaller-Kp regime; held-out empirical shows [16,16,128] for this exact shape."
+    },
+    {
+      "padded_key": "32_96_256",
+      "Mp": 32, "Np": 96, "Kp": 256,
+      "recommended_tile": [32, 16, 32],
+      "confidence": "low",
+      "reasoning_summary": "Phase 1.1: DB proxy 32_96_512=[32,16,128] supports n=16 for Np=96. errors.md: '(32,96,256) all tiles fail accuracy' for M=1 padded to Mp=32. My raw M=20-32; accuracy failure may still apply for M≤50 AND N=96. Phase 1.2: Kp=256 k=32. n=16: 96/16=6 (Pn=6, 6%3=0 ✓). strategy_insights: n=32 fails for Np=96; use n=16. Rejected [32,32,32]: strategy_insights documents n=32 failures on Np=96 shapes. Best available tile but accuracy failure expected."
+    },
+    {
+      "padded_key": "64_192_256",
+      "Mp": 64, "Np": 192, "Kp": 256,
+      "recommended_tile": [64, 32, 128],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_128_256=[16,32,32] and 64_256_256=[16,64,32]. strategy_insights empirical section explicitly: 'Np ≤ 192 and Kp ≥ 256: try m=64 first (e.g. 64_192_256→[64,32,128])'. Phase 1.2: Kp=256 k=128 per direct citation (k=128: 256/128=2 ✓). n=32: 192/32=6 (Pn=6, 6%3=0 ✓). DMEM: (64×32+32×128+128×64)×2=28672≤32256 ✓. Rejected [16,32,32]: strategy_insights confirms m=64 outperforms m=16 for small-Np Kp≥256 shapes."
+    },
+    {
+      "padded_key": "64_192_960",
+      "Mp": 64, "Np": 192, "Kp": 960,
+      "recommended_tile": [64, 32, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_128_960=[16,32,64] and 64_256_960=[16,64,64]. strategy_insights empirical section explicitly: 'Np ≤ 192 and Kp ≥ 256: try m=64 first (e.g. 64_192_960→[64,32,64])'. Phase 1.2: Kp=960 absolute k=64. n=32: 192/32=6 (Pn=6, 6%3=0 ✓). m=64: Pm=1. Rejected [16,32,64] and [16,64,64]: strategy_insights confirms m=64 wins for small-Np Kp≥256 at Mp=64."
+    },
+    {
+      "padded_key": "64_256_512",
+      "Mp": 64, "Np": 256, "Kp": 512,
+      "recommended_tile": [16, 64, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_192_512=[64,32,32] and 64_288_512=[32,32,16]. strategy_insights held-out correction: '64_256_512: best=[16,64,32]'. strategy_insights: 'Np=256 → n=64 preferred over n=32' (8-11% faster). Phase 1.2: Kp=512 k=32 per held-out data (not the typical k=64). n=64: 256/64=4 (Pn=4, 4%4=0 ✓). m=16: Pm=4 (4%4=0 ✓). Rejected [64,32,32]: strategy_insights holds-out confirm [16,64,32] wins."
+    },
+    {
+      "padded_key": "64_288_256",
+      "Mp": 64, "Np": 288, "Kp": 256,
+      "recommended_tile": [32, 32, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxy 64_288_512=[32,32,16] (same Np, different Kp) supports m=32, n=32. strategy_insights held-out correction: '64_288_256: best k=16; k=64 tile 1.021x slower'. Phase 1.2: Kp=256 k=16 wins for small overhead-limited shapes per held-out data. k=16: 256/16=16 ✓. n=32: 288/32=9 (Pn=9, 9%3=0 ✓). m=32: Pm=2. Rejected [32,32,32]: k=32 confirmed marginally slower; held-out data supports k=16."
+    },
+    {
+      "padded_key": "64_32_512",
+      "Mp": 64, "Np": 32, "Kp": 512,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxy 64_64_512=[32,32,32]. strategy_insights held-out correction: '64_32_512: best k=32; k=64 tile 1.071x slower'. Phase 1.2: Kp=512 overhead-limited small shape (Mp×Np=2048). k=32 per small-total-shape rule. n=32: only valid power-of-2 for Np=32. m=32: Pm=2. Rejected [32,32,64]: k=64 confirmed 7.1% slower per held-out data."
+    },
+    {
+      "padded_key": "64_32_768",
+      "Mp": 64, "Np": 32, "Kp": 768,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 64_64_768=[32,32,32]. Very small shape (Mp×Np=2048), overhead-dominated. Phase 1.2: Kp=768 k=32 valid for Np≤512 (errors.md). strategy_insights: small-total shapes (Mp×Np≤2048) prefer k=32. n=32: only valid option for Np=32. m=32. Rejected k=64: strategy_insights small-total-shape correction suggests k=32 for this regime; also 64_64_768=[32,32,32] supports k=32."
+    },
+    {
+      "padded_key": "64_384_960",
+      "Mp": 64, "Np": 384, "Kp": 960,
+      "recommended_tile": [32, 32, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_288_960=[32,32,64] (Np=288, nearest below) and 64_320_960=[32,16,64] (Np=320). n=64: 384/64=6 (Pn=6, 6%3=0 ✓) is valid. Phase 1.2: Kp=960 absolute k=64. m=32 for Np 192-480 per strategy_insights Mp=64 rule. The DB is highly variable in n for this region; 64_288_960=[32,32,64] is the nearest proxy. Rejected [16,64,64]: requires n=64, which is valid but further proxy 64_512_960=[16,64,64] is less representative than 64_288_960."
+    },
+    {
+      "padded_key": "64_480_256",
+      "Mp": 64, "Np": 480, "Kp": 256,
+      "recommended_tile": [32, 32, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_384_256=[32,32,32] and 64_512_256=[16,64,64]. n=64 does not divide 480 (480/64=7.5). n=32: Pn=15 (15%3=0 ✓). Phase 1.2: Kp=256 k=32 and k=64 roughly equal; k=32 for overhead-dominated regime. m=32: dominant for Mp=64 Np=192-480. 64_384_256=[32,32,32] is the nearest valid proxy. Rejected [16,64,64]: n=64 is not a valid divisor of 480."
+    },
+    {
+      "padded_key": "64_480_32",
+      "Mp": 64, "Np": 480, "Kp": 32,
+      "recommended_tile": [64, 32, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights held-out correction: '64_480_32: best=[64,32,16]; agent used m=32 → 1.056x slower'. DB proxy 64_288_32=[64,32,16] supports same tile pattern. Phase 1.2: Kp=32 k=16 (Kp=32+Np≥480 rule: prefer n=64 and m=64). n=32: 480/32=15 (15%3=0 ✓). m=64: Pm=1. Constraint: m=64,n=16 crashes for Np≥480 — tile uses n=32, not n=16. Rejected [32,32,16]: held-out data confirms m=64 wins by 5.6%."
+    },
+    {
+      "padded_key": "64_480_960",
+      "Mp": 64, "Np": 480, "Kp": 960,
+      "recommended_tile": [32, 16, 64],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_320_960=[32,16,64] and 64_576_960=[32,16,64] (strategy_insights cited). Both bracket Np=480 and agree on n=16. n=16: 480/16=30 (30%3=0 ✓). Phase 1.2: Kp=960 absolute k=64. m=32 for Np 192-480. Constraint: m=64,n=16 crashes for Np≥480 (errors.md) — this tile uses m=32, not m=64, so safe. Rejected [32,32,64]: n=32 proxy 64_288_960 is further; n=16 trend from 64_320_960 and 64_576_960 is more applicable."
+    },
+    {
+      "padded_key": "64_576_32",
+      "Mp": 64, "Np": 576, "Kp": 32,
+      "recommended_tile": [32, 64, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights held-out correction: '64_576_32: best=[32,64,16]; agent used n=32 → 1.122x slower'. DB proxy 64_384_32=[32,64,32] supports n=64 orientation. Phase 1.2: Kp=32 k=16. n=64: 576/64=9 (Pn=9, 9%3=0 ✓). strategy_insights Kp≤32+Np≥480 rule: prefer n=64. m=32. Rejected [32,32,16]: n=32 confirmed 12.2% slower per held-out data."
+    },
+    {
+      "padded_key": "64_576_960",
+      "Mp": 64, "Np": 576, "Kp": 960,
+      "recommended_tile": [32, 16, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights empirical section explicitly: '(64,576,960): [32,16,64] — n=16 beats n=32 (366µs) by 17%'. DB proxy 64_576_512=[32,16,128] also supports n=16 for Np=576. Phase 1.2: Kp=960 absolute k=64. n=16: 576/16=36 (36%3=0 ✓). m=32: safe (m=64,n=16 crashes at Np≥480; m=32,n=16 is safe). Constraint: NOT m=64,n=16 — tile uses m=32. Rejected [32,32,64]: strategy_insights confirms 17% slower."
+    },
+    {
+      "padded_key": "64_672_256",
+      "Mp": 64, "Np": 672, "Kp": 256,
+      "recommended_tile": [16, 32, 128],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxy 64_640_256=[16,32,128] is the nearest match (Np=640). n=64 does not divide 672 (672/64=10.5). n=32: Pn=21 (21%3=0 ✓). Phase 1.2: Kp=256 k=128 from proxy 64_640_256. m=16: Pm=4 (4%4=0 ✓). DMEM: (16×32+32×128+128×16)×2=13312 ✓. Rejected [32,32,32]: 64_640_256=[16,32,128] proxy at Np=640 is most representative; higher k and smaller m suit large-Np Kp=256 regime."
+    },
+    {
+      "padded_key": "64_672_32",
+      "Mp": 64, "Np": 672, "Kp": 32,
+      "recommended_tile": [64, 32, 16],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights held-out correction: '64_672_32: best=[64,32,16]; agent used m=32 → 1.111x slower'. DB proxy 64_288_32=[64,32,16] supports same tile. Phase 1.2: Kp=32 k=16. n=32: 672/32=21 (Pn=21, 21%3=0 ✓). m=64: Pm=1. Constraint: m=64,n=16 crashes for Np≥480 — tile uses n=32. Rejected [32,32,16]: held-out data confirms m=64 wins by 11.1%."
+    },
+    {
+      "padded_key": "64_768_32",
+      "Mp": 64, "Np": 768, "Kp": 32,
+      "recommended_tile": [32, 64, 32],
+      "confidence": "medium",
+      "reasoning_summary": "Phase 1.1: DB proxies 64_512_32=[16,64,16] and 64_960_32=[32,64,32]. Np=768 is between these; 64_960_32=[32,64,32] supports n=64. n=64: 768/64=12 (Pn=12, 12%4=0 ✓). Phase 1.2: Kp=32 k=32. strategy_insights Kp≤32+Np≥480: prefer n=64. m=32: Pm=2. Between proxies, 64_960_32=[32,64,32] is more representative for larger Np. Rejected [16,64,16]: 64_512_32 proxy at smaller Np; 64_960_32 more relevant for Np=768."
+    },
+    {
+      "padded_key": "64_960_128",
+      "Mp": 64, "Np": 960, "Kp": 128,
+      "recommended_tile": [16, 64, 64],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: DB proxy 64_768_128=[16,64,64]. strategy_insights session 2026-03-28: 'Tile (16,64,64) beats (16,32,64) by 17% on shape (64,960,128) bf16. avg=205.6µs. Verifies that (16,64,64) is the correct best tile.' Phase 1.2: Kp=128 k=64 for large Np. n=64: 960/64=15 (Pn=15, 15%3=0 ✓). m=16: Pm=4 (4%4=0 ✓). Rejected [16,32,64]: explicitly confirmed 17% slower by session notes."
+    },
+    {
+      "padded_key": "64_960_512",
+      "Mp": 64, "Np": 960, "Kp": 512,
+      "recommended_tile": [32, 16, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights empirical section explicitly: '64_960_512: [32,16,32] — n=16 wins'. Phase 1.2: Kp=512 k=32 (overhead-limited large-Np regime; strategy_insights notes [16,16,16] wins for Mp≤64,Np≥960,Kp≥512 but here small tile [32,16,32] is cited). n=16: 960/16=60 (60%3=0 ✓). m=32: safe (m=64,n=16 crash does not apply to m=32). k=32: 512/32=16 ✓. Rejected [16,16,16]: strategy_insights directly cites [32,16,32] for this shape."
+    },
+    {
+      "padded_key": "64_96_32",
+      "Mp": 64, "Np": 96, "Kp": 32,
+      "recommended_tile": [64, 16, 32],
+      "confidence": "high",
+      "reasoning_summary": "Phase 1.1: strategy_insights empirical section explicitly: 'Np ≤ 96: prefer m=64 with n=16 (e.g. 64_96_32→[64,16,32])'. Phase 1.2: Kp=32 k=32. n=16: 96/16=6 (Pn=6, 6%3=0 ✓). m=64: Pm=1. Constraint: m=64,n=16 crash applies only to Np≥480; Np=96 < 480 so safe. DMEM: (64×16+16×32+32×64)×2=(1024+512+2048)×2=7168 ✓. Rejected [64,32,32]: strategy_insights directly recommends n=16 for Np≤96 shapes."
+    }
+  ]
+}

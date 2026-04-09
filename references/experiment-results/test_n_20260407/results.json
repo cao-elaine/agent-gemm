@@ -1,0 +1,515 @@
+{
+  "experiment": "SmolVLA NPU Baseline vs Agentic",
+  "date": "2026-04-07",
+  "dtype": "bf16",
+  "trials_per_group": 3,
+  "shapes": [
+    {
+      "M": 20,
+      "K": 32,
+      "N": 96,
+      "layers": [
+        "action_in_proj"
+      ],
+      "baseline_0": {
+        "padded": {
+          "M": 32,
+          "N": 96,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "fixed",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 129.301,
+            "npu_min_us": 108.0,
+            "padding_us": 16.853,
+            "unpadding_us": 1.162,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 128.786,
+            "npu_min_us": 108.0,
+            "padding_us": 28.485,
+            "unpadding_us": 1.252,
+            "error": null,
+            "elapsed_s": 7.9
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 127.613,
+            "npu_min_us": 104.0,
+            "padding_us": 16.241,
+            "unpadding_us": 2.344,
+            "error": null,
+            "elapsed_s": 7.9
+          }
+        ],
+        "mean_npu_avg_us": 128.57,
+        "mean_padding_us": 20.53,
+        "mean_unpadding_us": 1.59,
+        "mean_total_us": 150.69,
+        "pass_count": 3
+      },
+      "baseline_1": {
+        "padded": {
+          "M": 32,
+          "N": 96,
+          "K": 32
+        },
+        "tile": [
+          32,
+          16,
+          16
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "profiling",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 125.767,
+            "npu_min_us": 106.0,
+            "padding_us": 20.058,
+            "unpadding_us": 1.452,
+            "error": null,
+            "elapsed_s": 8.1
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 128.517,
+            "npu_min_us": 108.0,
+            "padding_us": 28.033,
+            "unpadding_us": 1.483,
+            "error": null,
+            "elapsed_s": 8.1
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 122.477,
+            "npu_min_us": 106.0,
+            "padding_us": 19.717,
+            "unpadding_us": 1.453,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 125.59,
+        "mean_padding_us": 22.6,
+        "mean_unpadding_us": 1.46,
+        "mean_total_us": 149.65,
+        "pass_count": 3
+      },
+      "agentic": {
+        "padded": {
+          "M": 32,
+          "N": 96,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "heuristic",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 128.081,
+            "npu_min_us": 108.0,
+            "padding_us": 27.532,
+            "unpadding_us": 1.273,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 127.821,
+            "npu_min_us": 106.0,
+            "padding_us": 27.984,
+            "unpadding_us": 1.783,
+            "error": null,
+            "elapsed_s": 7.9
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 132.072,
+            "npu_min_us": 108.0,
+            "padding_us": 28.043,
+            "unpadding_us": 2.324,
+            "error": null,
+            "elapsed_s": 7.9
+          }
+        ],
+        "mean_npu_avg_us": 129.32,
+        "mean_padding_us": 27.85,
+        "mean_unpadding_us": 1.79,
+        "mean_total_us": 158.96,
+        "pass_count": 3,
+        "reasoning_summary": "Mp=32 fallback: (32, 32, 32)"
+      },
+      "winner": "tie",
+      "delta_b1_vs_b0_us": -1.04,
+      "delta_b1_vs_b0_pct": -0.69,
+      "delta_ag_vs_b0_us": 8.27,
+      "delta_ag_vs_b0_pct": 5.49,
+      "delta_ag_vs_b1_us": 9.31,
+      "delta_ag_vs_b1_pct": 6.22
+    },
+    {
+      "M": 20,
+      "K": 32,
+      "N": 192,
+      "layers": [
+        "action_in_proj"
+      ],
+      "baseline_0": {
+        "padded": {
+          "M": 32,
+          "N": 192,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "fixed",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 125.068,
+            "npu_min_us": 105.0,
+            "padding_us": 27.913,
+            "unpadding_us": 2.464,
+            "error": null,
+            "elapsed_s": 8.1
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 127.385,
+            "npu_min_us": 105.0,
+            "padding_us": 29.236,
+            "unpadding_us": 2.434,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 123.463,
+            "npu_min_us": 101.0,
+            "padding_us": 19.698,
+            "unpadding_us": 2.445,
+            "error": null,
+            "elapsed_s": 8.1
+          }
+        ],
+        "mean_npu_avg_us": 125.31,
+        "mean_padding_us": 25.62,
+        "mean_unpadding_us": 2.45,
+        "mean_total_us": 153.38,
+        "pass_count": 3
+      },
+      "baseline_1": {
+        "padded": {
+          "M": 32,
+          "N": 192,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "profiling",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 129.306,
+            "npu_min_us": 108.0,
+            "padding_us": 17.503,
+            "unpadding_us": 1.353,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 126.896,
+            "npu_min_us": 110.0,
+            "padding_us": 28.144,
+            "unpadding_us": 1.322,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 127.667,
+            "npu_min_us": 110.0,
+            "padding_us": 28.484,
+            "unpadding_us": 2.414,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 127.96,
+        "mean_padding_us": 24.71,
+        "mean_unpadding_us": 1.7,
+        "mean_total_us": 154.37,
+        "pass_count": 3
+      },
+      "agentic": {
+        "padded": {
+          "M": 32,
+          "N": 192,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "profiling",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 125.647,
+            "npu_min_us": 111.0,
+            "padding_us": 20.5,
+            "unpadding_us": 2.374,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 125.057,
+            "npu_min_us": 106.0,
+            "padding_us": 17.684,
+            "unpadding_us": 2.324,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 126.299,
+            "npu_min_us": 107.0,
+            "padding_us": 28.354,
+            "unpadding_us": 1.532,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 125.67,
+        "mean_padding_us": 22.18,
+        "mean_unpadding_us": 2.08,
+        "mean_total_us": 149.93,
+        "pass_count": 3,
+        "reasoning_summary": "Using profiling best (32, 32, 32)"
+      },
+      "winner": "agentic",
+      "delta_b1_vs_b0_us": 0.99,
+      "delta_b1_vs_b0_pct": 0.65,
+      "delta_ag_vs_b0_us": -3.45,
+      "delta_ag_vs_b0_pct": -2.25,
+      "delta_ag_vs_b1_us": -4.44,
+      "delta_ag_vs_b1_pct": -2.88
+    },
+    {
+      "M": 20,
+      "K": 32,
+      "N": 288,
+      "layers": [
+        "action_in_proj"
+      ],
+      "baseline_0": {
+        "padded": {
+          "M": 32,
+          "N": 288,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "fixed",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 131.343,
+            "npu_min_us": 114.0,
+            "padding_us": 21.741,
+            "unpadding_us": 2.946,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 133.052,
+            "npu_min_us": 111.0,
+            "padding_us": 19.567,
+            "unpadding_us": 2.856,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 131.109,
+            "npu_min_us": 113.0,
+            "padding_us": 30.038,
+            "unpadding_us": 3.607,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 131.83,
+        "mean_padding_us": 23.78,
+        "mean_unpadding_us": 3.14,
+        "mean_total_us": 158.75,
+        "pass_count": 3
+      },
+      "baseline_1": {
+        "padded": {
+          "M": 32,
+          "N": 288,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "profiling",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 132.205,
+            "npu_min_us": 111.0,
+            "padding_us": 30.368,
+            "unpadding_us": 2.745,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 132.818,
+            "npu_min_us": 115.0,
+            "padding_us": 29.797,
+            "unpadding_us": 2.595,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 132.088,
+            "npu_min_us": 112.0,
+            "padding_us": 18.325,
+            "unpadding_us": 2.695,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 132.37,
+        "mean_padding_us": 26.16,
+        "mean_unpadding_us": 2.68,
+        "mean_total_us": 161.21,
+        "pass_count": 3
+      },
+      "agentic": {
+        "padded": {
+          "M": 32,
+          "N": 288,
+          "K": 32
+        },
+        "tile": [
+          32,
+          32,
+          32
+        ],
+        "pad_impl": "manual_copy",
+        "tile_source": "profiling",
+        "trials": [
+          {
+            "trial": 1,
+            "status": "passed",
+            "npu_avg_us": 129.365,
+            "npu_min_us": 111.0,
+            "padding_us": 29.777,
+            "unpadding_us": 1.253,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 2,
+            "status": "passed",
+            "npu_avg_us": 132.663,
+            "npu_min_us": 114.0,
+            "padding_us": 29.256,
+            "unpadding_us": 1.152,
+            "error": null,
+            "elapsed_s": 8.0
+          },
+          {
+            "trial": 3,
+            "status": "passed",
+            "npu_avg_us": 130.405,
+            "npu_min_us": 110.0,
+            "padding_us": 17.894,
+            "unpadding_us": 2.776,
+            "error": null,
+            "elapsed_s": 8.0
+          }
+        ],
+        "mean_npu_avg_us": 130.81,
+        "mean_padding_us": 25.64,
+        "mean_unpadding_us": 1.73,
+        "mean_total_us": 158.18,
+        "pass_count": 3,
+        "reasoning_summary": "Using profiling best (32, 32, 32)"
+      },
+      "winner": "tie",
+      "delta_b1_vs_b0_us": 2.46,
+      "delta_b1_vs_b0_pct": 1.55,
+      "delta_ag_vs_b0_us": -0.57,
+      "delta_ag_vs_b0_pct": -0.36,
+      "delta_ag_vs_b1_us": -3.03,
+      "delta_ag_vs_b1_pct": -1.88
+    }
+  ]
+}

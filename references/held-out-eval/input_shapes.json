@@ -1,0 +1,2202 @@
+{
+  "description": "50 held-out SmolVLA padded shapes. The agent must recommend the best bf16 tile for each. No profiling data exists for these shapes in the reduced profiling DB.",
+  "dtype": "bf16",
+  "shapes": [
+    {
+      "padded_key": "32_288_256",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_192_960",
+      "Mp": 32,
+      "Np": 192,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "192_576_512",
+      "Mp": 192,
+      "Np": 576,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_960_128",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_480_960",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "192_192_512",
+      "Mp": 192,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_256_512",
+      "Mp": 64,
+      "Np": 256,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_96_512",
+      "Mp": 128,
+      "Np": 96,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_672_512",
+      "Mp": 128,
+      "Np": 672,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_480_512",
+      "Mp": 128,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_32_512",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_96_256",
+      "Mp": 32,
+      "Np": 96,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_256_128",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_768_32",
+      "Mp": 64,
+      "Np": 768,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 720,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 720,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_192_512",
+      "Mp": 128,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_32_768",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 576,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 672,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 720,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 576,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 672,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 720,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_576_960",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_672_256",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_32_256",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 192,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 192,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 192,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_960_512",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 288,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 384,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 50,
+          "K": 480,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 288,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 384,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 480,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_576_32",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "256_576_512",
+      "Mp": 256,
+      "Np": 576,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_960_128",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 96,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 96,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_32_512",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 288,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 384,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 480,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 288,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 384,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 480,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 288,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 384,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 480,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_384_960",
+      "Mp": 64,
+      "Np": 384,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_384_960",
+      "Mp": 32,
+      "Np": 384,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_672_256",
+      "Mp": 32,
+      "Np": 672,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_384_512",
+      "Mp": 128,
+      "Np": 384,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 384,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_256_256",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 192,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 192,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 192,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_480_256",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_576_32",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 32,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 32,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 32,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "256_480_512",
+      "Mp": 256,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "192_480_512",
+      "Mp": 192,
+      "Np": 480,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_32_128",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 128,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 96,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 96,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 96,
+          "N": 32,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_out_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_672_32",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "256_192_512",
+      "Mp": 256,
+      "Np": 192,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_96_32",
+      "Mp": 64,
+      "Np": 96,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "192_672_512",
+      "Mp": 192,
+      "Np": 672,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 672,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_192_960",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 960,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 960,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "128_768_512",
+      "Mp": 128,
+      "Np": 768,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 115,
+          "K": 320,
+          "N": 720,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        },
+        {
+          "M": 128,
+          "K": 320,
+          "N": 720,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_576_256",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 256,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 256,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 256,
+          "N": 576,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_256_768",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 576,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 672,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 720,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 576,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 672,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 720,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 576,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 672,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 720,
+          "N": 256,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "gate_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "up_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_288_960",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 960,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 960,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 960,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 960,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "q_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_960_512",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 288,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 384,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 480,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 288,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 384,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 480,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 288,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 384,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 480,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_192_256",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 192,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "256_768_512",
+      "Mp": 256,
+      "Np": 768,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 235,
+          "K": 320,
+          "N": 720,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_480_32",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 32,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 32,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 32,
+          "N": 480,
+          "layers": [
+            {
+              "section": "Projections",
+              "name": "action_in_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "64_288_256",
+      "Mp": 64,
+      "Np": 288,
+      "Kp": 256,
+      "raw_shapes": [
+        {
+          "M": 50,
+          "K": 256,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        },
+        {
+          "M": 60,
+          "K": 256,
+          "N": 288,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "down_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "192_96_512",
+      "Mp": 192,
+      "Np": 96,
+      "Kp": 512,
+      "raw_shapes": [
+        {
+          "M": 179,
+          "K": 320,
+          "N": 96,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "k_proj"
+            },
+            {
+              "section": "Action Expert",
+              "name": "v_proj"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "padded_key": "32_960_768",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 768,
+      "raw_shapes": [
+        {
+          "M": 20,
+          "K": 576,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 672,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 20,
+          "K": 720,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 576,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 672,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 30,
+          "K": 720,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 576,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 672,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        },
+        {
+          "M": 32,
+          "K": 720,
+          "N": 960,
+          "layers": [
+            {
+              "section": "Action Expert",
+              "name": "o_proj"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

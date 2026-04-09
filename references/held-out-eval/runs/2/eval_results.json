@@ -1,0 +1,1216 @@
+{
+  "summary": {
+    "generated": "2026-04-09T00:17:44",
+    "run": 2,
+    "n_shapes": 50,
+    "exact_match": 29,
+    "exact_match_pct": 58.0,
+    "npu_runs": 21,
+    "npu_failed": 3,
+    "npu_unavailable": 0,
+    "avg_suboptimality": 1.0285,
+    "max_suboptimality": 1.192
+  },
+  "per_shape": [
+    {
+      "padded_key": "128_192_512",
+      "Mp": 128,
+      "Np": 192,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 172.36,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 154.59,
+      "suboptimality": 0.8969,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "128_384_512",
+      "Mp": 128,
+      "Np": 384,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 186.107,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 179.99,
+      "suboptimality": 0.9671,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "128_480_512",
+      "Mp": 128,
+      "Np": 480,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 223.508,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 266.42,
+      "suboptimality": 1.192,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "128_672_512",
+      "Mp": 128,
+      "Np": 672,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        32,
+        128
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 290.45,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 319.14,
+      "suboptimality": 1.0988,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "128_768_512",
+      "Mp": 128,
+      "Np": 768,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 219.531,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 220.87,
+      "suboptimality": 1.0061,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "128_96_512",
+      "Mp": 128,
+      "Np": 96,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 145.808,
+      "confidence": "low",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 159.74,
+      "suboptimality": 1.0956,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "192_192_512",
+      "Mp": 192,
+      "Np": 192,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 214.457,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "192_480_512",
+      "Mp": 192,
+      "Np": 480,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 363.318,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "192_576_512",
+      "Mp": 192,
+      "Np": 576,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 279.585,
+      "confidence": "medium",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "192_672_512",
+      "Mp": 192,
+      "Np": 672,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 680.771,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": "failed",
+      "npu_error": "[NOTE]: bfloat16 have accuracy issue"
+    },
+    {
+      "padded_key": "192_96_512",
+      "Mp": 192,
+      "Np": 96,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 175.134,
+      "confidence": "low",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "256_192_512",
+      "Mp": 256,
+      "Np": 192,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 190.899,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 188.69,
+      "suboptimality": 0.9884,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "256_480_512",
+      "Mp": 256,
+      "Np": 480,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        32,
+        128
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 380.974,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 291.53,
+      "suboptimality": 0.7652,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "256_576_512",
+      "Mp": 256,
+      "Np": 576,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 315.462,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 322.05,
+      "suboptimality": 1.0209,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "256_768_512",
+      "Mp": 256,
+      "Np": 768,
+      "Kp": 512,
+      "recommended_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 249.812,
+      "confidence": "medium",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_192_960",
+      "Mp": 32,
+      "Np": 192,
+      "Kp": 960,
+      "recommended_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 166.141,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_256_128",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 128,
+      "recommended_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 129.087,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_256_256",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 256,
+      "recommended_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 131.328,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_256_768",
+      "Mp": 32,
+      "Np": 256,
+      "Kp": 768,
+      "recommended_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 150.767,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_288_256",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 256,
+      "recommended_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 148.763,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_288_960",
+      "Mp": 32,
+      "Np": 288,
+      "Kp": 960,
+      "recommended_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 241.419,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_32_128",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 128,
+      "recommended_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 117.413,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_32_256",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 256,
+      "recommended_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 121.953,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 127.6,
+      "suboptimality": 1.0463,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_32_512",
+      "Mp": 32,
+      "Np": 32,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 123.072,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_384_960",
+      "Mp": 32,
+      "Np": 384,
+      "Kp": 960,
+      "recommended_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 190.767,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_576_256",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 256,
+      "recommended_tile": [
+        16,
+        16,
+        128
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        16
+      ],
+      "actual_best_avg_us": 185.641,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 218.44,
+      "suboptimality": 1.1767,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_576_32",
+      "Mp": 32,
+      "Np": 576,
+      "Kp": 32,
+      "recommended_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 129.86,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_672_256",
+      "Mp": 32,
+      "Np": 672,
+      "Kp": 256,
+      "recommended_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 203.532,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 208.73,
+      "suboptimality": 1.0255,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_960_128",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 128,
+      "recommended_tile": [
+        16,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        64
+      ],
+      "actual_best_avg_us": 168.168,
+      "confidence": "medium",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_960_512",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 512,
+      "recommended_tile": [
+        16,
+        16,
+        16
+      ],
+      "actual_best_tile": [
+        16,
+        16,
+        16
+      ],
+      "actual_best_avg_us": 301.035,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_960_768",
+      "Mp": 32,
+      "Np": 960,
+      "Kp": 768,
+      "recommended_tile": [
+        16,
+        16,
+        128
+      ],
+      "actual_best_tile": [
+        16,
+        16,
+        128
+      ],
+      "actual_best_avg_us": 300.735,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "32_96_256",
+      "Mp": 32,
+      "Np": 96,
+      "Kp": 256,
+      "recommended_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 122.138,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 125.3,
+      "suboptimality": 1.0259,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_192_256",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 256,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        128
+      ],
+      "actual_best_avg_us": 135.363,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 138.26,
+      "suboptimality": 1.0214,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_192_960",
+      "Mp": 64,
+      "Np": 192,
+      "Kp": 960,
+      "recommended_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 171.302,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_256_512",
+      "Mp": 64,
+      "Np": 256,
+      "Kp": 512,
+      "recommended_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 142.932,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_288_256",
+      "Mp": 64,
+      "Np": 288,
+      "Kp": 256,
+      "recommended_tile": [
+        32,
+        32,
+        16
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 154.552,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_32_512",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 125.49,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_32_768",
+      "Mp": 64,
+      "Np": 32,
+      "Kp": 768,
+      "recommended_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 133.742,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_384_960",
+      "Mp": 64,
+      "Np": 384,
+      "Kp": 960,
+      "recommended_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 202.635,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_480_256",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 256,
+      "recommended_tile": [
+        16,
+        32,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 174.477,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 205.21,
+      "suboptimality": 1.1761,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_480_32",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 32,
+      "recommended_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 134.556,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_480_960",
+      "Mp": 64,
+      "Np": 480,
+      "Kp": 960,
+      "recommended_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        64
+      ],
+      "actual_best_avg_us": 301.724,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": "failed",
+      "npu_error": "ails.  Use the cmake_policy command to\n  set the policy and suppress this warning.\n\nThis warning is for project developers.  Use -Wno-dev to suppress it.\n\nterminate called after throwing an instance of 'std::runtime_error'\n  what():  qds_device::wait() unexpected command state\nAborted (core dumped)"
+    },
+    {
+      "padded_key": "64_576_32",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 32,
+      "recommended_tile": [
+        32,
+        64,
+        16
+      ],
+      "actual_best_tile": [
+        32,
+        64,
+        16
+      ],
+      "actual_best_avg_us": 130.47,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_576_960",
+      "Mp": 64,
+      "Np": 576,
+      "Kp": 960,
+      "recommended_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        64
+      ],
+      "actual_best_avg_us": 289.788,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_672_256",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 256,
+      "recommended_tile": [
+        64,
+        64,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        32,
+        32
+      ],
+      "actual_best_avg_us": 202.823,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": "failed",
+      "npu_error": "[NOTE]: bfloat16 have accuracy issue"
+    },
+    {
+      "padded_key": "64_672_32",
+      "Mp": 64,
+      "Np": 672,
+      "Kp": 32,
+      "recommended_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_tile": [
+        64,
+        32,
+        16
+      ],
+      "actual_best_avg_us": 144.617,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_768_32",
+      "Mp": 64,
+      "Np": 768,
+      "Kp": 32,
+      "recommended_tile": [
+        32,
+        64,
+        16
+      ],
+      "actual_best_tile": [
+        16,
+        256,
+        16
+      ],
+      "actual_best_avg_us": 145.83,
+      "confidence": "high",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 153.86,
+      "suboptimality": 1.0551,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_960_128",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 128,
+      "recommended_tile": [
+        32,
+        64,
+        64
+      ],
+      "actual_best_tile": [
+        16,
+        64,
+        32
+      ],
+      "actual_best_avg_us": 200.239,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 181.53,
+      "suboptimality": 0.9066,
+      "npu_status": "passed",
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_960_512",
+      "Mp": 64,
+      "Np": 960,
+      "Kp": 512,
+      "recommended_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 306.597,
+      "confidence": "high",
+      "exact_match": true,
+      "npu_run": false,
+      "agent_avg_us": null,
+      "suboptimality": null,
+      "npu_status": null,
+      "npu_error": null
+    },
+    {
+      "padded_key": "64_96_32",
+      "Mp": 64,
+      "Np": 96,
+      "Kp": 32,
+      "recommended_tile": [
+        32,
+        16,
+        32
+      ],
+      "actual_best_tile": [
+        64,
+        16,
+        32
+      ],
+      "actual_best_avg_us": 124.078,
+      "confidence": "medium",
+      "exact_match": false,
+      "npu_run": true,
+      "agent_avg_us": 129.97,
+      "suboptimality": 1.0475,
+      "npu_status": "passed",
+      "npu_error": null
+    }
+  ]
+}
