@@ -6,7 +6,7 @@ Experiment: test_n_20260330
 - dtype: bf16
 - trials: 3 per (shape, group)
 - shapes: 291 unique GEMM shapes from SmolVLA model
-- groups: Baseline 0 (fixed tile), Baseline 2 (profiling best), Agentic (full reasoning)
+- groups: Baseline 0 (fixed tile), Baseline 1 (profiling best), Agentic (full reasoning)
 - output: references/experiment-results/test_n_20260330/
 
 ## Results Summary
@@ -19,14 +19,14 @@ Experiment: test_n_20260330
 
 ## Mean Latency Deltas
 - AG vs B0: -2.84% (agentic faster on average)
-- AG vs B2: +0.5% (essentially tied)
+- AG vs B1: +0.5% (essentially tied)
 - B2 vs B0: -3.28% (profiling lookup beats fixed tile)
 
 ## Key Findings
 
 ### 1. Np=320 n=16 heuristic failure for Mp=192
 For M=179,K=960,N=320 (padded to 192,320,960), the agentic strategy applied the
-n=16 tile rule (64,16,64) designed for Np=320 shapes. Result: 615µs vs B2's 298µs
+n=16 tile rule (64,16,64) designed for Np=320 shapes. Result: 615µs vs B1's 298µs
 (+105.4% slower). Mp=192 had no direct profiling data, making the n=16 rule
 counterproductive. Fix: only apply Np=320 n=16 rule when profiling data confirms it.
 

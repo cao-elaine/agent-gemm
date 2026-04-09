@@ -7,7 +7,7 @@ three decision strategies side-by-side:
 
 - **Baseline 0** — fixed tile only: always uses (64,64,64) or (32,32,32) with
   no profiling lookup. Represents the floor — what you get with zero data.
-- **Baseline 2** — profiling-best tile: closest-fit padded shape + best tile
+- **Baseline 1** — profiling-best tile: closest-fit padded shape + best tile
   from `npu_execution_profiling.json`. Fails gracefully when data is missing.
 - **Agentic** — full reasoning: padded shape selection across three strategies,
   k_min accuracy pre-validation, cost model fallback, and strategy insights.
@@ -181,7 +181,7 @@ Work through all 17 shapes in `smolvla_gemm_shapes.json`. For each (M, N, K):
 The simplest possible policy: pick the closest padded shape and use a fixed
 default tile with no profiling lookup whatsoever.
 
-1. **Padded shape**: same closest-fit rule as Baseline 2 (see below).
+1. **Padded shape**: same closest-fit rule as Baseline 1 (see below).
 2. **Tile**: always **(64, 64, 64)** unless any padded dimension < 64, in which
    case use **(32, 32, 32)**. No profiling lookup, no cost model, no heuristics.
    Verify divisibility (§ hard constraints). If the chosen tile fails divisibility,
@@ -192,7 +192,7 @@ default tile with no profiling lookup whatsoever.
    - `manual_copy` if `ab_elements ≤ 571,779`; else `numpy_pad`
    - If M==Mp and N==Np and K==Kp: `pad_impl = none`
 
-#### Baseline 2 strategy — profiling best tile
+#### Baseline 1 strategy — profiling best tile
 
 Picks the closest padded shape and uses the best tile from profiling data. Does
 not reason about whether a different padded shape might be faster overall.
@@ -208,7 +208,7 @@ not reason about whether a different padded shape might be faster overall.
    Kp = min(v for v in ALLOWED_K if v >= K)
    ```
 2. **Tile**: look up `"Best m,n,k"` in `npu_execution_profiling.json` for
-   `(Mp, Np, Kp, bf16)`. Use that tile directly — Baseline 2 does **not**
+   `(Mp, Np, Kp, bf16)`. Use that tile directly — Baseline 1 does **not**
    validate it against accuracy constraints; it trusts the profiling DB as-is.
    If no profile entry exists, fall back to:
    **(64, 64, 64)** if `Np >= 64`, else **(32, 32, 32)**.
@@ -259,7 +259,7 @@ Before running anything:
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
 ║                                    SMOLVLA EXPERIMENT PLAN  —  dtype=bf16                                           ║
 ╠══════════════╦═══════════════════╦════════════════════════════╦════════════════════════════╦════════════════════════╣
-║  Shape M,K,N ║ Layer(s)          ║ Baseline 0 (fixed tile)    ║ Baseline 2 (profiling)     ║ Agentic                ║
+║  Shape M,K,N ║ Layer(s)          ║ Baseline 0 (fixed tile)    ║ Baseline 1 (profiling)     ║ Agentic                ║
 ║              ║                   ║ Padded / Tile / Impl       ║ Padded / Tile / Impl       ║ Padded / Tile / Impl   ║
 ╠══════════════╬═══════════════════╬════════════════════════════╬════════════════════════════╬════════════════════════╣
 ║ 1024,768,768 ║ vision q/k/v/o    ║ 1024,768,768 (64,64,64) np ║ 1024,768,768 (64,64,64) np ║ ...                   ║
@@ -275,7 +275,7 @@ Estimated wall time: ~<2619 × avg_compile_time> min  (30–120s per compile)
 ## Phase 2 — Execute all runs
 
 Work through every shape. For each shape, run **Baseline 0 first** (3 trials),
-then **Baseline 2** (3 trials), then the **agentic group** (3 trials). Do not
+then **Baseline 1** (3 trials), then the **agentic group** (3 trials). Do not
 ask for confirmation before any run.
 
 ### 2.1 Per-trial execution
@@ -319,7 +319,7 @@ exclude everything else — record them as-is.
 Before each compile:
 ```
 [shape <i>/291 | <group> trial <t>/3]  M=<M> K=<K> N=<N>  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  compiling...
-# <group> is one of: baseline_0 | baseline_2 | agentic
+# <group> is one of: baseline_0 | baseline_1 | agentic
 ```
 
 After each trial:
@@ -333,7 +333,7 @@ After each trial:
 On failure, classify using the same tree as `agentic-npu-workflow.md` § 2.4.
 
 - **Baseline 0 failures**: apply fallback (32,32,32) → (16,32,32). Record tile used.
-- **Baseline 2 failures**: apply the tile fallback sequence (64,64,64) →
+- **Baseline 1 failures**: apply the tile fallback sequence (64,64,64) →
   (32,32,32) → (16,32,32). Record which tile was actually used for the trial.
   If all fallbacks fail, record `status = failed` for that trial with
   `npu_avg_us = null`.
@@ -351,12 +351,12 @@ After all 9 trials for a shape (3 × 3 groups) are complete, print:
 ── M=<M> K=<K> N=<N>  [<layer(s)>] ──────────────────────────────
   BASELINE_0  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  [fixed]
     Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
-  BASELINE_2  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  [profiling]
+  BASELINE_1  padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)  [profiling]
     Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
   AGENTIC     padded=(<Mp>,<Np>,<Kp>)  tile=(<m>,<n>,<k>)
     Trial 1: npu=<X>µs pad=<P>µs total=<T>µs  ...  Mean total: <X>µs
-  Best: <BASELINE_0|BASELINE_2|AGENTIC>  (by mean_total_us)
-  vs B0: Δ(B2)=<X>µs (<Y>%)   Δ(AG)=<X>µs (<Y>%)
+  Best: <BASELINE_0|BASELINE_1|AGENTIC>  (by mean_total_us)
+  vs B0: Δ(B1)=<X>µs (<Y>%)   Δ(AG)=<X>µs (<Y>%)
 ────────────────────────────────────────────────────────────────────
 ```
 
@@ -449,7 +449,7 @@ json.dump(sanitize(data), f, indent=2)
         "mean_total_us": <float|null>,
         "pass_count": <N>
       },
-      "baseline_2": {
+      "baseline_1": {
         "padded": {"M": <Mp>, "N": <Np>, "K": <Kp>},
         "tile": [<m>, <n>, <k>],
         "pad_impl": "<manual_copy|numpy_pad|none>",
@@ -478,21 +478,21 @@ json.dump(sanitize(data), f, indent=2)
         "mean_total_us": <float|null>,
         "pass_count": <N>
       },
-      "winner": "<baseline_0|baseline_2|agentic|tie|inconclusive|prescreened_skip>",
-      "delta_b2_vs_b0_us": <float|null>,
-      "delta_b2_vs_b0_pct": <float|null>,
+      "winner": "<baseline_0|baseline_1|agentic|tie|inconclusive|prescreened_skip>",
+      "delta_b1_vs_b0_us": <float|null>,
+      "delta_b1_vs_b0_pct": <float|null>,
       "delta_ag_vs_b0_us": <float|null>,
       "delta_ag_vs_b0_pct": <float|null>,
-      "delta_ag_vs_b2_us": <float|null>,
-      "delta_ag_vs_b2_pct": <float|null>
+      "delta_ag_vs_b1_us": <float|null>,
+      "delta_ag_vs_b1_pct": <float|null>
     }
   ],
   "summary": {
     "shapes_tested": 17,
-    "winner_counts": {"baseline_0": <N>, "baseline_2": <N>, "agentic": <N>, "tie": <N>, "inconclusive": <N>},
+    "winner_counts": {"baseline_0": <N>, "baseline_1": <N>, "agentic": <N>, "tie": <N>, "inconclusive": <N>},
     "mean_delta_ag_vs_b0_pct": <float>,
-    "mean_delta_ag_vs_b2_pct": <float>,
-    "mean_delta_b2_vs_b0_pct": <float>
+    "mean_delta_ag_vs_b1_pct": <float>,
+    "mean_delta_b1_vs_b0_pct": <float>
   }
 }
 ```
@@ -519,19 +519,19 @@ json.dump(sanitize(data), f, indent=2)
 |--------|-------|
 | Shapes tested | 17 |
 | Baseline 0 wins | <N> |
-| Baseline 2 wins | <N> |
+| Baseline 1 wins | <N> |
 | Agentic wins | <N> |
 | Ties (within 2%) | <N> |
 | Inconclusive | <N> |
 | Mean Δ agentic vs Baseline 0 | <X>% |
-| Mean Δ agentic vs Baseline 2 | <X>% |
-| Mean Δ Baseline 2 vs Baseline 0 | <X>% |
+| Mean Δ agentic vs Baseline 1 | <X>% |
+| Mean Δ Baseline 1 vs Baseline 0 | <X>% |
 
 ## Per-Shape Results
 
 ### <M>×<K>×<N>  —  `<layer(s)>`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (<Mp>,<Np>,<Kp>) | (<Mp>,<Np>,<Kp>) | (<Mp>,<Np>,<Kp>) |
 | Tile | (<m>,<n>,<k>) | (<m>,<n>,<k>) | (<m>,<n>,<k>) |
@@ -545,8 +545,8 @@ json.dump(sanitize(data), f, indent=2)
 | **Mean total (µs)** | **<X>** | **<X>** | **<X>** |
 | Pass count | <N>/3 | <N>/3 | <N>/3 |
 
-**Winner: <BASELINE_0 \| BASELINE_2 \| AGENTIC \| TIE>**
-Δ(B2 vs B0)=<X>µs (<Y>%)   Δ(AG vs B0)=<X>µs (<Y>%)   Δ(AG vs B2)=<X>µs (<Y>%)
+**Winner: <BASELINE_0 \| BASELINE_1 \| AGENTIC \| TIE>**
+Δ(B2 vs B0)=<X>µs (<Y>%)   Δ(AG vs B0)=<X>µs (<Y>%)   Δ(AG vs B1)=<X>µs (<Y>%)
 
 ---
 
@@ -587,7 +587,7 @@ os.makedirs(f'{out_dir}/plots', exist_ok=True)
 shapes   = [s for s in results['shapes'] if s['winner'] not in ('prescreened_skip',)]
 labels   = [f"{s['M']}×{s['K']}×{s['N']}" for s in shapes]
 b0_means = [s['baseline_0']['mean_total_us'] or 0 for s in shapes]
-b2_means = [s['baseline_2']['mean_total_us'] or 0 for s in shapes]
+b1_means = [s['baseline_1']['mean_total_us'] or 0 for s in shapes]
 ag_means = [s['agentic']['mean_total_us']    or 0 for s in shapes]
 x = np.arange(len(labels))
 w = 0.25
@@ -598,7 +598,7 @@ w = 0.25
 ```python
 fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 6))
 ax.bar(x - w, b0_means, w, label='Baseline 0 (fixed tile)', color='#d9534f')
-ax.bar(x,     b2_means, w, label='Baseline 2 (profiling)',  color='#f0ad4e')
+ax.bar(x,     b1_means, w, label='Baseline 1 (profiling)',  color='#f0ad4e')
 ax.bar(x + w, ag_means, w, label='Agentic',                 color='#5cb85c')
 ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
 ax.set_ylabel('Mean total time (µs)  [pad + NPU + unpad]'); ax.set_title('SmolVLA GEMM Latency by Strategy')
@@ -615,11 +615,11 @@ def pct(baseline, val):
         return (val - baseline) / baseline * 100
     return None
 
-b2_pct = [pct(b0, b2) for b0, b2 in zip(b0_means, b2_means)]
+b1_pct = [pct(b0, b2) for b0, b2 in zip(b0_means, b1_means)]
 ag_pct = [pct(b0, ag) for b0, ag in zip(b0_means, ag_means)]
 
 fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 5))
-ax.bar(x - w/2, b2_pct, w, label='Baseline 2 vs B0', color='#f0ad4e')
+ax.bar(x - w/2, b1_pct, w, label='Baseline 1 vs B0', color='#f0ad4e')
 ax.bar(x + w/2, ag_pct, w, label='Agentic vs B0',    color='#5cb85c')
 ax.axhline(0, color='black', linewidth=0.8)
 ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
@@ -634,8 +634,8 @@ plt.close()
 
 ```python
 counts = results['summary']['winner_counts']
-groups = ['Baseline 0', 'Baseline 2', 'Agentic', 'Tie', 'Inconclusive']
-keys   = ['baseline_0', 'baseline_2', 'agentic', 'tie', 'inconclusive']
+groups = ['Baseline 0', 'Baseline 1', 'Agentic', 'Tie', 'Inconclusive']
+keys   = ['baseline_0', 'baseline_1', 'agentic', 'tie', 'inconclusive']
 colors = ['#d9534f', '#f0ad4e', '#5cb85c', '#aaaaaa', '#cccccc']
 vals   = [counts.get(k, 0) for k in keys]
 fig, ax = plt.subplots(figsize=(7, 4))
@@ -648,17 +648,17 @@ plt.savefig(f'{out_dir}/plots/winner_distribution.png', dpi=150)
 plt.close()
 ```
 
-### Plot 4 — Agentic vs Baseline 2 delta (head-to-head)
+### Plot 4 — Agentic vs Baseline 1 delta (head-to-head)
 
 ```python
-ag_vs_b2 = [pct(b2, ag) for b2, ag in zip(b2_means, ag_means)]
-colors_bar = ['#5cb85c' if (v is not None and v < 0) else '#d9534f' for v in ag_vs_b2]
+ag_vs_b1 = [pct(b2, ag) for b2, ag in zip(b1_means, ag_means)]
+colors_bar = ['#5cb85c' if (v is not None and v < 0) else '#d9534f' for v in ag_vs_b1]
 fig, ax = plt.subplots(figsize=(max(12, len(labels)*0.9), 5))
-ax.bar(x, ag_vs_b2, color=colors_bar)
+ax.bar(x, ag_vs_b1, color=colors_bar)
 ax.axhline(0, color='black', linewidth=0.8)
 ax.set_xticks(x); ax.set_xticklabels(labels, rotation=45, ha='right', fontsize=8)
-ax.set_ylabel('Agentic Δ vs Baseline 2 (%)  [negative = agentic faster]')
-ax.set_title('Agentic vs Baseline 2 — Head-to-Head')
+ax.set_ylabel('Agentic Δ vs Baseline 1 (%)  [negative = agentic faster]')
+ax.set_title('Agentic vs Baseline 1 — Head-to-Head')
 plt.tight_layout()
 plt.savefig(f'{out_dir}/plots/agentic_vs_baseline2.png', dpi=150)
 plt.close()
@@ -676,9 +676,9 @@ print(f"Plots saved to {out_dir}/plots/")
 ║  Date:           <YYYY-MM-DD HH:MM:SS>                               ║
 ║  Shapes tested:  17   dtype: bf16   Trials/group: 5                  ║
 ║  Total NPU runs: <N>  │  Passed: <N>  │  Failed: <N>                 ║
-║  Baseline 0 wins: <N> │  Baseline 2 wins: <N> │  Agentic wins: <N>  ║
+║  Baseline 0 wins: <N> │  Baseline 1 wins: <N> │  Agentic wins: <N>  ║
 ║  Ties: <N>        │  Inconclusive: <N>                               ║
-║  Mean Δ agentic vs B0: <X>%   vs B2: <X>%                           ║
+║  Mean Δ agentic vs B0: <X>%   vs B1: <X>%                           ║
 ║  Results: references/experiment-results/test_n_<date>/               ║
 ║  Plots:   references/experiment-results/test_n_<date>/plots/         ║
 ╚══════════════════════════════════════════════════════════════════════╝
@@ -716,10 +716,10 @@ Never use `torch_pad`. Never use `torch_pad`. Always use `manual_copy` or `numpy
 **Three-strategy design:**
 - **Baseline 0** is the floor: fixed tile (64,64,64) or (32,32,32) with no data.
   It measures the minimum achievable without any profiling or reasoning.
-- **Baseline 2** adds profiling lookup: closest-fit shape + best known tile.
+- **Baseline 1** adds profiling lookup: closest-fit shape + best known tile.
   It measures the value of having profiling data but no shape-selection reasoning.
 - **Agentic** makes all decisions freely using profiling data, insights, error
-  logs, and the cost model — no fixed algorithm. The gap between Baseline 2 and
+  logs, and the cost model — no fixed algorithm. The gap between Baseline 1 and
   Agentic measures the value of open-ended reasoning over a closest-fit rule.
 
 **Agentic runs update memory; baseline runs do not.** Only write to memory files

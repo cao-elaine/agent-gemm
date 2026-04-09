@@ -2,7 +2,7 @@
 
 **Goal**: Run the full SmolVLA NPU Baseline vs Agentic experiment across all 291 unique
 GEMM shapes from `references/smol-vla-dataset/smolvla_gemm_shapes.json`, dtype=bf16,
-3 trials per shape per strategy group (Baseline 0, Baseline 2, Agentic).
+3 trials per shape per strategy group (Baseline 0, Baseline 1, Agentic).
 
 **Outcome**: BLOCKED — NPU hardware in persistent error state from prior retile session.
 

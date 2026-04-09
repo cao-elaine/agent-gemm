@@ -15,7 +15,7 @@ os.environ["ENABLE_AGGRESSIVE_PORT_UTILIZATION_PATCH"] = "1"
 BASE       = "/home/ec935/agent-gemm"
 SCRIPT_DIR = "/home/ec935/vla-to-npu/gemm/scripts"
 PYTHON     = "/opt/anaconda3/envs/allo-base/bin/python3"
-DATE_STR   = "20260330"
+DATE_STR   = "20260407"
 OUT_DIR    = f"{BASE}/references/experiment-results/test_n_{DATE_STR}"
 JSON_OUT   = f"{OUT_DIR}/results.json"
 MD_OUT     = f"{OUT_DIR}/results.md"
@@ -98,7 +98,7 @@ def strategy_b0(M, K, N, Mp, Np, Kp):
     return {"Mp":Mp,"Np":Np,"Kp":Kp, "tile":[32,32,32],
             "pad_impl": get_pad_impl(M,K,N,Mp,Np,Kp), "tile_source":"fixed"}
 
-# ─── Strategy: Baseline 2 ────────────────────────────────────────────────────
+# ─── Strategy: Baseline 1 ────────────────────────────────────────────────────
 def strategy_b2(M, K, N, Mp, Np, Kp):
     """Closest-fit padded shape + profiling-best tile (no accuracy pre-validation)."""
     best, src = get_profiling_best(Mp, Np, Kp)
@@ -431,7 +431,7 @@ def run_group(M, K, N, Mp, Np, Kp, strategy_info, group_name, shape_idx, total_s
     if not npu_gone and not any(r['status']=='passed' for r in trial_results):
         if group_name == 'baseline_0':
             fb = B0_FALLBACKS
-        elif group_name == 'baseline_2':
+        elif group_name == 'baseline_1':
             fb = B2_FALLBACKS
         else:
             # Agentic fallbacks: skip the current tile in sequence
@@ -479,7 +479,7 @@ def load_results():
         print(f"[RESUME] Loaded {len(data['shapes'])} shapes, {len(completed)} completed", flush=True)
         return data, completed
     return {"experiment":"SmolVLA NPU Baseline vs Agentic",
-            "date": "2026-03-30",
+            "date": "2026-04-07",
             "dtype": DTYPE,
             "trials_per_group": TRIALS,
             "shapes": []}, set()
@@ -519,7 +519,7 @@ def compute_all_strategies():
             'M': M, 'K': K, 'N': N, 'layers': layers,
             'skip': False,
             'baseline_0': b0,
-            'baseline_2': b2,
+            'baseline_1': b2,
             'agentic': ag
         })
     return plan
@@ -534,7 +534,7 @@ def print_plan_table(plan):
     print("╔" + "═"*118 + "╗")
     print("║" + "   SMOLVLA EXPERIMENT PLAN  —  dtype=bf16".center(118) + "║")
     print("╠" + "═"*14 + "╦" + "═"*22 + "╦" + "═"*26 + "╦" + "═"*26 + "╦" + "═"*26 + "╣")
-    print("║ Shape M,K,N  ║ Layer(s)             ║ Baseline 0 (fixed)       ║ Baseline 2 (profiling)   ║ Agentic                  ║")
+    print("║ Shape M,K,N  ║ Layer(s)             ║ Baseline 0 (fixed)       ║ Baseline 1 (profiling)   ║ Agentic                  ║")
     print("╠" + "═"*14 + "╬" + "═"*22 + "╬" + "═"*26 + "╬" + "═"*26 + "╬" + "═"*26 + "╣")
 
     for p in plan[:30]:  # Show first 30 for brevity, then summary
@@ -542,7 +542,7 @@ def print_plan_table(plan):
             layer_str = ', '.join(p['layers'])[:18]
             print(f"║ {p['M']:4},{p['K']:4},{p['N']:4} ║ {layer_str:<20} ║ {'PRESCREENED_SKIP ('+p['skip_reason'][:20]+')':<24} ║{'':26}║{'':26}║")
             continue
-        b0, b2, ag = p['baseline_0'], p['baseline_2'], p['agentic']
+        b0, b2, ag = p['baseline_0'], p['baseline_1'], p['agentic']
         layer_str = ', '.join(p['layers'])[:18]
         def fmt(s):
             tp = f"({s['Mp']},{s['Np']},{s['Kp']})"
@@ -567,7 +567,7 @@ def print_plan_table(plan):
 def determine_winner(b0, b2, ag):
     """Determine winner among groups with ≥1 passing trial. Uses mean_total_us."""
     means = {}
-    for name, grp in [('baseline_0', b0), ('baseline_2', b2), ('agentic', ag)]:
+    for name, grp in [('baseline_0', b0), ('baseline_1', b2), ('agentic', ag)]:
         if grp['pass_count'] > 0 and grp.get('mean_total_us') is not None:
             means[name] = grp['mean_total_us']
         elif grp['pass_count'] > 0 and grp.get('mean_npu_avg_us') is not None:
@@ -581,7 +581,7 @@ def determine_winner(b0, b2, ag):
 
     # Check if any group has 0 passing trials
     groups_inc = []
-    for name, grp in [('baseline_0', b0), ('baseline_2', b2), ('agentic', ag)]:
+    for name, grp in [('baseline_0', b0), ('baseline_1', b2), ('agentic', ag)]:
         if grp['pass_count'] == 0:
             groups_inc.append(name)
 
@@ -593,9 +593,9 @@ def determine_winner(b0, b2, ag):
             return round(d, 2), round(pct, 2)
         return None, None
 
-    db2_b0_us, db2_b0_pct = delta('baseline_0', 'baseline_2')
+    db2_b0_us, db2_b0_pct = delta('baseline_0', 'baseline_1')
     dag_b0_us, dag_b0_pct = delta('baseline_0', 'agentic')
-    dag_b2_us, dag_b2_pct = delta('baseline_2', 'agentic')
+    dag_b2_us, dag_b1_pct = delta('baseline_1', 'agentic')
 
     if groups_inc:
         winner = 'inconclusive'
@@ -611,14 +611,14 @@ def determine_winner(b0, b2, ag):
         else:
             winner = best_name
 
-    return winner, db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b2_pct
+    return winner, db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b1_pct
 
 
 def print_shape_summary(M, K, N, layers, b0_res, b2_res, ag_res, winner, deltas):
-    db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b2_pct = deltas
+    db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b1_pct = deltas
     layer_str = ', '.join(layers[:3])
     print(f"\n── M={M} K={K} N={N}  [{layer_str}] " + "─"*40, flush=True)
-    for name, res in [('BASELINE_0', b0_res), ('BASELINE_2', b2_res), ('AGENTIC', ag_res)]:
+    for name, res in [('BASELINE_0', b0_res), ('BASELINE_1', b2_res), ('AGENTIC', ag_res)]:
         t = res['tile']
         p = res['padded']
         src = res.get('tile_source', '')
@@ -634,7 +634,7 @@ def print_shape_summary(M, K, N, layers, b0_res, b2_res, ag_res, winner, deltas)
     if dag_b0_us is not None:
         parts.append(f"Δ(AG vs B0)={dag_b0_us:+.1f}µs ({dag_b0_pct:+.1f}%)")
     if dag_b2_us is not None:
-        parts.append(f"Δ(AG vs B2)={dag_b2_us:+.1f}µs ({dag_b2_pct:+.1f}%)")
+        parts.append(f"Δ(AG vs B1)={dag_b2_us:+.1f}µs ({dag_b1_pct:+.1f}%)")
     print("  " + "   ".join(parts), flush=True)
     print("─"*72, flush=True)
 
@@ -671,10 +671,10 @@ def main():
                     "layers": p['layers'],
                     "winner": "prescreened_skip",
                     "skip_reason": p['skip_reason'],
-                    "baseline_0": None, "baseline_2": None, "agentic": None,
-                    "delta_b2_vs_b0_us": None, "delta_b2_vs_b0_pct": None,
+                    "baseline_0": None, "baseline_1": None, "agentic": None,
+                    "delta_b1_vs_b0_us": None, "delta_b1_vs_b0_pct": None,
                     "delta_ag_vs_b0_us": None, "delta_ag_vs_b0_pct": None,
-                    "delta_ag_vs_b2_us": None, "delta_ag_vs_b2_pct": None
+                    "delta_ag_vs_b1_us": None, "delta_ag_vs_b1_pct": None
                 }
                 data['shapes'].append(entry)
                 save_results(data)
@@ -691,10 +691,10 @@ def main():
             entry = {
                 "M": M, "K": K, "N": N, "layers": p['layers'],
                 "winner": "npu_unavailable",
-                "baseline_0": None, "baseline_2": None, "agentic": None,
-                "delta_b2_vs_b0_us": None, "delta_b2_vs_b0_pct": None,
+                "baseline_0": None, "baseline_1": None, "agentic": None,
+                "delta_b1_vs_b0_us": None, "delta_b1_vs_b0_pct": None,
                 "delta_ag_vs_b0_us": None, "delta_ag_vs_b0_pct": None,
-                "delta_ag_vs_b2_us": None, "delta_ag_vs_b2_pct": None
+                "delta_ag_vs_b1_us": None, "delta_ag_vs_b1_pct": None
             }
             data['shapes'].append(entry)
             continue
@@ -702,7 +702,7 @@ def main():
         print(f"\n[shape {shape_idx}/{total_shapes}]  M={M} K={K} N={N}  layers={', '.join(p['layers'][:2])}", flush=True)
 
         b0_strat = p['baseline_0']
-        b2_strat = p['baseline_2']
+        b2_strat = p['baseline_1']
         ag_strat = p['agentic']
 
         # Run Baseline 0
@@ -713,12 +713,12 @@ def main():
         if any(r['status']=='npu_unavailable' for r in b0_res['trials']):
             npu_gone = True
 
-        # Run Baseline 2
+        # Run Baseline 1
         if not npu_gone:
-            print(f"  Running Baseline 2...", flush=True)
+            print(f"  Running Baseline 1...", flush=True)
             b2_res = run_group(M, K, N,
                                b2_strat['Mp'], b2_strat['Np'], b2_strat['Kp'],
-                               b2_strat, 'baseline_2', shape_idx, total_shapes)
+                               b2_strat, 'baseline_1', shape_idx, total_shapes)
             if any(r['status']=='npu_unavailable' for r in b2_res['trials']):
                 npu_gone = True
         else:
@@ -742,25 +742,25 @@ def main():
                       "mean_padding_us":None, "pass_count":0}
 
         # Determine winner
-        winner, db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b2_pct = \
+        winner, db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b1_pct = \
             determine_winner(b0_res, b2_res, ag_res)
 
-        deltas = (db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b2_pct)
+        deltas = (db2_b0_us, db2_b0_pct, dag_b0_us, dag_b0_pct, dag_b2_us, dag_b1_pct)
         print_shape_summary(M, K, N, p['layers'], b0_res, b2_res, ag_res, winner, deltas)
 
         entry = {
             "M": M, "K": K, "N": N,
             "layers": p['layers'],
             "baseline_0": b0_res,
-            "baseline_2": b2_res,
+            "baseline_1": b2_res,
             "agentic": ag_res,
             "winner": winner,
-            "delta_b2_vs_b0_us": db2_b0_us,
-            "delta_b2_vs_b0_pct": db2_b0_pct,
+            "delta_b1_vs_b0_us": db2_b0_us,
+            "delta_b1_vs_b0_pct": db2_b0_pct,
             "delta_ag_vs_b0_us": dag_b0_us,
             "delta_ag_vs_b0_pct": dag_b0_pct,
-            "delta_ag_vs_b2_us": dag_b2_us,
-            "delta_ag_vs_b2_pct": dag_b2_pct
+            "delta_ag_vs_b1_us": dag_b2_us,
+            "delta_ag_vs_b1_pct": dag_b1_pct
         }
         data['shapes'].append(entry)
         completed.add(key)
@@ -770,7 +770,7 @@ def main():
     run_shapes = [s for s in data['shapes'] if s.get('winner') not in ('prescreened_skip', 'npu_unavailable')]
     skip_shapes = [s for s in data['shapes'] if s.get('winner') == 'prescreened_skip']
 
-    winner_counts = {"baseline_0":0, "baseline_2":0, "agentic":0, "tie":0, "inconclusive":0}
+    winner_counts = {"baseline_0":0, "baseline_1":0, "agentic":0, "tie":0, "inconclusive":0}
     ag_b0_deltas, ag_b2_deltas, b2_b0_deltas = [], [], []
 
     for s in run_shapes:
@@ -779,10 +779,10 @@ def main():
             winner_counts[w] += 1
         if s.get('delta_ag_vs_b0_pct') is not None:
             ag_b0_deltas.append(s['delta_ag_vs_b0_pct'])
-        if s.get('delta_ag_vs_b2_pct') is not None:
-            ag_b2_deltas.append(s['delta_ag_vs_b2_pct'])
-        if s.get('delta_b2_vs_b0_pct') is not None:
-            b2_b0_deltas.append(s['delta_b2_vs_b0_pct'])
+        if s.get('delta_ag_vs_b1_pct') is not None:
+            ag_b2_deltas.append(s['delta_ag_vs_b1_pct'])
+        if s.get('delta_b1_vs_b0_pct') is not None:
+            b2_b0_deltas.append(s['delta_b1_vs_b0_pct'])
 
     def safe_mean(lst):
         return round(float(np.mean(lst)), 2) if lst else None
@@ -793,8 +793,8 @@ def main():
         "shapes_prescreened": len(skip_shapes),
         "winner_counts": winner_counts,
         "mean_delta_ag_vs_b0_pct": safe_mean(ag_b0_deltas),
-        "mean_delta_ag_vs_b2_pct": safe_mean(ag_b2_deltas),
-        "mean_delta_b2_vs_b0_pct": safe_mean(b2_b0_deltas)
+        "mean_delta_ag_vs_b1_pct": safe_mean(ag_b2_deltas),
+        "mean_delta_b1_vs_b0_pct": safe_mean(b2_b0_deltas)
     }
     save_results(data)
     print("\n[Phase 4] Results saved to", JSON_OUT, flush=True)
@@ -816,10 +816,10 @@ def main():
     wc = s['winner_counts']
     total_runs = sum(
         len(sh['baseline_0'].get('trials', [])) +
-        len(sh['baseline_2'].get('trials', [])) +
+        len(sh['baseline_1'].get('trials', [])) +
         len(sh['agentic'].get('trials', []))
         for sh in run_shapes
-        if sh.get('baseline_0') and sh.get('baseline_2') and sh.get('agentic')
+        if sh.get('baseline_0') and sh.get('baseline_1') and sh.get('agentic')
     )
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print()
@@ -830,10 +830,10 @@ def main():
     print(f"║  Shapes total:   {len(ALL_SHAPES):<4}  dtype: bf16   Trials/group: {TRIALS:<19}║")
     print(f"║  Shapes run:     {len(run_shapes):<4}  Pre-screened: {len(skip_shapes):<28}║")
     print(f"║  Total NPU runs: {total_runs:<52}║")
-    print(f"║  Baseline 0 wins: {wc['baseline_0']:<3} │ Baseline 2 wins: {wc['baseline_2']:<3} │ Agentic wins: {wc['agentic']:<4}║")
+    print(f"║  Baseline 0 wins: {wc['baseline_0']:<3} │ Baseline 1 wins: {wc['baseline_1']:<3} │ Agentic wins: {wc['agentic']:<4}║")
     print(f"║  Ties: {wc['tie']:<4}    │ Inconclusive: {wc['inconclusive']:<35}║")
     if s['mean_delta_ag_vs_b0_pct'] is not None:
-        print(f"║  Mean Δ agentic vs B0: {s['mean_delta_ag_vs_b0_pct']:+.1f}%   vs B2: {s['mean_delta_ag_vs_b2_pct']:+.1f}%{'':<25}║")
+        print(f"║  Mean Δ agentic vs B0: {s['mean_delta_ag_vs_b0_pct']:+.1f}%   vs B1: {s['mean_delta_ag_vs_b1_pct']:+.1f}%{'':<25}║")
     print(f"║  Results: references/experiment-results/test_n_{DATE_STR}/{'':<17}║")
     print("╚" + "═"*70 + "╝")
 
@@ -918,7 +918,7 @@ def update_strategy_insights(data):
     """Append new insights to strategy_insights.md based on agentic run results."""
     insights_path = f"{BASE}/references/memory/knowledge-base/strategy_insights.md"
     new_bullets = []
-    today = "2026-03-30"
+    today = "2026-04-07"
 
     # Check for new best tiles found by agentic
     for s in data['shapes']:
@@ -926,10 +926,10 @@ def update_strategy_insights(data):
             continue
         ag = s.get('agentic')
         b0 = s.get('baseline_0')
-        b2 = s.get('baseline_2')
+        b2 = s.get('baseline_1')
         if not ag or not b2:
             continue
-        # If agentic significantly outperforms baseline_2 on a non-trivial shape
+        # If agentic significantly outperforms baseline_1 on a non-trivial shape
         ag_mean = ag.get('mean_total_us') or ag.get('mean_npu_avg_us')
         b2_mean = b2.get('mean_total_us') or b2.get('mean_npu_avg_us')
         if ag_mean and b2_mean and ag['tile'] != b2['tile']:
@@ -982,13 +982,13 @@ def write_markdown(data):
         f"| Shapes run | {s.get('shapes_run', 'N/A')} |",
         f"| Pre-screened (skip) | {s.get('shapes_prescreened', 'N/A')} |",
         f"| Baseline 0 wins | {wc.get('baseline_0', 0)} |",
-        f"| Baseline 2 wins | {wc.get('baseline_2', 0)} |",
+        f"| Baseline 1 wins | {wc.get('baseline_1', 0)} |",
         f"| Agentic wins | {wc.get('agentic', 0)} |",
         f"| Ties (within 2%) | {wc.get('tie', 0)} |",
         f"| Inconclusive | {wc.get('inconclusive', 0)} |",
         f"| Mean Δ agentic vs Baseline 0 | {s.get('mean_delta_ag_vs_b0_pct', 'N/A')}% |",
-        f"| Mean Δ agentic vs Baseline 2 | {s.get('mean_delta_ag_vs_b2_pct', 'N/A')}% |",
-        f"| Mean Δ Baseline 2 vs Baseline 0 | {s.get('mean_delta_b2_vs_b0_pct', 'N/A')}% |",
+        f"| Mean Δ agentic vs Baseline 1 | {s.get('mean_delta_ag_vs_b1_pct', 'N/A')}% |",
+        f"| Mean Δ Baseline 1 vs Baseline 0 | {s.get('mean_delta_b1_vs_b0_pct', 'N/A')}% |",
         "",
         "## Per-Shape Results",
         ""
@@ -1013,7 +1013,7 @@ def write_markdown(data):
             continue
 
         b0 = sh.get('baseline_0', {}) or {}
-        b2 = sh.get('baseline_2', {}) or {}
+        b2 = sh.get('baseline_1', {}) or {}
         ag = sh.get('agentic', {}) or {}
 
         def fmt_padded(g):
@@ -1035,7 +1035,7 @@ def write_markdown(data):
         lines += [
             f"### {M}×{K}×{N}  —  `{layers}`",
             "",
-            "| | Baseline 0 | Baseline 2 | Agentic |",
+            "| | Baseline 0 | Baseline 1 | Agentic |",
             "|-|------------|------------|---------|",
             f"| Padded shape | {fmt_padded(b0)} | {fmt_padded(b2)} | {fmt_padded(ag)} |",
             f"| Tile | {fmt_tile(b0)} | {fmt_tile(b2)} | {fmt_tile(ag)} |",
@@ -1053,12 +1053,12 @@ def write_markdown(data):
         winner_label = winner.upper().replace('_', ' ')
         lines.append(f"**Winner: {winner_label}**")
         deltas = []
-        if sh.get('delta_b2_vs_b0_us') is not None:
-            deltas.append(f"Δ(B2 vs B0)={sh['delta_b2_vs_b0_us']:+.1f}µs ({sh['delta_b2_vs_b0_pct']:+.1f}%)")
+        if sh.get('delta_b1_vs_b0_us') is not None:
+            deltas.append(f"Δ(B2 vs B0)={sh['delta_b1_vs_b0_us']:+.1f}µs ({sh['delta_b1_vs_b0_pct']:+.1f}%)")
         if sh.get('delta_ag_vs_b0_us') is not None:
             deltas.append(f"Δ(AG vs B0)={sh['delta_ag_vs_b0_us']:+.1f}µs ({sh['delta_ag_vs_b0_pct']:+.1f}%)")
-        if sh.get('delta_ag_vs_b2_us') is not None:
-            deltas.append(f"Δ(AG vs B2)={sh['delta_ag_vs_b2_us']:+.1f}µs ({sh['delta_ag_vs_b2_pct']:+.1f}%)")
+        if sh.get('delta_ag_vs_b1_us') is not None:
+            deltas.append(f"Δ(AG vs B1)={sh['delta_ag_vs_b1_us']:+.1f}µs ({sh['delta_ag_vs_b1_pct']:+.1f}%)")
         if deltas:
             lines.append("   ".join(deltas))
         lines += ["", "---", ""]
@@ -1109,7 +1109,7 @@ def generate_plots(data):
 
     shapes = [s for s in data['shapes']
               if s.get('winner') not in ('prescreened_skip', 'npu_unavailable')
-              and s.get('baseline_0') and s.get('baseline_2') and s.get('agentic')]
+              and s.get('baseline_0') and s.get('baseline_1') and s.get('agentic')]
 
     if not shapes:
         print("  No runnable shapes to plot", flush=True)
@@ -1117,7 +1117,7 @@ def generate_plots(data):
 
     labels   = [f"{s['M']}×{s['K']}×{s['N']}" for s in shapes]
     b0_means = [s['baseline_0'].get('mean_npu_avg_us') or 0 for s in shapes]
-    b2_means = [s['baseline_2'].get('mean_npu_avg_us') or 0 for s in shapes]
+    b1_means = [s['baseline_1'].get('mean_npu_avg_us') or 0 for s in shapes]
     ag_means = [s['agentic'].get('mean_npu_avg_us') or 0    for s in shapes]
     x = np.arange(len(labels))
     w = 0.25
@@ -1125,7 +1125,7 @@ def generate_plots(data):
     # Plot 1: grouped bar chart
     fig, ax = plt.subplots(figsize=(max(16, len(labels)*0.12), 6))
     ax.bar(x - w, b0_means, w, label='Baseline 0 (fixed tile)', color='#d9534f')
-    ax.bar(x,     b2_means, w, label='Baseline 2 (profiling)',  color='#f0ad4e')
+    ax.bar(x,     b1_means, w, label='Baseline 1 (profiling)',  color='#f0ad4e')
     ax.bar(x + w, ag_means, w, label='Agentic',                 color='#5cb85c')
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=90, ha='center', fontsize=5)
@@ -1142,13 +1142,13 @@ def generate_plots(data):
             return (val - baseline) / baseline * 100
         return None
 
-    b2_pct = [pct(b0, b2) for b0, b2 in zip(b0_means, b2_means)]
+    b1_pct = [pct(b0, b2) for b0, b2 in zip(b0_means, b1_means)]
     ag_pct = [pct(b0, ag) for b0, ag in zip(b0_means, ag_means)]
-    b2_pct_clean = [v if v is not None else 0 for v in b2_pct]
+    b1_pct_clean = [v if v is not None else 0 for v in b1_pct]
     ag_pct_clean = [v if v is not None else 0 for v in ag_pct]
 
     fig, ax = plt.subplots(figsize=(max(16, len(labels)*0.12), 5))
-    ax.bar(x - w/2, b2_pct_clean, w, label='Baseline 2 vs B0', color='#f0ad4e')
+    ax.bar(x - w/2, b1_pct_clean, w, label='Baseline 1 vs B0', color='#f0ad4e')
     ax.bar(x + w/2, ag_pct_clean, w, label='Agentic vs B0',    color='#5cb85c')
     ax.axhline(0, color='black', linewidth=0.8)
     ax.set_xticks(x)
@@ -1162,8 +1162,8 @@ def generate_plots(data):
 
     # Plot 3: winner distribution
     counts = data['summary']['winner_counts']
-    groups = ['Baseline 0', 'Baseline 2', 'Agentic', 'Tie', 'Inconclusive']
-    keys   = ['baseline_0', 'baseline_2', 'agentic', 'tie', 'inconclusive']
+    groups = ['Baseline 0', 'Baseline 1', 'Agentic', 'Tie', 'Inconclusive']
+    keys   = ['baseline_0', 'baseline_1', 'agentic', 'tie', 'inconclusive']
     colors = ['#d9534f', '#f0ad4e', '#5cb85c', '#aaaaaa', '#cccccc']
     vals   = [counts.get(k, 0) for k in keys]
     fig, ax = plt.subplots(figsize=(7, 4))
@@ -1177,17 +1177,17 @@ def generate_plots(data):
     plt.savefig(f"{plots_dir}/winner_distribution.png", dpi=150)
     plt.close()
 
-    # Plot 4: agentic vs B2 head-to-head
-    ag_vs_b2 = [pct(b2, ag) for b2, ag in zip(b2_means, ag_means)]
-    ag_vs_b2_clean = [v if v is not None else 0 for v in ag_vs_b2]
-    colors_bar = ['#5cb85c' if v < 0 else '#d9534f' for v in ag_vs_b2_clean]
+    # Plot 4: agentic vs B1 head-to-head
+    ag_vs_b1 = [pct(b2, ag) for b2, ag in zip(b1_means, ag_means)]
+    ag_vs_b1_clean = [v if v is not None else 0 for v in ag_vs_b1]
+    colors_bar = ['#5cb85c' if v < 0 else '#d9534f' for v in ag_vs_b1_clean]
     fig, ax = plt.subplots(figsize=(max(16, len(labels)*0.12), 5))
-    ax.bar(x, ag_vs_b2_clean, color=colors_bar)
+    ax.bar(x, ag_vs_b1_clean, color=colors_bar)
     ax.axhline(0, color='black', linewidth=0.8)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=90, ha='center', fontsize=5)
-    ax.set_ylabel('Agentic Δ vs Baseline 2 (%)  [negative = agentic faster]')
-    ax.set_title('Agentic vs Baseline 2 — Head-to-Head')
+    ax.set_ylabel('Agentic Δ vs Baseline 1 (%)  [negative = agentic faster]')
+    ax.set_title('Agentic vs Baseline 1 — Head-to-Head')
     plt.tight_layout()
     plt.savefig(f"{plots_dir}/agentic_vs_baseline2.png", dpi=150)
     plt.close()

@@ -9,19 +9,19 @@
 | Shapes run | 282 |
 | Pre-screened (skip) | 12 |
 | Baseline 0 wins | 38 |
-| Baseline 2 wins | 7 |
+| Baseline 1 wins | 7 |
 | Agentic wins | 18 |
 | Ties (within 2%) | 163 |
 | Inconclusive | 56 |
 | Mean Δ agentic vs Baseline 0 | 2.05% |
-| Mean Δ agentic vs Baseline 2 | 0.45% |
-| Mean Δ Baseline 2 vs Baseline 0 | 1.12% |
+| Mean Δ agentic vs Baseline 1 | 0.45% |
+| Mean Δ Baseline 1 vs Baseline 0 | 1.12% |
 
 ## Per-Shape Results
 
 ### 1024×768×768  —  `Vision Encoder/q_proj, Vision Encoder/k_proj, Vision Encoder`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -34,7 +34,7 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+13.4µs (+1.8%)   Δ(AG vs B0)=+1.6µs (+0.2%)   Δ(AG vs B2)=-11.8µs (-1.5%)
+Δ(B2 vs B0)=+13.4µs (+1.8%)   Δ(AG vs B0)=+1.6µs (+0.2%)   Δ(AG vs B1)=-11.8µs (-1.5%)
 
 ---
 
@@ -52,7 +52,7 @@
 
 ### 128×960×960  —  `Text Layers/q_proj, Text Layers/o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -65,13 +65,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-113.3µs (-18.1%)   Δ(AG vs B0)=+1.7µs (+0.3%)   Δ(AG vs B2)=+115.0µs (+22.5%)
+Δ(B2 vs B0)=-113.3µs (-18.1%)   Δ(AG vs B0)=+1.7µs (+0.3%)   Δ(AG vs B1)=+115.0µs (+22.5%)
 
 ---
 
 ### 128×960×320  —  `Text Layers/k_proj, Text Layers/v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -84,7 +84,7 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+3.5µs (+1.5%)   Δ(AG vs B0)=+4.2µs (+1.8%)   Δ(AG vs B2)=+0.7µs (+0.3%)
+Δ(B2 vs B0)=+3.5µs (+1.5%)   Δ(AG vs B0)=+4.2µs (+1.8%)   Δ(AG vs B1)=+0.7µs (+0.3%)
 
 ---
 
@@ -108,7 +108,7 @@
 
 ### 128×320×96  —  `Action Expert/k_proj, Action Expert/v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -121,13 +121,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+4.3µs (+2.9%)   Δ(AG vs B0)=-0.2µs (-0.1%)   Δ(AG vs B2)=-4.5µs (-3.0%)
+Δ(B2 vs B0)=+4.3µs (+2.9%)   Δ(AG vs B0)=-0.2µs (-0.1%)   Δ(AG vs B1)=-4.5µs (-3.0%)
 
 ---
 
 ### 50×96×960  —  `Action Expert/o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -140,13 +140,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-47.3µs (-19.0%)   Δ(AG vs B0)=-48.2µs (-19.3%)   Δ(AG vs B2)=-0.9µs (-0.4%)
+Δ(B2 vs B0)=-47.3µs (-19.0%)   Δ(AG vs B0)=-48.2µs (-19.3%)   Δ(AG vs B1)=-0.9µs (-0.4%)
 
 ---
 
 ### 50×96×256  —  `Action Expert/gate_proj, Action Expert/up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -159,13 +159,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-17.5µs (-11.5%)   Δ(AG vs B0)=-15.4µs (-10.2%)   Δ(AG vs B2)=+2.0µs (+1.5%)
+Δ(B2 vs B0)=-17.5µs (-11.5%)   Δ(AG vs B0)=-15.4µs (-10.2%)   Δ(AG vs B1)=+2.0µs (+1.5%)
 
 ---
 
 ### 50×256×96  —  `Action Expert/down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -178,7 +178,7 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B2)=+3.2µs (+2.5%)
+Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B1)=+3.2µs (+2.5%)
 
 ---
 
@@ -190,7 +190,7 @@
 
 ### 50×32×96  —  `Projections/action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -203,13 +203,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.1µs (-0.1%)   Δ(AG vs B0)=-0.9µs (-0.7%)   Δ(AG vs B2)=-0.8µs (-0.6%)
+Δ(B2 vs B0)=-0.1µs (-0.1%)   Δ(AG vs B0)=-0.9µs (-0.7%)   Δ(AG vs B1)=-0.8µs (-0.6%)
 
 ---
 
 ### 50×96×32  —  `Projections/action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -222,13 +222,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 1×192×96  —  `Projections/action_time_mlp_in`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -241,13 +241,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.5µs (-1.2%)   Δ(AG vs B0)=+0.3µs (+0.2%)   Δ(AG vs B2)=+1.9µs (+1.4%)
+Δ(B2 vs B0)=-1.5µs (-1.2%)   Δ(AG vs B0)=+0.3µs (+0.2%)   Δ(AG vs B1)=+1.9µs (+1.4%)
 
 ---
 
 ### 1×96×96  —  `Projections/action_time_mlp_out`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (?,?,?) | (?,?,?) | (?,?,?) |
 | Tile | (?,?,?) | (?,?,?) | (?,?,?) |
@@ -260,13 +260,13 @@
 | Pass count | 0/3 | 0/3 | 0/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=+0.1µs (+0.1%)   Δ(AG vs B2)=-0.3µs (-0.2%)
+Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=+0.1µs (+0.1%)   Δ(AG vs B1)=-0.3µs (-0.2%)
 
 ---
 
 ### 20×32×96  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,32) | (32,96,32) | (32,96,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -279,13 +279,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B2)=-1.1µs (-0.9%)
+Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B1)=-1.1µs (-0.9%)
 
 ---
 
 ### 20×32×192  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,32) | (32,192,32) | (32,192,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -298,13 +298,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+1.8µs (+1.4%)   Δ(AG vs B2)=+1.8µs (+1.4%)
+Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+1.8µs (+1.4%)   Δ(AG vs B1)=+1.8µs (+1.4%)
 
 ---
 
 ### 20×32×288  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,32) | (32,288,32) | (32,288,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -317,13 +317,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.4µs (-1.9%)   Δ(AG vs B0)=-2.3µs (-1.8%)   Δ(AG vs B2)=+0.1µs (+0.1%)
+Δ(B2 vs B0)=-2.4µs (-1.9%)   Δ(AG vs B0)=-2.3µs (-1.8%)   Δ(AG vs B1)=+0.1µs (+0.1%)
 
 ---
 
 ### 20×32×384  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,32) | (32,384,32) | (32,384,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -336,13 +336,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.2µs (+0.1%)   Δ(AG vs B0)=+0.2µs (+0.1%)   Δ(AG vs B2)=+0.1µs (+0.0%)
+Δ(B2 vs B0)=+0.2µs (+0.1%)   Δ(AG vs B0)=+0.2µs (+0.1%)   Δ(AG vs B1)=+0.1µs (+0.0%)
 
 ---
 
 ### 20×32×480  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,32) | (32,480,32) | (32,480,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -355,13 +355,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.7µs (+1.3%)   Δ(AG vs B2)=+1.4µs (+1.0%)
+Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.7µs (+1.3%)   Δ(AG vs B1)=+1.4µs (+1.0%)
 
 ---
 
 ### 20×32×576  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,32) | (32,576,32) | (32,576,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -374,13 +374,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.5µs (-1.1%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B2)=-0.6µs (-0.5%)
+Δ(B2 vs B0)=-1.5µs (-1.1%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B1)=-0.6µs (-0.5%)
 
 ---
 
 ### 20×32×672  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,32) | (32,672,32) | (32,672,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -393,13 +393,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.0µs (+1.4%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B2)=-1.4µs (-1.0%)
+Δ(B2 vs B0)=+2.0µs (+1.4%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B1)=-1.4µs (-1.0%)
 
 ---
 
 ### 20×32×720  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,32) | (32,768,32) | (32,768,32) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -412,13 +412,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-39.8µs (-20.4%)   Δ(AG vs B0)=-38.0µs (-19.5%)   Δ(AG vs B2)=+1.7µs (+1.1%)
+Δ(B2 vs B0)=-39.8µs (-20.4%)   Δ(AG vs B0)=-38.0µs (-19.5%)   Δ(AG vs B1)=+1.7µs (+1.1%)
 
 ---
 
 ### 20×96×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,128) | (32,32,128) | (32,32,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -431,13 +431,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=+0.2µs (+0.2%)   Δ(AG vs B2)=+1.1µs (+0.9%)
+Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=+0.2µs (+0.2%)   Δ(AG vs B1)=+1.1µs (+0.9%)
 
 ---
 
 ### 20×96×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,128) | (32,256,128) | (32,256,128) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -450,13 +450,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-10.3µs (-7.3%)   Δ(AG vs B0)=-8.9µs (-6.3%)   Δ(AG vs B2)=+1.5µs (+1.1%)
+Δ(B2 vs B0)=-10.3µs (-7.3%)   Δ(AG vs B0)=-8.9µs (-6.3%)   Δ(AG vs B1)=+1.5µs (+1.1%)
 
 ---
 
 ### 20×96×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,128) | (32,960,128) | (32,960,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -469,13 +469,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.4µs (-0.8%)   Δ(AG vs B0)=-2.2µs (-1.2%)   Δ(AG vs B2)=-0.8µs (-0.4%)
+Δ(B2 vs B0)=-1.4µs (-0.8%)   Δ(AG vs B0)=-2.2µs (-1.2%)   Δ(AG vs B1)=-0.8µs (-0.4%)
 
 ---
 
 ### 20×192×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,256) | (32,32,256) | (32,32,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -488,13 +488,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.7µs (-0.6%)   Δ(AG vs B0)=-1.4µs (-1.1%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-0.7µs (-0.6%)   Δ(AG vs B0)=-1.4µs (-1.1%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 20×192×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,256) | (32,256,256) | (32,256,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -507,13 +507,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.8µs (-3.3%)   Δ(AG vs B0)=-5.5µs (-3.8%)   Δ(AG vs B2)=-0.8µs (-0.6%)
+Δ(B2 vs B0)=-4.8µs (-3.3%)   Δ(AG vs B0)=-5.5µs (-3.8%)   Δ(AG vs B1)=-0.8µs (-0.6%)
 
 ---
 
 ### 20×192×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,256) | (32,960,256) | (32,960,256) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -532,7 +532,7 @@
 
 ### 20×256×96  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,256) | (32,96,256) | (32,96,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,64) |
@@ -545,13 +545,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B2)=+3.2µs (+2.5%)
+Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B1)=+3.2µs (+2.5%)
 
 ---
 
 ### 20×256×192  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,256) | (32,192,256) | (32,192,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -564,13 +564,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B2)=+1.3µs (+1.0%)
+Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B1)=+1.3µs (+1.0%)
 
 ---
 
 ### 20×256×288  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,256) | (32,288,256) | (32,288,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -583,13 +583,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+5.9µs (+3.8%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B2)=-5.3µs (-3.3%)
+Δ(B2 vs B0)=+5.9µs (+3.8%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B1)=-5.3µs (-3.3%)
 
 ---
 
 ### 20×256×384  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,256) | (32,384,256) | (32,384,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -602,13 +602,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+3.1µs (+2.0%)   Δ(AG vs B0)=+2.7µs (+1.8%)   Δ(AG vs B2)=-0.4µs (-0.3%)
+Δ(B2 vs B0)=+3.1µs (+2.0%)   Δ(AG vs B0)=+2.7µs (+1.8%)   Δ(AG vs B1)=-0.4µs (-0.3%)
 
 ---
 
 ### 20×256×480  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,256) | (32,480,256) | (32,480,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -621,13 +621,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.1µs (-0.1%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B2)=-0.4µs (-0.2%)
+Δ(B2 vs B0)=-0.1µs (-0.1%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B1)=-0.4µs (-0.2%)
 
 ---
 
 ### 20×256×576  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,256) | (32,576,256) | (32,576,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -640,13 +640,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+3.8µs (+2.0%)   Δ(AG vs B0)=+1.0µs (+0.5%)   Δ(AG vs B2)=-2.8µs (-1.5%)
+Δ(B2 vs B0)=+3.8µs (+2.0%)   Δ(AG vs B0)=+1.0µs (+0.5%)   Δ(AG vs B1)=-2.8µs (-1.5%)
 
 ---
 
 ### 20×256×672  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,256) | (32,672,256) | (32,672,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -659,13 +659,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.8µs (+1.4%)   Δ(AG vs B0)=+0.3µs (+0.2%)   Δ(AG vs B2)=-2.5µs (-1.2%)
+Δ(B2 vs B0)=+2.8µs (+1.4%)   Δ(AG vs B0)=+0.3µs (+0.2%)   Δ(AG vs B1)=-2.5µs (-1.2%)
 
 ---
 
 ### 20×256×720  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,256) | (32,768,256) | (32,768,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -678,13 +678,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-31.2µs (-16.0%)   Δ(AG vs B0)=-33.1µs (-17.0%)   Δ(AG vs B2)=-1.9µs (-1.2%)
+Δ(B2 vs B0)=-31.2µs (-16.0%)   Δ(AG vs B0)=-33.1µs (-17.0%)   Δ(AG vs B1)=-1.9µs (-1.2%)
 
 ---
 
 ### 20×288×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -697,13 +697,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.5µs (+1.2%)   Δ(AG vs B0)=+2.2µs (+1.6%)   Δ(AG vs B2)=+0.6µs (+0.5%)
+Δ(B2 vs B0)=+1.5µs (+1.2%)   Δ(AG vs B0)=+2.2µs (+1.6%)   Δ(AG vs B1)=+0.6µs (+0.5%)
 
 ---
 
 ### 20×288×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -716,13 +716,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-7.4µs (-4.7%)   Δ(AG vs B0)=-5.0µs (-3.2%)   Δ(AG vs B2)=+2.4µs (+1.6%)
+Δ(B2 vs B0)=-7.4µs (-4.7%)   Δ(AG vs B0)=-5.0µs (-3.2%)   Δ(AG vs B1)=+2.4µs (+1.6%)
 
 ---
 
 ### 20×288×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -741,7 +741,7 @@
 
 ### 20×384×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -754,13 +754,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=-0.5µs (-0.4%)   Δ(AG vs B2)=-1.0µs (-0.8%)
+Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=-0.5µs (-0.4%)   Δ(AG vs B1)=-1.0µs (-0.8%)
 
 ---
 
 ### 20×384×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -773,13 +773,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.0µs (-2.6%)   Δ(AG vs B0)=-6.9µs (-4.5%)   Δ(AG vs B2)=-2.9µs (-1.9%)
+Δ(B2 vs B0)=-4.0µs (-2.6%)   Δ(AG vs B0)=-6.9µs (-4.5%)   Δ(AG vs B1)=-2.9µs (-1.9%)
 
 ---
 
 ### 20×384×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -792,13 +792,13 @@
 | Pass count | 2/3 | 1/3 | 1/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+41.9µs (+11.2%)   Δ(AG vs B0)=+57.5µs (+15.4%)   Δ(AG vs B2)=+15.6µs (+3.8%)
+Δ(B2 vs B0)=+41.9µs (+11.2%)   Δ(AG vs B0)=+57.5µs (+15.4%)   Δ(AG vs B1)=+15.6µs (+3.8%)
 
 ---
 
 ### 20×480×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -811,13 +811,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B2)=+0.7µs (+0.5%)
+Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B1)=+0.7µs (+0.5%)
 
 ---
 
 ### 20×480×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -830,13 +830,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.7µs (-4.3%)   Δ(AG vs B0)=-7.4µs (-4.8%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-6.7µs (-4.3%)   Δ(AG vs B0)=-7.4µs (-4.8%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 20×480×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -854,7 +854,7 @@
 
 ### 20×576×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -867,13 +867,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.1µs (-0.8%)   Δ(AG vs B0)=-1.8µs (-1.3%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-1.1µs (-0.8%)   Δ(AG vs B0)=-1.8µs (-1.3%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 20×576×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -886,13 +886,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.9µs (-4.2%)   Δ(AG vs B0)=-4.3µs (-2.6%)   Δ(AG vs B2)=+2.6µs (+1.6%)
+Δ(B2 vs B0)=-6.9µs (-4.2%)   Δ(AG vs B0)=-4.3µs (-2.6%)   Δ(AG vs B1)=+2.6µs (+1.6%)
 
 ---
 
 ### 20×576×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -905,13 +905,13 @@
 | Pass count | 2/3 | 2/3 | 1/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-37.8µs (-7.5%)   Δ(AG vs B0)=+102.2µs (+20.3%)   Δ(AG vs B2)=+139.9µs (+30.1%)
+Δ(B2 vs B0)=-37.8µs (-7.5%)   Δ(AG vs B0)=+102.2µs (+20.3%)   Δ(AG vs B1)=+139.9µs (+30.1%)
 
 ---
 
 ### 20×672×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -924,13 +924,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.3µs (-1.0%)   Δ(AG vs B0)=-4.0µs (-2.9%)   Δ(AG vs B2)=-2.6µs (-1.9%)
+Δ(B2 vs B0)=-1.3µs (-1.0%)   Δ(AG vs B0)=-4.0µs (-2.9%)   Δ(AG vs B1)=-2.6µs (-1.9%)
 
 ---
 
 ### 20×672×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -943,13 +943,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-7.7µs (-4.6%)   Δ(AG vs B0)=-4.8µs (-2.9%)   Δ(AG vs B2)=+2.9µs (+1.8%)
+Δ(B2 vs B0)=-7.7µs (-4.6%)   Δ(AG vs B0)=-4.8µs (-2.9%)   Δ(AG vs B1)=+2.9µs (+1.8%)
 
 ---
 
 ### 20×672×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -967,7 +967,7 @@
 
 ### 20×720×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -980,13 +980,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.5µs (-1.8%)   Δ(AG vs B0)=-0.6µs (-0.5%)   Δ(AG vs B2)=+1.9µs (+1.4%)
+Δ(B2 vs B0)=-2.5µs (-1.8%)   Δ(AG vs B0)=-0.6µs (-0.5%)   Δ(AG vs B1)=+1.9µs (+1.4%)
 
 ---
 
 ### 20×720×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -999,13 +999,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-5.6µs (-3.4%)   Δ(AG vs B0)=-7.6µs (-4.6%)   Δ(AG vs B2)=-2.1µs (-1.3%)
+Δ(B2 vs B0)=-5.6µs (-3.4%)   Δ(AG vs B0)=-7.6µs (-4.6%)   Δ(AG vs B1)=-2.1µs (-1.3%)
 
 ---
 
 ### 20×720×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1029,7 +1029,7 @@
 
 ### 20×960×192  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,960) | (32,192,960) | (32,192,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1047,7 +1047,7 @@
 
 ### 20×960×288  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,960) | (32,288,960) | (32,288,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1065,7 +1065,7 @@
 
 ### 20×960×384  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,960) | (32,384,960) | (32,384,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1083,7 +1083,7 @@
 
 ### 20×960×480  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,960) | (32,480,960) | (32,480,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1101,7 +1101,7 @@
 
 ### 20×960×576  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,960) | (32,576,960) | (32,576,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1119,7 +1119,7 @@
 
 ### 20×960×672  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,960) | (32,672,960) | (32,672,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1137,7 +1137,7 @@
 
 ### 20×960×720  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,960) | (32,768,960) | (32,768,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1155,7 +1155,7 @@
 
 ### 30×32×96  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,32) | (32,96,32) | (32,96,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1168,13 +1168,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=-0.9µs (-0.7%)   Δ(AG vs B2)=-1.9µs (-1.5%)
+Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=-0.9µs (-0.7%)   Δ(AG vs B1)=-1.9µs (-1.5%)
 
 ---
 
 ### 30×32×192  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,32) | (32,192,32) | (32,192,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1187,13 +1187,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-1.4µs (-1.1%)   Δ(AG vs B0)=-4.1µs (-3.2%)   Δ(AG vs B2)=-2.8µs (-2.2%)
+Δ(B2 vs B0)=-1.4µs (-1.1%)   Δ(AG vs B0)=-4.1µs (-3.2%)   Δ(AG vs B1)=-2.8µs (-2.2%)
 
 ---
 
 ### 30×32×288  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,32) | (32,288,32) | (32,288,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1206,13 +1206,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.0µs (-0.0%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B2)=+1.6µs (+1.2%)
+Δ(B2 vs B0)=-0.0µs (-0.0%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B1)=+1.6µs (+1.2%)
 
 ---
 
 ### 30×32×384  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,32) | (32,384,32) | (32,384,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1225,13 +1225,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.6µs (+1.7%)   Δ(AG vs B0)=+1.8µs (+1.1%)   Δ(AG vs B2)=-0.8µs (-0.5%)
+Δ(B2 vs B0)=+2.6µs (+1.7%)   Δ(AG vs B0)=+1.8µs (+1.1%)   Δ(AG vs B1)=-0.8µs (-0.5%)
 
 ---
 
 ### 30×32×480  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,32) | (32,480,32) | (32,480,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1244,13 +1244,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B2)=+0.9µs (+0.7%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+1.6µs (+1.2%)   Δ(AG vs B1)=+0.9µs (+0.7%)
 
 ---
 
 ### 30×32×576  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,32) | (32,576,32) | (32,576,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1263,13 +1263,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=+0.9µs (+0.6%)   Δ(AG vs B2)=+0.1µs (+0.1%)
+Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=+0.9µs (+0.6%)   Δ(AG vs B1)=+0.1µs (+0.1%)
 
 ---
 
 ### 30×32×672  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,32) | (32,672,32) | (32,672,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1282,13 +1282,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=+1.3µs (+0.9%)   Δ(AG vs B2)=+0.5µs (+0.3%)
+Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=+1.3µs (+0.9%)   Δ(AG vs B1)=+0.5µs (+0.3%)
 
 ---
 
 ### 30×32×720  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,32) | (32,768,32) | (32,768,32) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1301,13 +1301,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-39.9µs (-20.4%)   Δ(AG vs B0)=-39.5µs (-20.2%)   Δ(AG vs B2)=+0.3µs (+0.2%)
+Δ(B2 vs B0)=-39.9µs (-20.4%)   Δ(AG vs B0)=-39.5µs (-20.2%)   Δ(AG vs B1)=+0.3µs (+0.2%)
 
 ---
 
 ### 30×96×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,128) | (32,32,128) | (32,32,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1320,13 +1320,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.8µs (+1.5%)   Δ(AG vs B0)=-2.0µs (-1.6%)   Δ(AG vs B2)=-3.8µs (-3.1%)
+Δ(B2 vs B0)=+1.8µs (+1.5%)   Δ(AG vs B0)=-2.0µs (-1.6%)   Δ(AG vs B1)=-3.8µs (-3.1%)
 
 ---
 
 ### 30×96×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,128) | (32,256,128) | (32,256,128) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1339,13 +1339,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-8.0µs (-5.6%)   Δ(AG vs B0)=-8.7µs (-6.1%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-8.0µs (-5.6%)   Δ(AG vs B0)=-8.7µs (-6.1%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 30×96×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,128) | (32,960,128) | (32,960,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1358,13 +1358,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.2µs (+1.2%)   Δ(AG vs B0)=+1.2µs (+0.7%)   Δ(AG vs B2)=-0.9µs (-0.5%)
+Δ(B2 vs B0)=+2.2µs (+1.2%)   Δ(AG vs B0)=+1.2µs (+0.7%)   Δ(AG vs B1)=-0.9µs (-0.5%)
 
 ---
 
 ### 30×192×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,256) | (32,32,256) | (32,32,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1377,13 +1377,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B2)=+0.1µs (+0.1%)
+Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=+0.6µs (+0.4%)   Δ(AG vs B1)=+0.1µs (+0.1%)
 
 ---
 
 ### 30×192×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,256) | (32,256,256) | (32,256,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1396,13 +1396,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.6µs (-4.5%)   Δ(AG vs B0)=-6.0µs (-4.1%)   Δ(AG vs B2)=+0.6µs (+0.4%)
+Δ(B2 vs B0)=-6.6µs (-4.5%)   Δ(AG vs B0)=-6.0µs (-4.1%)   Δ(AG vs B1)=+0.6µs (+0.4%)
 
 ---
 
 ### 30×192×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,256) | (32,960,256) | (32,960,256) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1415,13 +1415,13 @@
 | Pass count | 0/3 | 1/3 | 1/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=+0.6µs (+0.2%)
+Δ(AG vs B1)=+0.6µs (+0.2%)
 
 ---
 
 ### 30×256×96  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,256) | (32,96,256) | (32,96,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,64) |
@@ -1434,13 +1434,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=+4.4µs (+3.4%)   Δ(AG vs B2)=+3.3µs (+2.5%)
+Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=+4.4µs (+3.4%)   Δ(AG vs B1)=+3.3µs (+2.5%)
 
 ---
 
 ### 30×256×192  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,256) | (32,192,256) | (32,192,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1453,13 +1453,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.2µs (+0.2%)   Δ(AG vs B0)=+1.5µs (+1.1%)   Δ(AG vs B2)=+1.3µs (+0.9%)
+Δ(B2 vs B0)=+0.2µs (+0.2%)   Δ(AG vs B0)=+1.5µs (+1.1%)   Δ(AG vs B1)=+1.3µs (+0.9%)
 
 ---
 
 ### 30×256×288  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,256) | (32,288,256) | (32,288,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1472,13 +1472,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.3µs (-2.7%)   Δ(AG vs B0)=-5.1µs (-3.2%)   Δ(AG vs B2)=-0.8µs (-0.5%)
+Δ(B2 vs B0)=-4.3µs (-2.7%)   Δ(AG vs B0)=-5.1µs (-3.2%)   Δ(AG vs B1)=-0.8µs (-0.5%)
 
 ---
 
 ### 30×256×384  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,256) | (32,384,256) | (32,384,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1491,13 +1491,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.2µs (-0.8%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B2)=+0.8µs (+0.5%)
+Δ(B2 vs B0)=-1.2µs (-0.8%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B1)=+0.8µs (+0.5%)
 
 ---
 
 ### 30×256×480  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,256) | (32,480,256) | (32,480,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1510,13 +1510,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.3µs (+0.8%)   Δ(AG vs B2)=+1.0µs (+0.6%)
+Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.3µs (+0.8%)   Δ(AG vs B1)=+1.0µs (+0.6%)
 
 ---
 
 ### 30×256×576  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,256) | (32,576,256) | (32,576,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1529,13 +1529,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.8µs (-0.9%)   Δ(AG vs B0)=+0.7µs (+0.4%)   Δ(AG vs B2)=+2.5µs (+1.3%)
+Δ(B2 vs B0)=-1.8µs (-0.9%)   Δ(AG vs B0)=+0.7µs (+0.4%)   Δ(AG vs B1)=+2.5µs (+1.3%)
 
 ---
 
 ### 30×256×672  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,256) | (32,672,256) | (32,672,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1548,13 +1548,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.8µs (-0.4%)   Δ(AG vs B0)=-1.0µs (-0.5%)   Δ(AG vs B2)=-0.3µs (-0.1%)
+Δ(B2 vs B0)=-0.8µs (-0.4%)   Δ(AG vs B0)=-1.0µs (-0.5%)   Δ(AG vs B1)=-0.3µs (-0.1%)
 
 ---
 
 ### 30×256×720  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,256) | (32,768,256) | (32,768,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1567,13 +1567,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-33.2µs (-16.9%)   Δ(AG vs B0)=-33.8µs (-17.2%)   Δ(AG vs B2)=-0.6µs (-0.3%)
+Δ(B2 vs B0)=-33.2µs (-16.9%)   Δ(AG vs B0)=-33.8µs (-17.2%)   Δ(AG vs B1)=-0.6µs (-0.3%)
 
 ---
 
 ### 30×288×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1586,13 +1586,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B2)=-1.2µs (-0.9%)
+Δ(B2 vs B0)=+0.9µs (+0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B1)=-1.2µs (-0.9%)
 
 ---
 
 ### 30×288×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1605,13 +1605,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-8.9µs (-5.7%)   Δ(AG vs B0)=-7.4µs (-4.7%)   Δ(AG vs B2)=+1.5µs (+1.0%)
+Δ(B2 vs B0)=-8.9µs (-5.7%)   Δ(AG vs B0)=-7.4µs (-4.7%)   Δ(AG vs B1)=+1.5µs (+1.0%)
 
 ---
 
 ### 30×288×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1630,7 +1630,7 @@
 
 ### 30×384×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1643,13 +1643,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.6µs (-1.2%)   Δ(AG vs B0)=-1.1µs (-0.8%)   Δ(AG vs B2)=+0.5µs (+0.4%)
+Δ(B2 vs B0)=-1.6µs (-1.2%)   Δ(AG vs B0)=-1.1µs (-0.8%)   Δ(AG vs B1)=+0.5µs (+0.4%)
 
 ---
 
 ### 30×384×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1662,13 +1662,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-5.7µs (-3.6%)   Δ(AG vs B0)=-5.8µs (-3.7%)   Δ(AG vs B2)=-0.1µs (-0.1%)
+Δ(B2 vs B0)=-5.7µs (-3.6%)   Δ(AG vs B0)=-5.8µs (-3.7%)   Δ(AG vs B1)=-0.1µs (-0.1%)
 
 ---
 
 ### 30×384×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1681,13 +1681,13 @@
 | Pass count | 3/3 | 2/3 | 1/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-30.9µs (-8.1%)   Δ(AG vs B0)=+97.0µs (+25.5%)   Δ(AG vs B2)=+127.9µs (+36.5%)
+Δ(B2 vs B0)=-30.9µs (-8.1%)   Δ(AG vs B0)=+97.0µs (+25.5%)   Δ(AG vs B1)=+127.9µs (+36.5%)
 
 ---
 
 ### 30×480×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1700,13 +1700,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=-0.6µs (-0.4%)   Δ(AG vs B2)=+1.7µs (+1.3%)
+Δ(B2 vs B0)=-2.3µs (-1.7%)   Δ(AG vs B0)=-0.6µs (-0.4%)   Δ(AG vs B1)=+1.7µs (+1.3%)
 
 ---
 
 ### 30×480×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1719,13 +1719,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.9µs (-3.2%)   Δ(AG vs B0)=-5.4µs (-3.5%)   Δ(AG vs B2)=-0.4µs (-0.3%)
+Δ(B2 vs B0)=-4.9µs (-3.2%)   Δ(AG vs B0)=-5.4µs (-3.5%)   Δ(AG vs B1)=-0.4µs (-0.3%)
 
 ---
 
 ### 30×480×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1738,13 +1738,13 @@
 | Pass count | 2/3 | 1/3 | 1/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.3µs (+0.1%)   Δ(AG vs B0)=+0.3µs (+0.1%)   Δ(AG vs B2)=-0.0µs (-0.0%)
+Δ(B2 vs B0)=+0.3µs (+0.1%)   Δ(AG vs B0)=+0.3µs (+0.1%)   Δ(AG vs B1)=-0.0µs (-0.0%)
 
 ---
 
 ### 30×576×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1757,13 +1757,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.2µs (-0.2%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B2)=-0.1µs (-0.0%)
+Δ(B2 vs B0)=-0.2µs (-0.2%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B1)=-0.1µs (-0.0%)
 
 ---
 
 ### 30×576×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1776,13 +1776,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-7.6µs (-4.6%)   Δ(AG vs B0)=-8.0µs (-4.8%)   Δ(AG vs B2)=-0.4µs (-0.3%)
+Δ(B2 vs B0)=-7.6µs (-4.6%)   Δ(AG vs B0)=-8.0µs (-4.8%)   Δ(AG vs B1)=-0.4µs (-0.3%)
 
 ---
 
 ### 30×576×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1801,7 +1801,7 @@
 
 ### 30×672×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1814,13 +1814,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.6µs (-0.4%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B2)=-1.5µs (-1.1%)
+Δ(B2 vs B0)=-0.6µs (-0.4%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B1)=-1.5µs (-1.1%)
 
 ---
 
 ### 30×672×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1833,13 +1833,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-3.5µs (-2.1%)   Δ(AG vs B0)=-4.3µs (-2.6%)   Δ(AG vs B2)=-0.8µs (-0.5%)
+Δ(B2 vs B0)=-3.5µs (-2.1%)   Δ(AG vs B0)=-4.3µs (-2.6%)   Δ(AG vs B1)=-0.8µs (-0.5%)
 
 ---
 
 ### 30×672×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1857,7 +1857,7 @@
 
 ### 30×720×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -1870,13 +1870,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B2)=-0.3µs (-0.2%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B1)=-0.3µs (-0.2%)
 
 ---
 
 ### 30×720×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -1889,13 +1889,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-5.7µs (-3.5%)   Δ(AG vs B0)=-4.5µs (-2.7%)   Δ(AG vs B2)=+1.2µs (+0.8%)
+Δ(B2 vs B0)=-5.7µs (-3.5%)   Δ(AG vs B0)=-4.5µs (-2.7%)   Δ(AG vs B1)=+1.2µs (+0.8%)
 
 ---
 
 ### 30×720×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1920,7 +1920,7 @@
 
 ### 30×960×192  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,960) | (32,192,960) | (32,192,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1938,7 +1938,7 @@
 
 ### 30×960×288  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,960) | (32,288,960) | (32,288,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1956,7 +1956,7 @@
 
 ### 30×960×384  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,960) | (32,384,960) | (32,384,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1974,7 +1974,7 @@
 
 ### 30×960×480  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,960) | (32,480,960) | (32,480,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -1992,7 +1992,7 @@
 
 ### 30×960×576  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,960) | (32,576,960) | (32,576,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2010,7 +2010,7 @@
 
 ### 30×960×672  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,960) | (32,672,960) | (32,672,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2028,7 +2028,7 @@
 
 ### 30×960×720  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,960) | (32,768,960) | (32,768,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2046,7 +2046,7 @@
 
 ### 32×32×96  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,32) | (32,96,32) | (32,96,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2059,13 +2059,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.3µs (-0.3%)   Δ(AG vs B0)=-1.4µs (-1.1%)   Δ(AG vs B2)=-1.1µs (-0.8%)
+Δ(B2 vs B0)=-0.3µs (-0.3%)   Δ(AG vs B0)=-1.4µs (-1.1%)   Δ(AG vs B1)=-1.1µs (-0.8%)
 
 ---
 
 ### 32×32×192  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,32) | (32,192,32) | (32,192,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2078,13 +2078,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+0.5µs (+0.4%)   Δ(AG vs B2)=+0.5µs (+0.4%)
+Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+0.5µs (+0.4%)   Δ(AG vs B1)=+0.5µs (+0.4%)
 
 ---
 
 ### 32×32×288  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,32) | (32,288,32) | (32,288,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2097,13 +2097,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=-1.4µs (-1.0%)   Δ(AG vs B2)=-0.4µs (-0.3%)
+Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=-1.4µs (-1.0%)   Δ(AG vs B1)=-0.4µs (-0.3%)
 
 ---
 
 ### 32×32×384  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,32) | (32,384,32) | (32,384,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2116,13 +2116,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.2µs (+1.4%)   Δ(AG vs B0)=+0.2µs (+0.2%)   Δ(AG vs B2)=-1.9µs (-1.2%)
+Δ(B2 vs B0)=+2.2µs (+1.4%)   Δ(AG vs B0)=+0.2µs (+0.2%)   Δ(AG vs B1)=-1.9µs (-1.2%)
 
 ---
 
 ### 32×32×480  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,32) | (32,480,32) | (32,480,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2135,13 +2135,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=-0.5µs (-0.4%)   Δ(AG vs B2)=-0.9µs (-0.6%)
+Δ(B2 vs B0)=+0.4µs (+0.3%)   Δ(AG vs B0)=-0.5µs (-0.4%)   Δ(AG vs B1)=-0.9µs (-0.6%)
 
 ---
 
 ### 32×32×576  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,32) | (32,576,32) | (32,576,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2154,13 +2154,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.0µs (+0.7%)   Δ(AG vs B0)=+2.1µs (+1.5%)   Δ(AG vs B2)=+1.1µs (+0.8%)
+Δ(B2 vs B0)=+1.0µs (+0.7%)   Δ(AG vs B0)=+2.1µs (+1.5%)   Δ(AG vs B1)=+1.1µs (+0.8%)
 
 ---
 
 ### 32×32×672  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,32) | (32,672,32) | (32,672,32) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2173,13 +2173,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.2µs (+0.8%)   Δ(AG vs B0)=-0.8µs (-0.6%)   Δ(AG vs B2)=-2.0µs (-1.4%)
+Δ(B2 vs B0)=+1.2µs (+0.8%)   Δ(AG vs B0)=-0.8µs (-0.6%)   Δ(AG vs B1)=-2.0µs (-1.4%)
 
 ---
 
 ### 32×32×720  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,32) | (32,768,32) | (32,768,32) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2192,13 +2192,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-39.9µs (-20.4%)   Δ(AG vs B0)=-39.2µs (-20.1%)   Δ(AG vs B2)=+0.7µs (+0.5%)
+Δ(B2 vs B0)=-39.9µs (-20.4%)   Δ(AG vs B0)=-39.2µs (-20.1%)   Δ(AG vs B1)=+0.7µs (+0.5%)
 
 ---
 
 ### 32×96×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,128) | (32,32,128) | (32,32,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2211,13 +2211,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.8µs (-0.6%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B2)=+1.1µs (+0.9%)
+Δ(B2 vs B0)=-0.8µs (-0.6%)   Δ(AG vs B0)=+0.4µs (+0.3%)   Δ(AG vs B1)=+1.1µs (+0.9%)
 
 ---
 
 ### 32×96×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,128) | (32,256,128) | (32,256,128) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2230,13 +2230,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-12.2µs (-8.6%)   Δ(AG vs B0)=-11.7µs (-8.2%)   Δ(AG vs B2)=+0.6µs (+0.4%)
+Δ(B2 vs B0)=-12.2µs (-8.6%)   Δ(AG vs B0)=-11.7µs (-8.2%)   Δ(AG vs B1)=+0.6µs (+0.4%)
 
 ---
 
 ### 32×96×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,128) | (32,960,128) | (32,960,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2249,13 +2249,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.4%)   Δ(AG vs B0)=+2.8µs (+1.5%)   Δ(AG vs B2)=+2.2µs (+1.2%)
+Δ(B2 vs B0)=+0.7µs (+0.4%)   Δ(AG vs B0)=+2.8µs (+1.5%)   Δ(AG vs B1)=+2.2µs (+1.2%)
 
 ---
 
 ### 32×192×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,256) | (32,32,256) | (32,32,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2268,13 +2268,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.8µs (-0.6%)   Δ(AG vs B0)=-0.3µs (-0.3%)   Δ(AG vs B2)=+0.5µs (+0.4%)
+Δ(B2 vs B0)=-0.8µs (-0.6%)   Δ(AG vs B0)=-0.3µs (-0.3%)   Δ(AG vs B1)=+0.5µs (+0.4%)
 
 ---
 
 ### 32×192×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,256) | (32,256,256) | (32,256,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2287,13 +2287,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-3.4µs (-2.4%)   Δ(AG vs B0)=-4.2µs (-2.9%)   Δ(AG vs B2)=-0.8µs (-0.6%)
+Δ(B2 vs B0)=-3.4µs (-2.4%)   Δ(AG vs B0)=-4.2µs (-2.9%)   Δ(AG vs B1)=-0.8µs (-0.6%)
 
 ---
 
 ### 32×192×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,256) | (32,960,256) | (32,960,256) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2311,7 +2311,7 @@
 
 ### 32×256×96  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,96,256) | (32,96,256) | (32,96,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,64) |
@@ -2324,13 +2324,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.1µs (+0.1%)   Δ(AG vs B0)=+3.6µs (+2.7%)   Δ(AG vs B2)=+3.5µs (+2.6%)
+Δ(B2 vs B0)=+0.1µs (+0.1%)   Δ(AG vs B0)=+3.6µs (+2.7%)   Δ(AG vs B1)=+3.5µs (+2.6%)
 
 ---
 
 ### 32×256×192  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,256) | (32,192,256) | (32,192,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2343,13 +2343,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.0µs (+0.7%)   Δ(AG vs B0)=+0.1µs (+0.1%)   Δ(AG vs B2)=-0.8µs (-0.6%)
+Δ(B2 vs B0)=+1.0µs (+0.7%)   Δ(AG vs B0)=+0.1µs (+0.1%)   Δ(AG vs B1)=-0.8µs (-0.6%)
 
 ---
 
 ### 32×256×288  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,256) | (32,288,256) | (32,288,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2362,13 +2362,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.3µs (-0.2%)   Δ(AG vs B0)=+0.9µs (+0.6%)   Δ(AG vs B2)=+1.3µs (+0.8%)
+Δ(B2 vs B0)=-0.3µs (-0.2%)   Δ(AG vs B0)=+0.9µs (+0.6%)   Δ(AG vs B1)=+1.3µs (+0.8%)
 
 ---
 
 ### 32×256×384  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,256) | (32,384,256) | (32,384,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2381,13 +2381,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.3µs (+0.8%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B2)=-1.9µs (-1.2%)
+Δ(B2 vs B0)=+1.3µs (+0.8%)   Δ(AG vs B0)=-0.5µs (-0.3%)   Δ(AG vs B1)=-1.9µs (-1.2%)
 
 ---
 
 ### 32×256×480  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,256) | (32,480,256) | (32,480,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2400,13 +2400,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.2µs (-0.7%)   Δ(AG vs B0)=-2.2µs (-1.3%)   Δ(AG vs B2)=-1.0µs (-0.6%)
+Δ(B2 vs B0)=-1.2µs (-0.7%)   Δ(AG vs B0)=-2.2µs (-1.3%)   Δ(AG vs B1)=-1.0µs (-0.6%)
 
 ---
 
 ### 32×256×576  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,256) | (32,576,256) | (32,576,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2419,13 +2419,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.5µs (+1.3%)   Δ(AG vs B0)=-2.1µs (-1.1%)   Δ(AG vs B2)=-4.6µs (-2.4%)
+Δ(B2 vs B0)=+2.5µs (+1.3%)   Δ(AG vs B0)=-2.1µs (-1.1%)   Δ(AG vs B1)=-4.6µs (-2.4%)
 
 ---
 
 ### 32×256×672  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,256) | (32,672,256) | (32,672,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2438,13 +2438,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-3.4µs (-1.6%)   Δ(AG vs B0)=-1.4µs (-0.7%)   Δ(AG vs B2)=+2.0µs (+1.0%)
+Δ(B2 vs B0)=-3.4µs (-1.6%)   Δ(AG vs B0)=-1.4µs (-0.7%)   Δ(AG vs B1)=+2.0µs (+1.0%)
 
 ---
 
 ### 32×256×720  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,256) | (32,768,256) | (32,768,256) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2457,13 +2457,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-35.5µs (-18.1%)   Δ(AG vs B0)=-34.1µs (-17.4%)   Δ(AG vs B2)=+1.5µs (+0.9%)
+Δ(B2 vs B0)=-35.5µs (-18.1%)   Δ(AG vs B0)=-34.1µs (-17.4%)   Δ(AG vs B1)=+1.5µs (+0.9%)
 
 ---
 
 ### 32×288×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2476,13 +2476,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.8µs (-1.3%)   Δ(AG vs B0)=-0.2µs (-0.2%)   Δ(AG vs B2)=+1.5µs (+1.2%)
+Δ(B2 vs B0)=-1.8µs (-1.3%)   Δ(AG vs B0)=-0.2µs (-0.2%)   Δ(AG vs B1)=+1.5µs (+1.2%)
 
 ---
 
 ### 32×288×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2495,13 +2495,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.2µs (-4.0%)   Δ(AG vs B0)=-6.3µs (-4.1%)   Δ(AG vs B2)=-0.1µs (-0.1%)
+Δ(B2 vs B0)=-6.2µs (-4.0%)   Δ(AG vs B0)=-6.3µs (-4.1%)   Δ(AG vs B1)=-0.1µs (-0.1%)
 
 ---
 
 ### 32×288×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2514,13 +2514,13 @@
 | Pass count | 1/3 | 1/3 | 2/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.4µs (+0.4%)   Δ(AG vs B0)=+44.8µs (+12.7%)   Δ(AG vs B2)=+43.4µs (+12.3%)
+Δ(B2 vs B0)=+1.4µs (+0.4%)   Δ(AG vs B0)=+44.8µs (+12.7%)   Δ(AG vs B1)=+43.4µs (+12.3%)
 
 ---
 
 ### 32×384×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2533,13 +2533,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.5µs (-1.9%)   Δ(AG vs B0)=-1.1µs (-0.9%)   Δ(AG vs B2)=+1.4µs (+1.0%)
+Δ(B2 vs B0)=-2.5µs (-1.9%)   Δ(AG vs B0)=-1.1µs (-0.9%)   Δ(AG vs B1)=+1.4µs (+1.0%)
 
 ---
 
 ### 32×384×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2552,13 +2552,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.7µs (-3.1%)   Δ(AG vs B0)=-4.8µs (-3.1%)   Δ(AG vs B2)=-0.1µs (-0.0%)
+Δ(B2 vs B0)=-4.7µs (-3.1%)   Δ(AG vs B0)=-4.8µs (-3.1%)   Δ(AG vs B1)=-0.1µs (-0.0%)
 
 ---
 
 ### 32×384×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2571,13 +2571,13 @@
 | Pass count | 1/3 | 1/3 | 1/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.7µs (+0.5%)   Δ(AG vs B0)=+3.9µs (+1.1%)   Δ(AG vs B2)=+2.2µs (+0.6%)
+Δ(B2 vs B0)=+1.7µs (+0.5%)   Δ(AG vs B0)=+3.9µs (+1.1%)   Δ(AG vs B1)=+2.2µs (+0.6%)
 
 ---
 
 ### 32×480×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,512) | (32,32,512) | (32,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2590,13 +2590,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.4µs (-0.3%)   Δ(AG vs B0)=+4.2µs (+3.2%)   Δ(AG vs B2)=+4.6µs (+3.6%)
+Δ(B2 vs B0)=-0.4µs (-0.3%)   Δ(AG vs B0)=+4.2µs (+3.2%)   Δ(AG vs B1)=+4.6µs (+3.6%)
 
 ---
 
 ### 32×480×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,512) | (32,256,512) | (32,256,512) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2609,13 +2609,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-5.1µs (-3.3%)   Δ(AG vs B0)=-3.9µs (-2.5%)   Δ(AG vs B2)=+1.2µs (+0.8%)
+Δ(B2 vs B0)=-5.1µs (-3.3%)   Δ(AG vs B0)=-3.9µs (-2.5%)   Δ(AG vs B1)=+1.2µs (+0.8%)
 
 ---
 
 ### 32×480×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,512) | (32,960,512) | (32,960,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2628,13 +2628,13 @@
 | Pass count | 0/3 | 2/3 | 2/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-116.4µs (-24.4%)
+Δ(AG vs B1)=-116.4µs (-24.4%)
 
 ---
 
 ### 32×576×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2647,13 +2647,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=-1.0µs (-0.7%)   Δ(AG vs B2)=-1.7µs (-1.2%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=-1.0µs (-0.7%)   Δ(AG vs B1)=-1.7µs (-1.2%)
 
 ---
 
 ### 32×576×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2666,13 +2666,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.9µs (-3.0%)   Δ(AG vs B0)=-5.7µs (-3.5%)   Δ(AG vs B2)=-0.8µs (-0.5%)
+Δ(B2 vs B0)=-4.9µs (-3.0%)   Δ(AG vs B0)=-5.7µs (-3.5%)   Δ(AG vs B1)=-0.8µs (-0.5%)
 
 ---
 
 ### 32×576×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2685,13 +2685,13 @@
 | Pass count | 1/3 | 3/3 | 2/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+35.5µs (+7.7%)   Δ(AG vs B0)=+34.4µs (+7.5%)   Δ(AG vs B2)=-1.1µs (-0.2%)
+Δ(B2 vs B0)=+35.5µs (+7.7%)   Δ(AG vs B0)=+34.4µs (+7.5%)   Δ(AG vs B1)=-1.1µs (-0.2%)
 
 ---
 
 ### 32×672×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2704,13 +2704,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.3µs (-0.9%)   Δ(AG vs B0)=+0.8µs (+0.6%)   Δ(AG vs B2)=+2.1µs (+1.5%)
+Δ(B2 vs B0)=-1.3µs (-0.9%)   Δ(AG vs B0)=+0.8µs (+0.6%)   Δ(AG vs B1)=+2.1µs (+1.5%)
 
 ---
 
 ### 32×672×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2723,13 +2723,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.6µs (-4.0%)   Δ(AG vs B0)=-5.5µs (-3.4%)   Δ(AG vs B2)=+1.0µs (+0.6%)
+Δ(B2 vs B0)=-6.6µs (-4.0%)   Δ(AG vs B0)=-5.5µs (-3.4%)   Δ(AG vs B1)=+1.0µs (+0.6%)
 
 ---
 
 ### 32×672×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2742,13 +2742,13 @@
 | Pass count | 2/3 | 1/3 | 1/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-50.4µs (-9.7%)   Δ(AG vs B0)=-52.9µs (-10.2%)   Δ(AG vs B2)=-2.5µs (-0.5%)
+Δ(B2 vs B0)=-50.4µs (-9.7%)   Δ(AG vs B0)=-52.9µs (-10.2%)   Δ(AG vs B1)=-2.5µs (-0.5%)
 
 ---
 
 ### 32×720×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,32,768) | (32,32,768) | (32,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -2761,13 +2761,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.8µs (+1.3%)   Δ(AG vs B2)=+1.5µs (+1.1%)
+Δ(B2 vs B0)=+0.3µs (+0.2%)   Δ(AG vs B0)=+1.8µs (+1.3%)   Δ(AG vs B1)=+1.5µs (+1.1%)
 
 ---
 
 ### 32×720×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,256,768) | (32,256,768) | (32,256,768) |
 | Tile | (32,32,32) | (32,64,32) | (32,64,32) |
@@ -2780,13 +2780,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-5.0µs (-3.0%)   Δ(AG vs B0)=-4.5µs (-2.8%)   Δ(AG vs B2)=+0.4µs (+0.3%)
+Δ(B2 vs B0)=-5.0µs (-3.0%)   Δ(AG vs B0)=-4.5µs (-2.8%)   Δ(AG vs B1)=+0.4µs (+0.3%)
 
 ---
 
 ### 32×720×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,960,768) | (32,960,768) | (32,960,768) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2799,7 +2799,7 @@
 | Pass count | 1/3 | 2/3 | 2/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.6µs (-0.5%)   Δ(AG vs B0)=-6.4µs (-1.4%)   Δ(AG vs B2)=-3.8µs (-0.8%)
+Δ(B2 vs B0)=-2.6µs (-0.5%)   Δ(AG vs B0)=-6.4µs (-1.4%)   Δ(AG vs B1)=-3.8µs (-0.8%)
 
 ---
 
@@ -2811,7 +2811,7 @@
 
 ### 32×960×192  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,192,960) | (32,192,960) | (32,192,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2829,7 +2829,7 @@
 
 ### 32×960×288  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,288,960) | (32,288,960) | (32,288,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2847,7 +2847,7 @@
 
 ### 32×960×384  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,384,960) | (32,384,960) | (32,384,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2865,7 +2865,7 @@
 
 ### 32×960×480  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,480,960) | (32,480,960) | (32,480,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2883,7 +2883,7 @@
 
 ### 32×960×576  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,576,960) | (32,576,960) | (32,576,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2901,7 +2901,7 @@
 
 ### 32×960×672  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,672,960) | (32,672,960) | (32,672,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2919,7 +2919,7 @@
 
 ### 32×960×720  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (32,768,960) | (32,768,960) | (32,768,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -2937,7 +2937,7 @@
 
 ### 50×32×192  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,32) | (64,192,32) | (64,192,32) |
 | Tile | (32,32,32) | (16,64,16) | (16,64,16) |
@@ -2950,13 +2950,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+3.5µs (+2.8%)   Δ(AG vs B0)=+3.2µs (+2.5%)   Δ(AG vs B2)=-0.3µs (-0.3%)
+Δ(B2 vs B0)=+3.5µs (+2.8%)   Δ(AG vs B0)=+3.2µs (+2.5%)   Δ(AG vs B1)=-0.3µs (-0.3%)
 
 ---
 
 ### 50×32×288  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,32) | (64,288,32) | (64,288,32) |
 | Tile | (32,32,32) | (16,32,16) | (16,32,16) |
@@ -2969,13 +2969,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+20.5µs (+15.1%)   Δ(AG vs B0)=+19.3µs (+14.2%)   Δ(AG vs B2)=-1.2µs (-0.8%)
+Δ(B2 vs B0)=+20.5µs (+15.1%)   Δ(AG vs B0)=+19.3µs (+14.2%)   Δ(AG vs B1)=-1.2µs (-0.8%)
 
 ---
 
 ### 50×32×384  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,32) | (64,384,32) | (64,384,32) |
 | Tile | (32,32,32) | (16,128,16) | (16,128,16) |
@@ -2988,13 +2988,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-16.9µs (-11.1%)   Δ(AG vs B0)=-18.5µs (-12.2%)   Δ(AG vs B2)=-1.6µs (-1.2%)
+Δ(B2 vs B0)=-16.9µs (-11.1%)   Δ(AG vs B0)=-18.5µs (-12.2%)   Δ(AG vs B1)=-1.6µs (-1.2%)
 
 ---
 
 ### 50×32×480  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,32) | (64,480,32) | (64,480,32) |
 | Tile | (32,32,32) | (16,32,16) | (16,32,16) |
@@ -3007,13 +3007,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+40.8µs (+28.7%)   Δ(AG vs B0)=+42.5µs (+29.9%)   Δ(AG vs B2)=+1.7µs (+0.9%)
+Δ(B2 vs B0)=+40.8µs (+28.7%)   Δ(AG vs B0)=+42.5µs (+29.9%)   Δ(AG vs B1)=+1.7µs (+0.9%)
 
 ---
 
 ### 50×32×576  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,32) | (64,576,32) | (64,576,32) |
 | Tile | (32,32,32) | (16,64,16) | (16,64,16) |
@@ -3026,13 +3026,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+9.7µs (+6.6%)   Δ(AG vs B0)=+7.6µs (+5.1%)   Δ(AG vs B2)=-2.1µs (-1.4%)
+Δ(B2 vs B0)=+9.7µs (+6.6%)   Δ(AG vs B0)=+7.6µs (+5.1%)   Δ(AG vs B1)=-2.1µs (-1.4%)
 
 ---
 
 ### 50×32×672  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,32) | (64,672,32) | (64,672,32) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -3045,13 +3045,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+48.2µs (+29.9%)   Δ(AG vs B0)=+46.4µs (+28.8%)   Δ(AG vs B2)=-1.8µs (-0.8%)
+Δ(B2 vs B0)=+48.2µs (+29.9%)   Δ(AG vs B0)=+46.4µs (+28.8%)   Δ(AG vs B1)=-1.8µs (-0.8%)
 
 ---
 
 ### 50×32×720  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,32) | (64,768,32) | (64,768,32) |
 | Tile | (32,32,32) | (16,256,16) | (16,256,16) |
@@ -3064,13 +3064,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-32.8µs (-17.8%)   Δ(AG vs B0)=-34.3µs (-18.6%)   Δ(AG vs B2)=-1.5µs (-1.0%)
+Δ(B2 vs B0)=-32.8µs (-17.8%)   Δ(AG vs B0)=-34.3µs (-18.6%)   Δ(AG vs B1)=-1.5µs (-1.0%)
 
 ---
 
 ### 50×192×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,256) | (64,32,256) | (64,32,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3083,13 +3083,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.6µs (-1.2%)   Δ(AG vs B0)=-0.7µs (-0.6%)   Δ(AG vs B2)=+0.8µs (+0.7%)
+Δ(B2 vs B0)=-1.6µs (-1.2%)   Δ(AG vs B0)=-0.7µs (-0.6%)   Δ(AG vs B1)=+0.8µs (+0.7%)
 
 ---
 
 ### 50×192×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,256) | (64,256,256) | (64,256,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3102,13 +3102,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-16.5µs (-10.8%)   Δ(AG vs B0)=-14.0µs (-9.2%)   Δ(AG vs B2)=+2.5µs (+1.8%)
+Δ(B2 vs B0)=-16.5µs (-10.8%)   Δ(AG vs B0)=-14.0µs (-9.2%)   Δ(AG vs B1)=+2.5µs (+1.8%)
 
 ---
 
 ### 50×192×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,256) | (64,960,256) | (64,960,256) |
 | Tile | (64,64,64) | (16,32,16) | (16,32,16) |
@@ -3121,13 +3121,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+53.3µs (+21.7%)   Δ(AG vs B0)=+90.0µs (+36.7%)   Δ(AG vs B2)=+36.7µs (+12.3%)
+Δ(B2 vs B0)=+53.3µs (+21.7%)   Δ(AG vs B0)=+90.0µs (+36.7%)   Δ(AG vs B1)=+36.7µs (+12.3%)
 
 ---
 
 ### 50×256×192  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,256) | (64,192,256) | (64,192,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3140,13 +3140,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+3.5µs (+2.3%)   Δ(AG vs B0)=+2.3µs (+1.5%)   Δ(AG vs B2)=-1.2µs (-0.8%)
+Δ(B2 vs B0)=+3.5µs (+2.3%)   Δ(AG vs B0)=+2.3µs (+1.5%)   Δ(AG vs B1)=-1.2µs (-0.8%)
 
 ---
 
 ### 50×256×288  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,256) | (64,288,256) | (64,288,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -3159,13 +3159,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+18.1µs (+11.7%)   Δ(AG vs B0)=+16.0µs (+10.3%)   Δ(AG vs B2)=-2.2µs (-1.2%)
+Δ(B2 vs B0)=+18.1µs (+11.7%)   Δ(AG vs B0)=+16.0µs (+10.3%)   Δ(AG vs B1)=-2.2µs (-1.2%)
 
 ---
 
 ### 50×256×384  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,256) | (64,384,256) | (64,384,256) |
 | Tile | (64,64,64) | (16,32,128) | (16,32,128) |
@@ -3178,13 +3178,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+10.6µs (+6.7%)   Δ(AG vs B0)=+11.3µs (+7.2%)   Δ(AG vs B2)=+0.8µs (+0.5%)
+Δ(B2 vs B0)=+10.6µs (+6.7%)   Δ(AG vs B0)=+11.3µs (+7.2%)   Δ(AG vs B1)=+0.8µs (+0.5%)
 
 ---
 
 ### 50×256×480  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,256) | (64,480,256) | (64,480,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -3197,13 +3197,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+28.7µs (+16.4%)   Δ(AG vs B0)=+27.2µs (+15.6%)   Δ(AG vs B2)=-1.5µs (-0.7%)
+Δ(B2 vs B0)=+28.7µs (+16.4%)   Δ(AG vs B0)=+27.2µs (+15.6%)   Δ(AG vs B1)=-1.5µs (-0.7%)
 
 ---
 
 ### 50×256×576  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,256) | (64,576,256) | (64,576,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3216,13 +3216,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+14.7µs (+7.5%)   Δ(AG vs B0)=+75.8µs (+38.6%)   Δ(AG vs B2)=+61.1µs (+28.9%)
+Δ(B2 vs B0)=+14.7µs (+7.5%)   Δ(AG vs B0)=+75.8µs (+38.6%)   Δ(AG vs B1)=+61.1µs (+28.9%)
 
 ---
 
 ### 50×256×672  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,256) | (64,672,256) | (64,672,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -3235,13 +3235,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+14.4µs (+6.5%)   Δ(AG vs B0)=+2.9µs (+1.3%)   Δ(AG vs B2)=-11.5µs (-4.9%)
+Δ(B2 vs B0)=+14.4µs (+6.5%)   Δ(AG vs B0)=+2.9µs (+1.3%)   Δ(AG vs B1)=-11.5µs (-4.9%)
 
 ---
 
 ### 50×256×720  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,256) | (64,768,256) | (64,768,256) |
 | Tile | (64,64,64) | (16,64,128) | (16,64,128) |
@@ -3254,13 +3254,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+0.2µs (+0.1%)   Δ(AG vs B0)=-5.0µs (-2.7%)   Δ(AG vs B2)=-5.2µs (-2.9%)
+Δ(B2 vs B0)=+0.2µs (+0.1%)   Δ(AG vs B0)=-5.0µs (-2.7%)   Δ(AG vs B1)=-5.2µs (-2.9%)
 
 ---
 
 ### 50×288×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3273,13 +3273,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B2)=-0.2µs (-0.1%)
+Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=+0.9µs (+0.7%)   Δ(AG vs B1)=-0.2µs (-0.1%)
 
 ---
 
 ### 50×288×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3292,13 +3292,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-8.3µs (-5.3%)   Δ(AG vs B0)=-10.1µs (-6.4%)   Δ(AG vs B2)=-1.8µs (-1.2%)
+Δ(B2 vs B0)=-8.3µs (-5.3%)   Δ(AG vs B0)=-10.1µs (-6.4%)   Δ(AG vs B1)=-1.8µs (-1.2%)
 
 ---
 
 ### 50×288×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3311,13 +3311,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+84.5µs (+22.8%)   Δ(AG vs B0)=+115.9µs (+31.3%)   Δ(AG vs B2)=+31.4µs (+6.9%)
+Δ(B2 vs B0)=+84.5µs (+22.8%)   Δ(AG vs B0)=+115.9µs (+31.3%)   Δ(AG vs B1)=+31.4µs (+6.9%)
 
 ---
 
 ### 50×384×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3330,13 +3330,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=-1.7µs (-1.3%)   Δ(AG vs B2)=-2.5µs (-1.9%)
+Δ(B2 vs B0)=+0.8µs (+0.6%)   Δ(AG vs B0)=-1.7µs (-1.3%)   Δ(AG vs B1)=-2.5µs (-1.9%)
 
 ---
 
 ### 50×384×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3349,13 +3349,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-9.9µs (-6.2%)   Δ(AG vs B0)=-12.8µs (-8.0%)   Δ(AG vs B2)=-2.8µs (-1.9%)
+Δ(B2 vs B0)=-9.9µs (-6.2%)   Δ(AG vs B0)=-12.8µs (-8.0%)   Δ(AG vs B1)=-2.8µs (-1.9%)
 
 ---
 
 ### 50×384×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3368,13 +3368,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+225.9µs (+69.5%)   Δ(AG vs B0)=+306.1µs (+94.2%)   Δ(AG vs B2)=+80.2µs (+14.6%)
+Δ(B2 vs B0)=+225.9µs (+69.5%)   Δ(AG vs B0)=+306.1µs (+94.2%)   Δ(AG vs B1)=+80.2µs (+14.6%)
 
 ---
 
 ### 50×480×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3387,13 +3387,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.9µs (-0.6%)   Δ(AG vs B0)=-1.6µs (-1.2%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-0.9µs (-0.6%)   Δ(AG vs B0)=-1.6µs (-1.2%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 50×480×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3406,13 +3406,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-7.0µs (-4.4%)   Δ(AG vs B0)=-10.4µs (-6.5%)   Δ(AG vs B2)=-3.5µs (-2.3%)
+Δ(B2 vs B0)=-7.0µs (-4.4%)   Δ(AG vs B0)=-10.4µs (-6.5%)   Δ(AG vs B1)=-3.5µs (-2.3%)
 
 ---
 
 ### 50×480×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3425,13 +3425,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+99.8µs (+30.4%)   Δ(AG vs B0)=+121.1µs (+37.0%)   Δ(AG vs B2)=+21.4µs (+5.0%)
+Δ(B2 vs B0)=+99.8µs (+30.4%)   Δ(AG vs B0)=+121.1µs (+37.0%)   Δ(AG vs B1)=+21.4µs (+5.0%)
 
 ---
 
 ### 50×576×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3444,13 +3444,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.4µs (-1.0%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B2)=-0.7µs (-0.5%)
+Δ(B2 vs B0)=-1.4µs (-1.0%)   Δ(AG vs B0)=-2.1µs (-1.5%)   Δ(AG vs B1)=-0.7µs (-0.5%)
 
 ---
 
 ### 50×576×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3463,13 +3463,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-10.5µs (-6.2%)   Δ(AG vs B0)=-8.5µs (-5.0%)   Δ(AG vs B2)=+1.9µs (+1.2%)
+Δ(B2 vs B0)=-10.5µs (-6.2%)   Δ(AG vs B0)=-8.5µs (-5.0%)   Δ(AG vs B1)=+1.9µs (+1.2%)
 
 ---
 
 ### 50×576×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3482,13 +3482,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+110.7µs (+25.5%)   Δ(AG vs B0)=+37.8µs (+8.7%)   Δ(AG vs B2)=-72.9µs (-13.4%)
+Δ(B2 vs B0)=+110.7µs (+25.5%)   Δ(AG vs B0)=+37.8µs (+8.7%)   Δ(AG vs B1)=-72.9µs (-13.4%)
 
 ---
 
 ### 50×672×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3501,13 +3501,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+3.4µs (+2.5%)   Δ(AG vs B2)=+2.7µs (+1.9%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+3.4µs (+2.5%)   Δ(AG vs B1)=+2.7µs (+1.9%)
 
 ---
 
 ### 50×672×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3520,13 +3520,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-9.1µs (-5.4%)   Δ(AG vs B0)=-9.0µs (-5.3%)   Δ(AG vs B2)=+0.1µs (+0.1%)
+Δ(B2 vs B0)=-9.1µs (-5.4%)   Δ(AG vs B0)=-9.0µs (-5.3%)   Δ(AG vs B1)=+0.1µs (+0.1%)
 
 ---
 
 ### 50×672×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3539,13 +3539,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+95.5µs (+22.6%)   Δ(AG vs B0)=+80.5µs (+19.1%)   Δ(AG vs B2)=-14.9µs (-2.9%)
+Δ(B2 vs B0)=+95.5µs (+22.6%)   Δ(AG vs B0)=+80.5µs (+19.1%)   Δ(AG vs B1)=-14.9µs (-2.9%)
 
 ---
 
 ### 50×720×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3558,13 +3558,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+2.7µs (+1.9%)   Δ(AG vs B2)=+2.6µs (+1.9%)
+Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+2.7µs (+1.9%)   Δ(AG vs B1)=+2.6µs (+1.9%)
 
 ---
 
 ### 50×720×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3577,13 +3577,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-10.1µs (-5.9%)   Δ(AG vs B0)=-8.2µs (-4.8%)   Δ(AG vs B2)=+1.9µs (+1.2%)
+Δ(B2 vs B0)=-10.1µs (-5.9%)   Δ(AG vs B0)=-8.2µs (-4.8%)   Δ(AG vs B1)=+1.9µs (+1.2%)
 
 ---
 
 ### 50×720×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -3596,13 +3596,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-3.5µs (-0.8%)   Δ(AG vs B0)=+55.4µs (+13.1%)   Δ(AG vs B2)=+58.9µs (+14.0%)
+Δ(B2 vs B0)=-3.5µs (-0.8%)   Δ(AG vs B0)=+55.4µs (+13.1%)   Δ(AG vs B1)=+58.9µs (+14.0%)
 
 ---
 
 ### 50×960×192  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,960) | (64,192,960) | (64,192,960) |
 | Tile | (64,64,64) | (16,32,64) | (16,32,64) |
@@ -3615,13 +3615,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.8µs (-0.4%)   Δ(AG vs B0)=+1.6µs (+0.7%)   Δ(AG vs B2)=+2.5µs (+1.1%)
+Δ(B2 vs B0)=-0.8µs (-0.4%)   Δ(AG vs B0)=+1.6µs (+0.7%)   Δ(AG vs B1)=+2.5µs (+1.1%)
 
 ---
 
 ### 50×960×288  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,960) | (64,288,960) | (64,288,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -3634,13 +3634,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-12.7µs (-4.5%)
+Δ(AG vs B1)=-12.7µs (-4.5%)
 
 ---
 
 ### 50×960×384  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,960) | (64,384,960) | (64,384,960) |
 | Tile | (64,64,64) | (16,32,64) | (16,32,64) |
@@ -3653,13 +3653,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+23.0µs (+10.4%)   Δ(AG vs B0)=-11.2µs (-5.0%)   Δ(AG vs B2)=-34.2µs (-14.0%)
+Δ(B2 vs B0)=+23.0µs (+10.4%)   Δ(AG vs B0)=-11.2µs (-5.0%)   Δ(AG vs B1)=-34.2µs (-14.0%)
 
 ---
 
 ### 50×960×480  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,960) | (64,480,960) | (64,480,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -3672,13 +3672,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-117.1µs (-18.7%)
+Δ(AG vs B1)=-117.1µs (-18.7%)
 
 ---
 
 ### 50×960×576  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,960) | (64,576,960) | (64,576,960) |
 | Tile | (64,64,64) | (16,64,64) | (16,64,64) |
@@ -3691,13 +3691,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+128.1µs (+29.1%)   Δ(AG vs B0)=+110.7µs (+25.2%)   Δ(AG vs B2)=-17.4µs (-3.1%)
+Δ(B2 vs B0)=+128.1µs (+29.1%)   Δ(AG vs B0)=+110.7µs (+25.2%)   Δ(AG vs B1)=-17.4µs (-3.1%)
 
 ---
 
 ### 50×960×672  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,960) | (64,672,960) | (64,672,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -3710,13 +3710,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-32.9µs (-6.8%)
+Δ(AG vs B1)=-32.9µs (-6.8%)
 
 ---
 
 ### 50×960×720  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,960) | (64,768,960) | (64,768,960) |
 | Tile | (64,64,64) | (16,64,64) | (16,64,64) |
@@ -3729,13 +3729,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-23.9µs (-8.3%)   Δ(AG vs B0)=-29.2µs (-10.2%)   Δ(AG vs B2)=-5.4µs (-2.1%)
+Δ(B2 vs B0)=-23.9µs (-8.3%)   Δ(AG vs B0)=-29.2µs (-10.2%)   Δ(AG vs B1)=-5.4µs (-2.1%)
 
 ---
 
 ### 60×32×96  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,96,32) | (64,96,32) | (64,96,32) |
 | Tile | (32,32,32) | (16,32,16) | (16,16,32) |
@@ -3748,13 +3748,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.5µs (-0.4%)   Δ(AG vs B0)=+8.9µs (+6.7%)   Δ(AG vs B2)=+9.4µs (+7.1%)
+Δ(B2 vs B0)=-0.5µs (-0.4%)   Δ(AG vs B0)=+8.9µs (+6.7%)   Δ(AG vs B1)=+9.4µs (+7.1%)
 
 ---
 
 ### 60×32×192  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,32) | (64,192,32) | (64,192,32) |
 | Tile | (32,32,32) | (16,64,16) | (16,64,16) |
@@ -3767,13 +3767,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.9µs (+1.5%)   Δ(AG vs B0)=+4.8µs (+3.8%)   Δ(AG vs B2)=+2.9µs (+2.2%)
+Δ(B2 vs B0)=+1.9µs (+1.5%)   Δ(AG vs B0)=+4.8µs (+3.8%)   Δ(AG vs B1)=+2.9µs (+2.2%)
 
 ---
 
 ### 60×32×288  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,32) | (64,288,32) | (64,288,32) |
 | Tile | (32,32,32) | (16,32,16) | (16,32,16) |
@@ -3786,13 +3786,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+18.6µs (+13.6%)   Δ(AG vs B0)=+17.7µs (+12.9%)   Δ(AG vs B2)=-0.9µs (-0.6%)
+Δ(B2 vs B0)=+18.6µs (+13.6%)   Δ(AG vs B0)=+17.7µs (+12.9%)   Δ(AG vs B1)=-0.9µs (-0.6%)
 
 ---
 
 ### 60×32×384  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,32) | (64,384,32) | (64,384,32) |
 | Tile | (32,32,32) | (16,128,16) | (16,128,16) |
@@ -3805,13 +3805,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-19.5µs (-12.7%)   Δ(AG vs B0)=-19.5µs (-12.7%)   Δ(AG vs B2)=+0.0µs (+0.0%)
+Δ(B2 vs B0)=-19.5µs (-12.7%)   Δ(AG vs B0)=-19.5µs (-12.7%)   Δ(AG vs B1)=+0.0µs (+0.0%)
 
 ---
 
 ### 60×32×480  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,32) | (64,480,32) | (64,480,32) |
 | Tile | (32,32,32) | (16,32,16) | (16,32,16) |
@@ -3824,13 +3824,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+43.1µs (+30.4%)   Δ(AG vs B0)=+42.6µs (+30.1%)   Δ(AG vs B2)=-0.5µs (-0.3%)
+Δ(B2 vs B0)=+43.1µs (+30.4%)   Δ(AG vs B0)=+42.6µs (+30.1%)   Δ(AG vs B1)=-0.5µs (-0.3%)
 
 ---
 
 ### 60×32×576  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,32) | (64,576,32) | (64,576,32) |
 | Tile | (32,32,32) | (16,64,16) | (16,64,16) |
@@ -3843,13 +3843,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+8.2µs (+5.5%)   Δ(AG vs B0)=+8.0µs (+5.4%)   Δ(AG vs B2)=-0.1µs (-0.1%)
+Δ(B2 vs B0)=+8.2µs (+5.5%)   Δ(AG vs B0)=+8.0µs (+5.4%)   Δ(AG vs B1)=-0.1µs (-0.1%)
 
 ---
 
 ### 60×32×672  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,32) | (64,672,32) | (64,672,32) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -3862,13 +3862,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+52.8µs (+33.5%)   Δ(AG vs B0)=+52.0µs (+33.1%)   Δ(AG vs B2)=-0.8µs (-0.4%)
+Δ(B2 vs B0)=+52.8µs (+33.5%)   Δ(AG vs B0)=+52.0µs (+33.1%)   Δ(AG vs B1)=-0.8µs (-0.4%)
 
 ---
 
 ### 60×32×720  —  `action_in_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,32) | (64,768,32) | (64,768,32) |
 | Tile | (32,32,32) | (16,256,16) | (16,256,16) |
@@ -3881,13 +3881,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-29.2µs (-16.1%)   Δ(AG vs B0)=-29.4µs (-16.2%)   Δ(AG vs B2)=-0.3µs (-0.2%)
+Δ(B2 vs B0)=-29.2µs (-16.1%)   Δ(AG vs B0)=-29.4µs (-16.2%)   Δ(AG vs B1)=-0.3µs (-0.2%)
 
 ---
 
 ### 60×96×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,128) | (64,32,128) | (64,32,128) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3900,13 +3900,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=-0.8µs (-0.7%)   Δ(AG vs B2)=-1.3µs (-1.0%)
+Δ(B2 vs B0)=+0.5µs (+0.4%)   Δ(AG vs B0)=-0.8µs (-0.7%)   Δ(AG vs B1)=-1.3µs (-1.0%)
 
 ---
 
 ### 60×96×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,128) | (64,256,128) | (64,256,128) |
 | Tile | (64,64,64) | (16,64,64) | (16,64,64) |
@@ -3919,13 +3919,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-6.3µs (-4.5%)   Δ(AG vs B0)=-5.0µs (-3.5%)   Δ(AG vs B2)=+1.3µs (+1.0%)
+Δ(B2 vs B0)=-6.3µs (-4.5%)   Δ(AG vs B0)=-5.0µs (-3.5%)   Δ(AG vs B1)=+1.3µs (+1.0%)
 
 ---
 
 ### 60×96×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,128) | (64,960,128) | (64,960,128) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3938,13 +3938,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+14.3µs (+7.6%)   Δ(AG vs B0)=+15.2µs (+8.1%)   Δ(AG vs B2)=+0.9µs (+0.5%)
+Δ(B2 vs B0)=+14.3µs (+7.6%)   Δ(AG vs B0)=+15.2µs (+8.1%)   Δ(AG vs B1)=+0.9µs (+0.5%)
 
 ---
 
 ### 60×192×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,256) | (64,32,256) | (64,32,256) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -3957,13 +3957,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.4µs (+1.1%)   Δ(AG vs B0)=+1.7µs (+1.4%)   Δ(AG vs B2)=+0.3µs (+0.2%)
+Δ(B2 vs B0)=+1.4µs (+1.1%)   Δ(AG vs B0)=+1.7µs (+1.4%)   Δ(AG vs B1)=+0.3µs (+0.2%)
 
 ---
 
 ### 60×192×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,256) | (64,256,256) | (64,256,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -3976,13 +3976,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-11.6µs (-7.8%)   Δ(AG vs B0)=-11.9µs (-8.0%)   Δ(AG vs B2)=-0.3µs (-0.2%)
+Δ(B2 vs B0)=-11.6µs (-7.8%)   Δ(AG vs B0)=-11.9µs (-8.0%)   Δ(AG vs B1)=-0.3µs (-0.2%)
 
 ---
 
 ### 60×192×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,256) | (64,960,256) | (64,960,256) |
 | Tile | (64,64,64) | (16,32,16) | (16,32,16) |
@@ -3995,13 +3995,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+28.5µs (+12.4%)   Δ(AG vs B0)=+26.6µs (+11.5%)   Δ(AG vs B2)=-1.9µs (-0.7%)
+Δ(B2 vs B0)=+28.5µs (+12.4%)   Δ(AG vs B0)=+26.6µs (+11.5%)   Δ(AG vs B1)=-1.9µs (-0.7%)
 
 ---
 
 ### 60×256×96  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,96,256) | (64,96,256) | (64,96,256) |
 | Tile | (32,32,32) | (16,32,16) | (64,32,64) |
@@ -4014,13 +4014,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=-0.1µs (-0.0%)   Δ(AG vs B2)=-1.2µs (-0.8%)
+Δ(B2 vs B0)=+1.1µs (+0.8%)   Δ(AG vs B0)=-0.1µs (-0.0%)   Δ(AG vs B1)=-1.2µs (-0.8%)
 
 ---
 
 ### 60×256×192  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,256) | (64,192,256) | (64,192,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4033,13 +4033,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.1µs (+0.1%)   Δ(AG vs B0)=-1.0µs (-0.6%)   Δ(AG vs B2)=-1.1µs (-0.7%)
+Δ(B2 vs B0)=+0.1µs (+0.1%)   Δ(AG vs B0)=-1.0µs (-0.6%)   Δ(AG vs B1)=-1.1µs (-0.7%)
 
 ---
 
 ### 60×256×288  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,256) | (64,288,256) | (64,288,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -4052,13 +4052,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+11.1µs (+7.0%)   Δ(AG vs B0)=+12.2µs (+7.7%)   Δ(AG vs B2)=+1.1µs (+0.7%)
+Δ(B2 vs B0)=+11.1µs (+7.0%)   Δ(AG vs B0)=+12.2µs (+7.7%)   Δ(AG vs B1)=+1.1µs (+0.7%)
 
 ---
 
 ### 60×256×384  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,256) | (64,384,256) | (64,384,256) |
 | Tile | (64,64,64) | (16,32,128) | (16,32,128) |
@@ -4071,13 +4071,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+11.0µs (+7.0%)   Δ(AG vs B0)=+12.6µs (+8.1%)   Δ(AG vs B2)=+1.6µs (+1.0%)
+Δ(B2 vs B0)=+11.0µs (+7.0%)   Δ(AG vs B0)=+12.6µs (+8.1%)   Δ(AG vs B1)=+1.6µs (+1.0%)
 
 ---
 
 ### 60×256×480  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,256) | (64,480,256) | (64,480,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -4090,13 +4090,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+47.3µs (+27.1%)   Δ(AG vs B0)=+103.2µs (+59.0%)   Δ(AG vs B2)=+55.9µs (+25.2%)
+Δ(B2 vs B0)=+47.3µs (+27.1%)   Δ(AG vs B0)=+103.2µs (+59.0%)   Δ(AG vs B1)=+55.9µs (+25.2%)
 
 ---
 
 ### 60×256×576  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,256) | (64,576,256) | (64,576,256) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4109,13 +4109,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+51.7µs (+23.7%)   Δ(AG vs B0)=-8.2µs (-3.8%)   Δ(AG vs B2)=-59.9µs (-22.2%)
+Δ(B2 vs B0)=+51.7µs (+23.7%)   Δ(AG vs B0)=-8.2µs (-3.8%)   Δ(AG vs B1)=-59.9µs (-22.2%)
 
 ---
 
 ### 60×256×672  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,256) | (64,672,256) | (64,672,256) |
 | Tile | (32,32,32) | (16,32,32) | (16,32,32) |
@@ -4128,13 +4128,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+16.4µs (+7.8%)   Δ(AG vs B0)=+17.6µs (+8.5%)   Δ(AG vs B2)=+1.3µs (+0.6%)
+Δ(B2 vs B0)=+16.4µs (+7.8%)   Δ(AG vs B0)=+17.6µs (+8.5%)   Δ(AG vs B1)=+1.3µs (+0.6%)
 
 ---
 
 ### 60×256×720  —  `down_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,256) | (64,768,256) | (64,768,256) |
 | Tile | (64,64,64) | (16,64,128) | (16,64,128) |
@@ -4147,13 +4147,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.5µs (-0.8%)   Δ(AG vs B0)=-0.8µs (-0.4%)   Δ(AG vs B2)=+0.7µs (+0.4%)
+Δ(B2 vs B0)=-1.5µs (-0.8%)   Δ(AG vs B0)=-0.8µs (-0.4%)   Δ(AG vs B1)=+0.7µs (+0.4%)
 
 ---
 
 ### 60×288×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4166,13 +4166,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B2)=+0.6µs (+0.5%)
+Δ(B2 vs B0)=-0.9µs (-0.7%)   Δ(AG vs B0)=-0.3µs (-0.2%)   Δ(AG vs B1)=+0.6µs (+0.5%)
 
 ---
 
 ### 60×288×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4185,13 +4185,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-7.9µs (-5.0%)   Δ(AG vs B0)=-9.5µs (-6.0%)   Δ(AG vs B2)=-1.6µs (-1.1%)
+Δ(B2 vs B0)=-7.9µs (-5.0%)   Δ(AG vs B0)=-9.5µs (-6.0%)   Δ(AG vs B1)=-1.6µs (-1.1%)
 
 ---
 
 ### 60×288×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4204,13 +4204,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+131.0µs (+37.8%)   Δ(AG vs B0)=+41.2µs (+11.9%)   Δ(AG vs B2)=-89.7µs (-18.8%)
+Δ(B2 vs B0)=+131.0µs (+37.8%)   Δ(AG vs B0)=+41.2µs (+11.9%)   Δ(AG vs B1)=-89.7µs (-18.8%)
 
 ---
 
 ### 60×384×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4223,13 +4223,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.2µs (-1.7%)   Δ(AG vs B0)=-2.2µs (-1.7%)   Δ(AG vs B2)=-0.0µs (-0.0%)
+Δ(B2 vs B0)=-2.2µs (-1.7%)   Δ(AG vs B0)=-2.2µs (-1.7%)   Δ(AG vs B1)=-0.0µs (-0.0%)
 
 ---
 
 ### 60×384×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4242,13 +4242,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-7.2µs (-4.5%)   Δ(AG vs B0)=-10.5µs (-6.6%)   Δ(AG vs B2)=-3.3µs (-2.2%)
+Δ(B2 vs B0)=-7.2µs (-4.5%)   Δ(AG vs B0)=-10.5µs (-6.6%)   Δ(AG vs B1)=-3.3µs (-2.2%)
 
 ---
 
 ### 60×384×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4261,13 +4261,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-98.7µs (-20.7%)   Δ(AG vs B0)=-51.5µs (-10.8%)   Δ(AG vs B2)=+47.2µs (+12.5%)
+Δ(B2 vs B0)=-98.7µs (-20.7%)   Δ(AG vs B0)=-51.5µs (-10.8%)   Δ(AG vs B1)=+47.2µs (+12.5%)
 
 ---
 
 ### 60×480×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,512) | (64,32,512) | (64,32,512) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4280,13 +4280,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.0µs (-1.5%)   Δ(AG vs B0)=-0.8µs (-0.6%)   Δ(AG vs B2)=+1.2µs (+0.9%)
+Δ(B2 vs B0)=-2.0µs (-1.5%)   Δ(AG vs B0)=-0.8µs (-0.6%)   Δ(AG vs B1)=+1.2µs (+0.9%)
 
 ---
 
 ### 60×480×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,512) | (64,256,512) | (64,256,512) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4299,13 +4299,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-10.0µs (-6.3%)   Δ(AG vs B0)=-9.2µs (-5.8%)   Δ(AG vs B2)=+0.7µs (+0.5%)
+Δ(B2 vs B0)=-10.0µs (-6.3%)   Δ(AG vs B0)=-9.2µs (-5.8%)   Δ(AG vs B1)=+0.7µs (+0.5%)
 
 ---
 
 ### 60×480×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,512) | (64,960,512) | (64,960,512) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4318,13 +4318,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+74.1µs (+22.1%)   Δ(AG vs B0)=+79.5µs (+23.6%)   Δ(AG vs B2)=+5.3µs (+1.3%)
+Δ(B2 vs B0)=+74.1µs (+22.1%)   Δ(AG vs B0)=+79.5µs (+23.6%)   Δ(AG vs B1)=+5.3µs (+1.3%)
 
 ---
 
 ### 60×576×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4337,13 +4337,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+1.8µs (+1.3%)   Δ(AG vs B0)=+3.8µs (+2.7%)   Δ(AG vs B2)=+2.0µs (+1.4%)
+Δ(B2 vs B0)=+1.8µs (+1.3%)   Δ(AG vs B0)=+3.8µs (+2.7%)   Δ(AG vs B1)=+2.0µs (+1.4%)
 
 ---
 
 ### 60×576×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4356,13 +4356,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-12.7µs (-7.4%)   Δ(AG vs B0)=-11.8µs (-6.9%)   Δ(AG vs B2)=+0.9µs (+0.6%)
+Δ(B2 vs B0)=-12.7µs (-7.4%)   Δ(AG vs B0)=-11.8µs (-6.9%)   Δ(AG vs B1)=+0.9µs (+0.6%)
 
 ---
 
 ### 60×576×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4375,13 +4375,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+26.6µs (+6.3%)   Δ(AG vs B0)=+12.1µs (+2.9%)   Δ(AG vs B2)=-14.4µs (-3.2%)
+Δ(B2 vs B0)=+26.6µs (+6.3%)   Δ(AG vs B0)=+12.1µs (+2.9%)   Δ(AG vs B1)=-14.4µs (-3.2%)
 
 ---
 
 ### 60×672×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4394,13 +4394,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=-2.9µs (-2.1%)   Δ(AG vs B2)=-3.6µs (-2.5%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=-2.9µs (-2.1%)   Δ(AG vs B1)=-3.6µs (-2.5%)
 
 ---
 
 ### 60×672×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4413,13 +4413,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-8.5µs (-5.0%)   Δ(AG vs B0)=-12.1µs (-7.1%)   Δ(AG vs B2)=-3.6µs (-2.2%)
+Δ(B2 vs B0)=-8.5µs (-5.0%)   Δ(AG vs B0)=-12.1µs (-7.1%)   Δ(AG vs B1)=-3.6µs (-2.2%)
 
 ---
 
 ### 60×672×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4432,13 +4432,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+39.8µs (+8.1%)   Δ(AG vs B0)=-39.0µs (-7.9%)   Δ(AG vs B2)=-78.8µs (-14.8%)
+Δ(B2 vs B0)=+39.8µs (+8.1%)   Δ(AG vs B0)=-39.0µs (-7.9%)   Δ(AG vs B1)=-78.8µs (-14.8%)
 
 ---
 
 ### 60×720×32  —  `action_out_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,32,768) | (64,32,768) | (64,32,768) |
 | Tile | (32,32,32) | (32,32,32) | (32,32,32) |
@@ -4451,13 +4451,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+0.1µs (+0.0%)   Δ(AG vs B2)=-0.6µs (-0.4%)
+Δ(B2 vs B0)=+0.7µs (+0.5%)   Δ(AG vs B0)=+0.1µs (+0.0%)   Δ(AG vs B1)=-0.6µs (-0.4%)
 
 ---
 
 ### 60×720×256  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,256,768) | (64,256,768) | (64,256,768) |
 | Tile | (64,64,64) | (16,64,32) | (16,64,32) |
@@ -4470,13 +4470,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-14.6µs (-8.4%)   Δ(AG vs B0)=-14.5µs (-8.4%)   Δ(AG vs B2)=+0.1µs (+0.1%)
+Δ(B2 vs B0)=-14.6µs (-8.4%)   Δ(AG vs B0)=-14.5µs (-8.4%)   Δ(AG vs B1)=+0.1µs (+0.1%)
 
 ---
 
 ### 60×720×960  —  `o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,960,768) | (64,960,768) | (64,960,768) |
 | Tile | (64,64,64) | (16,16,128) | (16,16,128) |
@@ -4489,13 +4489,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+17.0µs (+4.0%)   Δ(AG vs B0)=-20.2µs (-4.8%)   Δ(AG vs B2)=-37.3µs (-8.5%)
+Δ(B2 vs B0)=+17.0µs (+4.0%)   Δ(AG vs B0)=-20.2µs (-4.8%)   Δ(AG vs B1)=-37.3µs (-8.5%)
 
 ---
 
 ### 60×960×96  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,96,960) | (64,96,960) | (64,96,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -4508,13 +4508,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-1.7µs (-1.0%)
+Δ(AG vs B1)=-1.7µs (-1.0%)
 
 ---
 
 ### 60×960×192  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,192,960) | (64,192,960) | (64,192,960) |
 | Tile | (64,64,64) | (16,32,64) | (16,32,64) |
@@ -4527,13 +4527,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-9.5µs (-4.1%)   Δ(AG vs B0)=-9.8µs (-4.2%)   Δ(AG vs B2)=-0.2µs (-0.1%)
+Δ(B2 vs B0)=-9.5µs (-4.1%)   Δ(AG vs B0)=-9.8µs (-4.2%)   Δ(AG vs B1)=-0.2µs (-0.1%)
 
 ---
 
 ### 60×960×288  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,288,960) | (64,288,960) | (64,288,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -4546,13 +4546,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-31.6µs (-10.4%)
+Δ(AG vs B1)=-31.6µs (-10.4%)
 
 ---
 
 ### 60×960×384  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,384,960) | (64,384,960) | (64,384,960) |
 | Tile | (64,64,64) | (16,32,64) | (16,32,64) |
@@ -4565,13 +4565,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-7.8µs (-3.5%)   Δ(AG vs B0)=+39.1µs (+17.7%)   Δ(AG vs B2)=+47.0µs (+22.0%)
+Δ(B2 vs B0)=-7.8µs (-3.5%)   Δ(AG vs B0)=+39.1µs (+17.7%)   Δ(AG vs B1)=+47.0µs (+22.0%)
 
 ---
 
 ### 60×960×480  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,480,960) | (64,480,960) | (64,480,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -4584,13 +4584,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-16.7µs (-3.0%)
+Δ(AG vs B1)=-16.7µs (-3.0%)
 
 ---
 
 ### 60×960×576  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,576,960) | (64,576,960) | (64,576,960) |
 | Tile | (64,64,64) | (16,64,64) | (16,64,64) |
@@ -4603,13 +4603,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+39.2µs (+8.4%)   Δ(AG vs B0)=+156.9µs (+33.8%)   Δ(AG vs B2)=+117.6µs (+23.3%)
+Δ(B2 vs B0)=+39.2µs (+8.4%)   Δ(AG vs B0)=+156.9µs (+33.8%)   Δ(AG vs B1)=+117.6µs (+23.3%)
 
 ---
 
 ### 60×960×672  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,672,960) | (64,672,960) | (64,672,960) |
 | Tile | (16,32,32) | (16,32,64) | (16,32,64) |
@@ -4622,13 +4622,13 @@
 | Pass count | 0/3 | 3/3 | 3/3 |
 
 **Winner: INCONCLUSIVE**
-Δ(AG vs B2)=-97.7µs (-17.7%)
+Δ(AG vs B1)=-97.7µs (-17.7%)
 
 ---
 
 ### 60×960×720  —  `q_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (64,768,960) | (64,768,960) | (64,768,960) |
 | Tile | (64,64,64) | (16,64,64) | (16,64,64) |
@@ -4641,13 +4641,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-17.5µs (-6.3%)   Δ(AG vs B0)=-18.2µs (-6.6%)   Δ(AG vs B2)=-0.8µs (-0.3%)
+Δ(B2 vs B0)=-17.5µs (-6.3%)   Δ(AG vs B0)=-18.2µs (-6.6%)   Δ(AG vs B1)=-0.8µs (-0.3%)
 
 ---
 
 ### 115×320×96  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,96,512) | (128,96,512) | (128,96,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4660,13 +4660,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.5µs (+1.6%)   Δ(AG vs B0)=+4.0µs (+2.7%)   Δ(AG vs B2)=+1.5µs (+1.0%)
+Δ(B2 vs B0)=+2.5µs (+1.6%)   Δ(AG vs B0)=+4.0µs (+2.7%)   Δ(AG vs B1)=+1.5µs (+1.0%)
 
 ---
 
 ### 115×320×192  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,192,512) | (128,192,512) | (128,192,512) |
 | Tile | (64,64,64) | (32,64,64) | (32,64,64) |
@@ -4679,13 +4679,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-2.4µs (-1.4%)   Δ(AG vs B0)=-2.6µs (-1.4%)   Δ(AG vs B2)=-0.2µs (-0.1%)
+Δ(B2 vs B0)=-2.4µs (-1.4%)   Δ(AG vs B0)=-2.6µs (-1.4%)   Δ(AG vs B1)=-0.2µs (-0.1%)
 
 ---
 
 ### 115×320×288  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,288,512) | (128,288,512) | (128,288,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4698,13 +4698,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-18.1µs (-7.7%)   Δ(AG vs B0)=+7.0µs (+3.0%)   Δ(AG vs B2)=+25.1µs (+11.5%)
+Δ(B2 vs B0)=-18.1µs (-7.7%)   Δ(AG vs B0)=+7.0µs (+3.0%)   Δ(AG vs B1)=+25.1µs (+11.5%)
 
 ---
 
 ### 115×320×384  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,384,512) | (128,384,512) | (128,384,512) |
 | Tile | (64,64,64) | (32,32,128) | (32,32,128) |
@@ -4717,13 +4717,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+21.4µs (+11.4%)   Δ(AG vs B0)=+4.7µs (+2.5%)   Δ(AG vs B2)=-16.7µs (-8.0%)
+Δ(B2 vs B0)=+21.4µs (+11.4%)   Δ(AG vs B0)=+4.7µs (+2.5%)   Δ(AG vs B1)=-16.7µs (-8.0%)
 
 ---
 
 ### 115×320×480  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,480,512) | (128,480,512) | (128,480,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4736,13 +4736,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+31.3µs (+10.7%)   Δ(AG vs B0)=-60.6µs (-20.8%)   Δ(AG vs B2)=-91.9µs (-28.4%)
+Δ(B2 vs B0)=+31.3µs (+10.7%)   Δ(AG vs B0)=-60.6µs (-20.8%)   Δ(AG vs B1)=-91.9µs (-28.4%)
 
 ---
 
 ### 115×320×576  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,576,512) | (128,576,512) | (128,576,512) |
 | Tile | (64,64,64) | (32,64,64) | (32,64,64) |
@@ -4755,13 +4755,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+168.3µs (+64.5%)   Δ(AG vs B0)=+157.7µs (+60.4%)   Δ(AG vs B2)=-10.6µs (-2.5%)
+Δ(B2 vs B0)=+168.3µs (+64.5%)   Δ(AG vs B0)=+157.7µs (+60.4%)   Δ(AG vs B1)=-10.6µs (-2.5%)
 
 ---
 
 ### 115×320×672  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,672,512) | (128,672,512) | (128,672,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4774,13 +4774,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-60.4µs (-15.8%)   Δ(AG vs B0)=-88.8µs (-23.2%)   Δ(AG vs B2)=-28.4µs (-8.8%)
+Δ(B2 vs B0)=-60.4µs (-15.8%)   Δ(AG vs B0)=-88.8µs (-23.2%)   Δ(AG vs B1)=-28.4µs (-8.8%)
 
 ---
 
 ### 115×320×720  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,768,512) | (128,768,512) | (128,768,512) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -4793,13 +4793,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-52.9µs (-16.4%)   Δ(AG vs B0)=-99.0µs (-30.8%)   Δ(AG vs B2)=-46.1µs (-17.2%)
+Δ(B2 vs B0)=-52.9µs (-16.4%)   Δ(AG vs B0)=-99.0µs (-30.8%)   Δ(AG vs B1)=-46.1µs (-17.2%)
 
 ---
 
 ### 115×960×320  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,320,960) | (128,320,960) | (128,320,960) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -4812,13 +4812,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+52.1µs (+18.3%)   Δ(AG vs B0)=+45.8µs (+16.1%)   Δ(AG vs B2)=-6.3µs (-1.9%)
+Δ(B2 vs B0)=+52.1µs (+18.3%)   Δ(AG vs B0)=+45.8µs (+16.1%)   Δ(AG vs B1)=-6.3µs (-1.9%)
 
 ---
 
 ### 115×960×960  —  `q_proj, o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,960,960) | (128,960,960) | (128,960,960) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -4831,13 +4831,13 @@
 | Pass count | 3/3 | 2/3 | 2/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-13.1µs (-2.6%)   Δ(AG vs B0)=-10.5µs (-2.1%)   Δ(AG vs B2)=+2.6µs (+0.5%)
+Δ(B2 vs B0)=-13.1µs (-2.6%)   Δ(AG vs B0)=-10.5µs (-2.1%)   Δ(AG vs B1)=+2.6µs (+0.5%)
 
 ---
 
 ### 115×960×2560  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,2560,960) | (128,2560,960) | (128,2560,960) |
 | Tile | (64,64,64) | (64,64,64) | (64,32,64) |
@@ -4850,7 +4850,7 @@
 | Pass count | 2/3 | 1/3 | 2/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-4.4µs (-0.6%)   Δ(AG vs B0)=+488.8µs (+65.9%)   Δ(AG vs B2)=+493.2µs (+66.9%)
+Δ(B2 vs B0)=-4.4µs (-0.6%)   Δ(AG vs B0)=+488.8µs (+65.9%)   Δ(AG vs B1)=+493.2µs (+66.9%)
 
 ---
 
@@ -4862,7 +4862,7 @@
 
 ### 128×320×192  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,192,512) | (128,192,512) | (128,192,512) |
 | Tile | (64,64,64) | (32,64,64) | (32,64,64) |
@@ -4875,13 +4875,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-1.5µs (-0.8%)   Δ(AG vs B0)=-1.7µs (-0.9%)   Δ(AG vs B2)=-0.2µs (-0.1%)
+Δ(B2 vs B0)=-1.5µs (-0.8%)   Δ(AG vs B0)=-1.7µs (-0.9%)   Δ(AG vs B1)=-0.2µs (-0.1%)
 
 ---
 
 ### 128×320×288  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,288,512) | (128,288,512) | (128,288,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4894,13 +4894,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-23.3µs (-9.4%)   Δ(AG vs B0)=-40.0µs (-16.1%)   Δ(AG vs B2)=-16.6µs (-7.4%)
+Δ(B2 vs B0)=-23.3µs (-9.4%)   Δ(AG vs B0)=-40.0µs (-16.1%)   Δ(AG vs B1)=-16.6µs (-7.4%)
 
 ---
 
 ### 128×320×384  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,384,512) | (128,384,512) | (128,384,512) |
 | Tile | (64,64,64) | (32,32,128) | (32,32,128) |
@@ -4913,13 +4913,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+27.4µs (+15.1%)   Δ(AG vs B0)=+7.3µs (+4.0%)   Δ(AG vs B2)=-20.1µs (-9.6%)
+Δ(B2 vs B0)=+27.4µs (+15.1%)   Δ(AG vs B0)=+7.3µs (+4.0%)   Δ(AG vs B1)=-20.1µs (-9.6%)
 
 ---
 
 ### 128×320×480  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,480,512) | (128,480,512) | (128,480,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4932,13 +4932,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 2**
-Δ(B2 vs B0)=-34.3µs (-13.0%)   Δ(AG vs B0)=+6.9µs (+2.6%)   Δ(AG vs B2)=+41.2µs (+18.0%)
+Δ(B2 vs B0)=-34.3µs (-13.0%)   Δ(AG vs B0)=+6.9µs (+2.6%)   Δ(AG vs B1)=+41.2µs (+18.0%)
 
 ---
 
 ### 128×320×576  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,576,512) | (128,576,512) | (128,576,512) |
 | Tile | (64,64,64) | (32,64,64) | (32,64,64) |
@@ -4951,13 +4951,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+108.8µs (+41.6%)   Δ(AG vs B0)=+174.4µs (+66.7%)   Δ(AG vs B2)=+65.6µs (+17.7%)
+Δ(B2 vs B0)=+108.8µs (+41.6%)   Δ(AG vs B0)=+174.4µs (+66.7%)   Δ(AG vs B1)=+65.6µs (+17.7%)
 
 ---
 
 ### 128×320×672  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,672,512) | (128,672,512) | (128,672,512) |
 | Tile | (32,32,32) | (64,32,64) | (64,32,64) |
@@ -4970,13 +4970,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+4.0µs (+0.9%)   Δ(AG vs B0)=-36.0µs (-8.1%)   Δ(AG vs B2)=-40.1µs (-8.9%)
+Δ(B2 vs B0)=+4.0µs (+0.9%)   Δ(AG vs B0)=-36.0µs (-8.1%)   Δ(AG vs B1)=-40.1µs (-8.9%)
 
 ---
 
 ### 128×320×720  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (128,768,512) | (128,768,512) | (128,768,512) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -4989,13 +4989,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.6µs (+0.3%)   Δ(AG vs B0)=+12.1µs (+5.4%)   Δ(AG vs B2)=+11.5µs (+5.2%)
+Δ(B2 vs B0)=+0.6µs (+0.3%)   Δ(AG vs B0)=+12.1µs (+5.4%)   Δ(AG vs B1)=+11.5µs (+5.2%)
 
 ---
 
 ### 179×320×96  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,96,512) | (192,96,512) | (192,96,512) |
 | Tile | (32,32,32) | (32,32,32) | (64,32,64) |
@@ -5008,13 +5008,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+4.1µs (+2.4%)   Δ(AG vs B2)=+4.1µs (+2.4%)
+Δ(B2 vs B0)=+0.0µs (+0.0%)   Δ(AG vs B0)=+4.1µs (+2.4%)   Δ(AG vs B1)=+4.1µs (+2.4%)
 
 ---
 
 ### 179×320×192  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,192,512) | (192,192,512) | (192,192,512) |
 | Tile | (64,64,64) | (64,64,64) | (64,32,64) |
@@ -5027,13 +5027,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=+2.2µs (+1.2%)   Δ(AG vs B0)=+37.1µs (+20.3%)   Δ(AG vs B2)=+35.0µs (+18.9%)
+Δ(B2 vs B0)=+2.2µs (+1.2%)   Δ(AG vs B0)=+37.1µs (+20.3%)   Δ(AG vs B1)=+35.0µs (+18.9%)
 
 ---
 
 ### 179×320×288  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,288,512) | (192,288,512) | (192,288,512) |
 | Tile | (32,32,32) | (32,32,32) | (64,32,64) |
@@ -5046,13 +5046,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: BASELINE 0**
-Δ(B2 vs B0)=+45.2µs (+15.5%)   Δ(AG vs B0)=+37.9µs (+13.0%)   Δ(AG vs B2)=-7.3µs (-2.2%)
+Δ(B2 vs B0)=+45.2µs (+15.5%)   Δ(AG vs B0)=+37.9µs (+13.0%)   Δ(AG vs B1)=-7.3µs (-2.2%)
 
 ---
 
 ### 179×320×384  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,384,512) | (192,384,512) | (192,384,512) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -5065,13 +5065,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: TIE**
-Δ(B2 vs B0)=-0.2µs (-0.1%)   Δ(AG vs B0)=+37.5µs (+16.3%)   Δ(AG vs B2)=+37.7µs (+16.4%)
+Δ(B2 vs B0)=-0.2µs (-0.1%)   Δ(AG vs B0)=+37.5µs (+16.3%)   Δ(AG vs B1)=+37.7µs (+16.4%)
 
 ---
 
 ### 179×320×480  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,480,512) | (192,480,512) | (192,480,512) |
 | Tile | (16,32,32) | (16,32,32) | (64,32,64) |
@@ -5084,13 +5084,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=-92.6µs (-15.7%)   Δ(AG vs B0)=-170.0µs (-28.7%)   Δ(AG vs B2)=-77.3µs (-15.5%)
+Δ(B2 vs B0)=-92.6µs (-15.7%)   Δ(AG vs B0)=-170.0µs (-28.7%)   Δ(AG vs B1)=-77.3µs (-15.5%)
 
 ---
 
 ### 179×320×576  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,576,512) | (192,576,512) | (192,576,512) |
 | Tile | (64,64,64) | (64,64,64) | (64,64,64) |
@@ -5103,13 +5103,13 @@
 | Pass count | 3/3 | 3/3 | 3/3 |
 
 **Winner: AGENTIC**
-Δ(B2 vs B0)=+67.4µs (+23.5%)   Δ(AG vs B0)=-6.3µs (-2.2%)   Δ(AG vs B2)=-73.7µs (-20.8%)
+Δ(B2 vs B0)=+67.4µs (+23.5%)   Δ(AG vs B0)=-6.3µs (-2.2%)   Δ(AG vs B1)=-73.7µs (-20.8%)
 
 ---
 
 ### 179×320×672  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,672,512) | (192,672,512) | (192,672,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5127,7 +5127,7 @@
 
 ### 179×320×720  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,768,512) | (192,768,512) | (192,768,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5145,7 +5145,7 @@
 
 ### 179×960×320  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,320,960) | (192,320,960) | (192,320,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5163,7 +5163,7 @@
 
 ### 179×960×960  —  `q_proj, o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,960,960) | (192,960,960) | (192,960,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5181,7 +5181,7 @@
 
 ### 179×960×2560  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (192,2560,960) | (192,2560,960) | (192,2560,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5205,7 +5205,7 @@
 
 ### 235×320×96  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,96,512) | (256,96,512) | (256,96,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5223,7 +5223,7 @@
 
 ### 235×320×192  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,192,512) | (256,192,512) | (256,192,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5241,7 +5241,7 @@
 
 ### 235×320×288  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,288,512) | (256,288,512) | (256,288,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5259,7 +5259,7 @@
 
 ### 235×320×384  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,384,512) | (256,384,512) | (256,384,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5277,7 +5277,7 @@
 
 ### 235×320×480  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,480,512) | (256,480,512) | (256,480,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5295,7 +5295,7 @@
 
 ### 235×320×576  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,576,512) | (256,576,512) | (256,576,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5313,7 +5313,7 @@
 
 ### 235×320×672  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,672,512) | (256,672,512) | (256,672,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5331,7 +5331,7 @@
 
 ### 235×320×720  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,768,512) | (256,768,512) | (256,768,512) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5349,7 +5349,7 @@
 
 ### 235×960×320  —  `k_proj, v_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,320,960) | (256,320,960) | (256,384,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5367,7 +5367,7 @@
 
 ### 235×960×960  —  `q_proj, o_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,960,960) | (256,960,960) | (256,960,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
@@ -5385,7 +5385,7 @@
 
 ### 235×960×2560  —  `gate_proj, up_proj`
 
-| | Baseline 0 | Baseline 2 | Agentic |
+| | Baseline 0 | Baseline 1 | Agentic |
 |-|------------|------------|---------|
 | Padded shape | (256,2560,960) | (256,2560,960) | (256,2560,960) |
 | Tile | (16,32,32) | (16,32,32) | (16,32,32) |
